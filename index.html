@@ -170,7 +170,7 @@
         >Subscribe</a
       >
     </p>
-    <h1>VAASUDEV'S APPS</h1>
+    <h1 id="vat">VAASUDEV'S APPS</h1>
     <p>Click them to open desired app</p>
     <div class="button-container">
     <button class="button-85" onclick="window.location.href='index.html'">
@@ -233,17 +233,26 @@
 function sha(){
   document.getElementById('sha').play();
 }
-  
+  function ninjaseal(var str) {
+  const h1 = document.getElementById("vat");
+  const originalText = h1.textContent;
+
+  h1.textContent = str;
+
+  setTimeout(() => {
+    h1.textContent = originalText;
+  }, 3000); // 3 seconds later
+}
   document.addEventListener('contextmenu', function(e) {
         e.preventDefault();
-     alert("Right Click Disabled");
+     ninjaseal("Right Click Disabled");
     });
   document.addEventListener('keydown', function(e) {
         if (e.key === 'F12' || 
             (e.ctrlKey && e.shiftKey && (e.key === 'I' || e.key === 'J')) || 
             (e.ctrlKey && e.key === 'U')) {
             e.preventDefault();
-            alert(e.key+" key Disabled");
+            ninjaseal(e.key+" key Disabled");
         }
     });
 </script>
