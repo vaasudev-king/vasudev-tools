@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <link rel="stylesheet" type="text/css" href="kurama.css" />
+    <link
+      rel="icon"
+      href="https://cdn.glitch.global/4aba7458-1964-4806-b002-2d38cf08add5/calc.png?v=1723538347496"
+      type="image/x-icon"
+    />
+
+    <style>
+      body {
+        background-color: lightblue;
+      }
+    </style>
+  </head>
+  <body>
+    <br />
+    <h1>Choose a version to contniue:</h1>
+    <br />
+    <button
+      id="1"
+      class="big-button"
+      onclick="window.location.href='calc_v1.html'"
+    >
+      Versionn 1.0.0
+    </button>
+    <button id="2" class="big-button" onclick="window.location.href='calc_v2.html'">
+      Versionn 2.0.0
+    </button>
+    <button id="3" class="big-button" onclick="window.location.href='calc_v3.html'">
+      Versionn 3.0.0
+    </button>
+
+    <button
+      class="big-button clear-button"
+      onclick="window.location.href='vs.html'"
+    >
+      Home
+    </button>
+    <script>
+    document.addEventListener("keydown", function (event) {
+        if ( ["1", "2", "3"].includes(event.key)) {
+          document.getElementById(event.key).click();
+        }
+ });
+    </script>
+  </body>
+  <html></html>
+</html>

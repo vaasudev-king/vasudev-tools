@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Calculator App</title>
+    <meta charset="UTF-8" />
+    <link rel="icon" href="https://cdn.glitch.global/4aba7458-1964-4806-b002-2d38cf08add5/calc.png?v=1723538347496" type="image/x-icon" />
+   
+    <style>
+      /* Add your custom styles here */
+      body {
+        font-family: Arial, sans-serif;
+        background-color: #f2f2f2;
+        color: #333;
+        margin: 0;
+        padding: 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 100vh;
+      }
+      h1 {
+        text-align: center;
+        margin: 30px 0;
+        color: #007bff;
+      }
+      .calc-container {
+        width: 80%;
+        max-width: 400px;
+        background-color: #fff;
+        border: 1px solid #ccc;
+        padding: 20px;
+        border-radius: 5px;
+      }
+      .calc-btn {
+        display: inline-block;
+        width: 20%;
+        padding: 10px;
+        margin: 5px;
+        text-align: center;
+        font-size: 24px;
+        /*background-color: #007bff;*/
+            color: black;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+      }
+      .calc-btn.clicked {
+        background-color: yellow;
+      }
+
+      .result {
+        font-size: 36px;
+        text-align: right;
+        margin-bottom: 20px;
+        padding: 10px;
+        background-color: #e9ecef;
+      }
+      @media (max-width: 500px) {
+        /* Adjust styles for smaller screens */
+        .calc-container {
+          width: 90%;
+        }
+        .calc-btn {
+          font-size: 20px;
+        }
+        .result {
+          font-size: 28px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <!--h1>Calculator App</h1-->
+    <div class="calc-container">
+      <div class="result" id="result">0</div>
+      <div>
+        <button class="calc-btn" onclick="appendSymbol('1')">1</button>
+        <button class="calc-btn" onclick="appendSymbol('2')">2</button>
+        <button class="calc-btn" onclick="appendSymbol('3')">3</button>
+        <button class="calc-btn" onclick="appendOperator('+')">+</button>
+      </div>
+      <div>
+        <button class="calc-btn" onclick="appendSymbol('4')">4</button>
+        <button class="calc-btn" onclick="appendSymbol('5')">5</button>
+        <button class="calc-btn" onclick="appendSymbol('6')">6</button>
+        <button class="calc-btn" onclick="appendOperator('-')">-</button>
+      </div>
+      <div>
+        <button class="calc-btn" onclick="appendSymbol('7')">7</button>
+        <button class="calc-btn" onclick="appendSymbol('8')">8</button>
+        <button class="calc-btn" onclick="appendSymbol('9')">9</button>
+        <button class="calc-btn" onclick="appendOperator('*')">×</button>
+      </div>
+      <div>
+        <button class="calc-btn" onclick="backspace()">←</button>
+        <button class="calc-btn" onclick="appendSymbol('0')">0</button>
+        <button class="calc-btn" onclick="calculate()">=</button>
+        <button class="calc-btn" onclick="appendOperator('/')">÷</button>
+      </div>
+      <div>
+        <button class="calc-btn" onclick="clearResult()">C</button>
+        <button class="calc-btn" onclick="window.location.href='vs.html'">Home</button>
+      </div>
+    </div>
+
+    <script>
+      let result = document.getElementById("result");
+      let currentInput = "0";
+      let currentOperator = "";
+      let resetNext = false;
+
+      function appendSymbol(symbol) {
+        if (resetNext) {
+          currentInput = symbol;
+          resetNext = false;
+        } else {
+          if (currentInput === "0") {
+            currentInput = symbol;
+          } else {
+            currentInput += symbol;
+          }
+        }
+        result.innerText = currentInput;
+      }
+
+      function appendOperator(operator) {
+        if (currentOperator) {
+          calculate();
+        }
+        currentOperator = operator;
+        currentInput += " " + operator + " ";
+        result.innerText = currentInput;
+      }
+
+      function calculate() {
+        try {
+          let evaluatedResult = eval(currentInput.replace(/\s/g, ""));
+          result.innerText = evaluatedResult;
+          currentInput = evaluatedResult.toString();
+          currentOperator = "";
+          resetNext = true;
+        } catch (error) {
+          result.innerText = "Error";
+          currentInput = "0";
+          currentOperator = "";
+        }
+      }
+
+      function clearResult() {
+        currentInput = "0";
+        currentOperator = "";
+        result.innerText = currentInput;
+      }
+
+      function backspace() {
+        if (currentInput.length > 1) {
+          currentInput = currentInput.slice(0, -1);
+        } else {
+          currentInput = "0";
+        }
+        result.innerText = currentInput;
+      }
+
+      document.addEventListener("keydown", function (event) {
+        const key = event.key;
+        if (key >= "0" && key <= "9") {
+          appendSymbol(key);
+        } else if (key === "+" || key === "-" || key === "*" || key === "/") {
+          appendOperator(key);
+        } else if (key === "Enter" || key === "=") {
+          event.preventDefault(); // Prevent form submission if the calculator is in a form
+          calculate();
+        } else if (key === "Backspace") {
+          backspace();
+        } else if (key === "Escape" || key.toLowerCase() === "c") {
+          clearResult();
+        }
+      });
+    </script>
+  </body>
+</html>

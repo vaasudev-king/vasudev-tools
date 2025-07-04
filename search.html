@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+     <link rel="icon" href="https://uxwing.com/wp-content/themes/uxwing/download/user-interface/find-icon.png" type="image/x-icon" />
+    <title>Search</title>
+    <style>
+      body {
+        text-align: center;
+       background-image: url("https://cdn.glitch.global/14780529-cce6-4176-8e0b-db06f1a231d1/bg.jpg?v=1716382917251");
+background-repeat: no-repeat;
+background-position: center;
+        height: 100vh; 
+background-size: cover; /* optional, makes it cover the whole background nicely */
+
+      }
+      h1 {
+        text-align: center;
+        color: blue;
+      }
+      label {
+        color: yellow;
+        font-size: 20px;
+      }
+      .sb {
+        height: 25px;
+        width: 50%;
+      }
+      .bs {
+        height: 30px;
+        width: 50px;
+      }
+    </style>
+  </head>
+  <body>
+    <h1 id="he">GOOGLE</h1>
+    <label for="dd">Choose a Search Engine:</label>
+    <select class="dropdown" id="dd" onchange="chg()">
+      <option value="1" selected>Google</option>
+      <option value="2">Bing</option>
+      <option value="3">DuckDuckGo</option>
+      <option value="4">Yahooo!</option>
+      <option value="5">Random</option>
+    </select>
+    <br /><br />
+    <input class="sb" id="se" type="text" placeholder="Search here" />
+    <button class="bs" id="bu" onclick="search()">Go</button>
+
+    <script>
+      function search() {
+        var searchVar = document.getElementById("se").value;
+        if (!searchVar) {
+    alert("Please enter a search query!");
+    return;
+  }
+        var se = document.getElementById("dd").value;
+        var goVar;
+        if (se == 5) {
+          se = Math.floor(Math.random() * 3) + 1;
+        }
+        if (se == 1) {
+          goVar = "https://www.google.com/search?q=" + searchVar;
+        } else if (se == 2) {
+          goVar = "https://www.bing.com/search?q=" + searchVar;
+        } else if (se == 3) {
+          goVar = "https://duckduckgo.com/?q=" + searchVar;
+        } else if (se == 4) {
+          goVar = "https://search.yahoo.com/search?p=" + searchVar;
+        }
+
+        window.open(goVar, "_blank");
+        console.log("Search query: " + searchVar);
+      }
+
+      function chg() {
+        var se = document.getElementById("dd").value;
+        if (se == 1) {
+          document.getElementById("he").innerHTML = "GOOGLE";
+        } else if (se == 2) {
+          document.getElementById("he").innerHTML = "BING";
+        } else if (se == 3) {
+          document.getElementById("he").innerHTML = "Duck Duck Go";
+        } else if (se == 4) {
+          document.getElementById("he").innerHTML = "YAHOO!";
+        }
+         else if (se == 5) {
+          document.getElementById("he").innerHTML = "Random!!!";
+        }
+      }
+      document.addEventListener("keydown", function (event) {
+        if (event.key =="Enter"){
+          search();
+          event.preventDefault();
+        }
+        //alert(event.key);
+        if (event.key == "ArrowUp" || event.key == "ArrowDown"){
+          document.getElementById("dd").focus();
+        }
+            });
+    </script>
+  </body>
+</html>

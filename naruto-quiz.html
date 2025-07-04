@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <link
+      rel="icon"
+      href="https://wallpapers.com/images/featured/naruto-profile-pictures-sa1tekghfajrr928.webp"
+      type="image/x-icon"
+    />
+    <style>
+      input[type="submit"] {
+        display: block;
+        width: 200px;
+        height: 40px;
+        margin: 10px auto;
+        background-color: #007bff;
+        color: rgb(249, 249, 251);
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background-color 0.3s ease, transform 0.3s ease;
+      }
+
+      input[type="submit"]:hover {
+        background-color: #0056b3;
+        transform: scale(1.05);
+      }
+
+      input[type="submit"]:active {
+        transform: scale(0.9);
+      }
+
+      input[type="radio"] {
+        --s: 1em; /* control the size */
+        --c: #009688; /* the active color */
+
+        height: var(--s);
+        aspect-ratio: 1;
+        border: calc(var(--s) / 8) solid #939393;
+        padding: calc(var(--s) / 8);
+        background: radial-gradient(farthest-side, var(--c) 94%, #0000) 50%/0 0
+          no-repeat content-box;
+        border-radius: 50%;
+        outline-offset: calc(var(--s) / 10);
+        -webkit-appearance: none;
+        -moz-appearance: none;
+        appearance: none;
+        cursor: pointer;
+        font-size: inherit;
+        transition: 0.3s;
+      }
+
+      input[type="radio"]:checked {
+        border-color: var(--c);
+        background-size: 100% 100%;
+      }
+    </style>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Quiz</title>
+    <script src="quiz.js" defer></script>
+  </head>
+  <body>
+    <form id="quizForm">
+      <!-- Question 1 -->
+      <h1>Q1:</h1>
+      <h1>Who killed Rin?</h1>
+
+      <input type="radio" id="q1_option1" name="question1" value="1" />Naruto
+      <br />
+
+      <input type="radio" id="q1_option2" name="question1" value="2" />Neji
+      <br />
+
+      <input type="radio" id="q1_option3" name="question1" value="3" />Kakashi
+      <br />
+
+      <input type="radio" id="q1_option4" name="question1" value="4" />Obito
+      <br />
+
+      <!-- Question 2 -->
+      <h1>Q2:</h1>
+      <h1>Who Created Rasengan?</h1>
+
+      <input type="radio" id="q2_option1" name="question2" value="1" />Jiraya
+      <br />
+
+      <input type="radio" id="q2_option2" name="question2" value="2" />Minato
+      <br />
+
+      <input type="radio" id="q2_option3" name="question2" value="3" />Naruto
+      <br />
+
+      <input type="radio" id="q2_option4" name="question2" value="4" />Boruto
+      <br />
+
+      <!-- Question 3 -->
+      <h1>Q3:</h1>
+      <h1>Who has Rinnegan?</h1>
+
+      <input type="radio" id="q3_option1" name="question3" value="1" />Sasuke
+      <br />
+
+      <input type="radio" id="q3_option2" name="question3" value="2" />Itachi
+      <br />
+
+      <input type="radio" id="q3_option3" name="question3" value="3" />Kakashi
+      <br />
+
+      <input type="radio" id="q3_option4" name="question3" value="4" />Sarada
+      <br />
+
+      <!-- Question 4 -->
+      <h1>Q4:</h1>
+      <h1>Who is the Fifth Hokage?</h1>
+
+      <input type="radio" id="q4_option1" name="question4" value="1" />Hashirama
+      <br />
+
+      <input type="radio" id="q4_option2" name="question4" value="2" />Tsunade
+      <br />
+
+      <input type="radio" id="q4_option3" name="question4" value="3" />Naruto
+      <br />
+
+      <input type="radio" id="q4_option4" name="question4" value="4" />Madara
+      <br />
+
+      <!-- Question 5 -->
+      <h1>Q5:</h1>
+      <h1>Who has Mangekyou but no Susanoo?</h1>
+
+      <input type="radio" id="q5_option1" name="question5" value="1" />Madara
+      <br />
+
+      <input type="radio" id="q5_option2" name="question5" value="2" />Itachi
+      <br />
+
+      <input type="radio" id="q5_option3" name="question5" value="3" />Sasuke
+      <br />
+
+      <input type="radio" id="q5_option4" name="question5" value="4" />Obito
+      <br />
+
+      <!-- Question 6 -->
+      <h1>Q6:</h1>
+      <h1>Who is not an Uchiha?</h1>
+
+      <input type="radio" id="q6_option1" name="question6" value="1" />Itachi
+      <br />
+
+      <input type="radio" id="q6_option2" name="question6" value="2" />Sasuke
+      <br />
+
+      <input type="radio" id="q6_option3" name="question6" value="3" />Kakashi
+      <br />
+
+      <input type="radio" id="q6_option4" name="question6" value="4" />Madara
+      <br />
+
+      <!-- Question 7 -->
+      <h1>Q7:</h1>
+      <h1>Who is known as the God of Shinobi?</h1>
+
+      <input type="radio" id="q7_option1" name="question7" value="1" />Tobirama
+      <br />
+
+      <input type="radio" id="q7_option2" name="question7" value="2" />Hashirama
+      <br />
+
+      <input type="radio" id="q7_option3" name="question7" value="3" />Sakura
+      <br />
+
+      <input type="radio" id="q7_option4" name="question7" value="4" />Rin
+      <br />
+
+      <!-- Question 8 -->
+      <h1>Q8:</h1>
+      <h1>Who is the father of Kakashi Hatake?</h1>
+
+      <input type="radio" id="q8_option1" name="question8" value="1" />Might Dai
+      <br />
+
+      <input type="radio" id="q8_option2" name="question8" value="2" />Jiraya
+      <br />
+
+      <input type="radio" id="q8_option3" name="question8" value="3" />Hiruzen
+      <br />
+
+      <input type="radio" id="q8_option4" name="question8" value="4" />Sakumo
+      <br />
+
+      <!-- Question 9 -->
+      <h1>Q9:</h1>
+      <h1>What is the Mangekyou ability of Kakashi?</h1>
+
+      <input type="radio" id="q9_option1" name="question9" value="1" />Amaterasu
+      <br />
+
+      <input type="radio" id="q9_option2" name="question9" value="2" />Tsukiyomi
+      <br />
+
+      <input type="radio" id="q9_option3" name="question9" value="3" />Kamui
+      <br />
+
+      <input
+        type="radio"
+        id="q9_option4"
+        name="question9"
+        value="4"
+      />Kotoamatsukami
+      <br />
+
+      <!-- Question 10 -->
+      <h1>Q10:</h1>
+      <h1>Who awakened Eternal Mangekyou Sharingan first?</h1>
+
+      <input type="radio" id="q10_option1" name="question10" value="1" />Madara
+      <br />
+
+      <input type="radio" id="q10_option2" name="question10" value="2" />Itachi
+      <br />
+
+      <input
+        type="radio"
+        id="q10_option3"
+        name="question10"
+        value="3"
+      />Hagoromo
+      <br />
+
+      <input type="radio" id="q10_option4" name="question10" value="4" />Sasuke
+      <br />
+
+      <!-- Question 11 -->
+      <h1>Q10:</h1>
+      <h1>Who awakened Rinnegan first?</h1>
+
+      <input type="radio" id="q11_option1" name="question11" value="1" />
+      Hagoromo
+      <br />
+
+      <input type="radio" id="q11_option2" name="question11" value="2" />Sasuke
+      <br />
+
+      <input type="radio" id="q11_option3" name="question11" value="3" />obito
+      <br />
+
+      <input type="radio" id="q11_option4" name="question11" value="4" />Naruto
+      <br />
+
+      <h2 style="color: red" id="resultz"></h2>
+      <h2 style="color: lime" id="result"></h2>
+      <input type="submit" value="Submit" />
+    </form>
+    <script>
+      // Define the correct answers
+      const correctAnswers = {
+        question1: "3",
+        question2: "2",
+        question3: "1",
+        question4: "2",
+        question5: "4",
+        question6: "3",
+        question7: "2",
+        question8: "4",
+        question9: "3",
+        question10: "1",
+        question11: "1",
+      };
+
+      document.addEventListener("DOMContentLoaded", () => {
+        const form = document.getElementById("quizForm");
+        const resultz = document.getElementById("resultz");
+        const result = document.getElementById("result");
+
+        form.addEventListener("submit", (event) => {
+          event.preventDefault(); // Prevent form from submitting normally
+
+          let score = 0;
+          const totalQuestions = Object.keys(correctAnswers).length;
+
+          // Check each question's answer
+          for (let question in correctAnswers) {
+            const selectedOption = form.querySelector(
+              `input[name="${question}"]:checked`
+            );
+
+            if (
+              selectedOption &&
+              selectedOption.value === correctAnswers[question]
+            ) {
+              score++;
+            }
+          }
+
+          // Display results
+          if (score === 0) {
+            resultz.innerHTML = `You scored ${score} out of ${totalQuestions}`;
+            alert(`You scored ${score} out of ${totalQuestions}`);
+          } else {
+            result.innerHTML = `You scored ${score} out of ${totalQuestions}`;
+            alert(`You scored ${score} out of ${totalQuestions}`);
+          }
+        });
+      });
+    </script>
+  </body>
+</html>

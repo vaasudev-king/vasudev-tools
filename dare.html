@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <sty <meta charset="UTF-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      <title>Dare</title>
+     
+      <style>
+        body {
+          font-family: Arial, sans-serif;
+          text-align: center;
+          margin-top: 50px;
+        }
+        #question {
+          margin-bottom: 20px;
+        }
+        .button,
+        .button2 {
+          margin-top: 10px;
+          padding: 10px 20px;
+          font-size: 16px;
+          background-color:white;
+          cursor: pointer;
+        }
+        .button2:active {
+          transform: scale(0.95);
+          box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+          color: lime;
+        }
+        .button:active {
+         background-color:white;
+        }
+        #noButton {
+          position: absolute;
+        }
+        .err {
+          color: red;
+          outline: 5px green;
+        }
+      </style>
+      <body>
+        <div id="error" style="display: none">
+          <h2 class="err">This page can only be accessed on a computer.</h2>
+          <a href="vs.html">Home</a>
+        </div>
+
+        <div id="content">
+          <div id="question">Are you Idiot ?</div>
+
+          <button id="yesButton" class="button2" onclick="showPopup()">
+            Yes
+          </button>
+          <button id="noButton" class="button" onmouseover="moveButton()" onclick="moveButton()">
+            No
+          </button>
+
+          <div id="popup" style="display: none">
+            <h2>Thanks for Accepting 🤡</h2>
+          </div>
+        </div>
+
+        <script>
+          function showPopup() {
+            var popup = document.getElementById("popup");
+            popup.style.display = "block";
+          }
+
+          function moveButton() {
+            var button = document.getElementById("noButton");
+            var x = Math.floor(Math.random() * 350);
+            var y = Math.floor(Math.random() * 350);
+            button.style.left = x + "px";
+            button.style.top = y + "px";
+          }
+
+          // Check if the device is a computer or mobile
+          function isMobileDevice() {
+            return (
+              typeof window.orientation !== "undefined" ||
+              navigator.userAgent.indexOf("IEMobile") !== -1
+            );
+          }
+
+          // Display error message if accessed from a mobile device
+          window.onload = function () {
+            if (isMobileDevice()) {
+              var content = document.getElementById("content");
+              var error = document.getElementById("error");
+              content.style.display = "none";
+              error.style.display = "block";
+            } else {
+              alert(
+                "In this dare you need to answer a question with YES or NO"
+              );
+            }
+          };
+        </script>
+      </body>
+    </sty>
+  </head>
+</html>

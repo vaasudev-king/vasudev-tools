@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Open YouTube in App</title>
+  </head>
+  <body>
+    <a href="javascript:void(0);" id="openInYouTubeApp">Watch Video</a>
+
+    <script type="text/javascript">
+      document.getElementById("openInYouTubeApp").onclick = function () {
+        var videoId = "example"; // Replace with your YouTube video ID
+        var appUrl = "vnd.youtube:" + videoId;
+        var webUrl = "https://www.youtube.com/watch?v=" + videoId;
+
+        // Attempt to open the link in the YouTube app
+        window.location.href = appUrl;
+
+        // Fallback to opening the link in the browser if the app is not installed
+        setTimeout(function () {
+          window.location.href = webUrl;
+        }, 2000);
+      };
+    </script>
+  </body>
+</html>

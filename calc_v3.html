@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Calculator App</title>
+    <meta charset="UTF-8" />
+<link rel="icon" href="https://cdn.glitch.global/4aba7458-1964-4806-b002-2d38cf08add5/calc.png?v=1723538347496" type="image/x-icon" />
+   
+    <style>
+          /* Add your custom styles here */
+          body {
+            font-family: Arial, sans-serif;
+            background-color: #f2f2f2;
+            color: #333;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+           
+          }
+          h1 {
+            text-align: center;
+            margin: 30px 0;
+            color: #007bff;
+          }
+          .calc-container {
+            width: 80%;
+            max-width: 400px;
+            background-color: #fff;
+            border: 1px solid #ccc;
+            padding: 20px;
+            border-radius: 5px;
+          }
+          .button-85 {
+            width: 20%;
+            padding: 10px;
+            margin: 5px;
+            text-align: center;
+            font-size: 24px;
+            margin: 10px auto;
+           /* padding: 0.6em 2em;*/
+            border: none;
+            outline: none;
+            color: rgb(255, 255, 255);
+            background: #111;
+            cursor: pointer;
+            position: relative;
+            z-index: 0;
+            border-radius: 10px;
+            user-select: none;
+            -webkit-user-select: none;
+            touch-action: manipulation;
+          }
+
+          .button-85:before {
+            content: "";
+            background: linear-gradient(
+              45deg,
+              #ff0000,
+              #ff7300,
+              #fffb00,
+              #48ff00,
+              #00ffd5,
+              #002bff,
+              #7a00ff,
+              #ff00c8,
+              #ff0000
+            );
+            position: absolute;
+            top: -2px;
+            left: -2px;
+            background-size: 400%;
+            z-index: -1;
+            filter: blur(5px);
+            -webkit-filter: blur(5px);
+            width: calc(100% + 4px);
+            height: calc(100% + 4px);
+            animation: glowing-button-85 20s linear infinite;
+            transition: opacity 0.3s ease-in-out;
+            border-radius: 10px;
+          }
+
+          @keyframes glowing-button-85 {
+            0% {
+              background-position: 0 0;
+            }
+            50% {
+              background-position: 400% 0;
+            }
+            100% {
+              background-position: 0 0;
+            }
+          }
+
+          .button-85:after {
+            z-index: -1;
+            content: "";
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: #222;
+            left: 0;
+            top: 0;
+            border-radius: 10px;
+          }
+          /* Clicking effect */
+          .button-85:active {
+            transform: scale(0.95);
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+            color: yellow;
+          }
+          .result {
+            font-size: 36px;
+            text-align: right;
+            margin-bottom: 20px;
+            padding: 10px;
+            background-color: #e9ecef;
+            border-radius: 5px;
+
+        font-size: 24px;
+        margin: 10px auto;
+
+        border: none;
+        outline: none;
+        color: black;
+
+        cursor: pointer;
+        position: relative;
+        z-index: 0;
+        border-radius: 10px;
+        user-select: none;
+        -webkit-user-select: none;
+        touch-action: manipulation;
+      }
+
+      .result:before {
+        content: "";
+        background: linear-gradient(
+          45deg,
+          #ff0000,
+          #ff7300,
+          #fffb00,
+          #48ff00,
+          #00ffd5,
+          #002bff,
+          #7a00ff,
+          #ff00c8,
+          #ff0000
+        );
+        position: absolute;
+        top: -2px;
+        left: -2px;
+        background-size: 400%;
+        z-index: -1;
+        filter: blur(5px);
+        -webkit-filter: blur(5px);
+        width: calc(100% + 4px);
+        height: calc(100% + 4px);
+        animation: glowing-button-85 20s linear infinite;
+        transition: opacity 0.3s ease-in-out;
+        border-radius: 10px;
+      }
+
+      @keyframes glowing-button-85 {
+        0% {
+          background-position: 0 0;
+        }
+        50% {
+          background-position: 400% 0;
+        }
+        100% {
+          background-position: 0 0;
+        }
+      }
+
+      .result:after {
+        z-index: -1;
+        content: "";
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        background: #e9ecef;
+        left: 0;
+        top: 0;
+        border-radius: 10px;
+      }
+
+          }
+          @media (max-width: 500px) {
+            /* Adjust styles for smaller screens */
+            .calc-container {
+              width: 90%;
+            }
+            .button-85 {
+              font-size: 20px;
+            }
+            .result {
+              font-size: 28px;
+            }
+          }
+    </style>
+  </head>
+  <body>
+    <!--h1>Calculator App</h1-->
+    <div class="calc-container">
+      <div class="result" id="result">0</div>
+      <div>
+        <button class="button-85" onclick="appendSymbol('1')">1</button>
+        <button class="button-85" onclick="appendSymbol('2')">2</button>
+        <button class="button-85" onclick="appendSymbol('3')">3</button>
+        <button class="button-85" onclick="appendOperator('+')">+</button>
+      </div>
+      <div>
+        <button class="button-85" onclick="appendSymbol('4')">4</button>
+        <button class="button-85" onclick="appendSymbol('5')">5</button>
+        <button class="button-85" onclick="appendSymbol('6')">6</button>
+        <button class="button-85" onclick="appendOperator('-')">-</button>
+      </div>
+      <div>
+        <button class="button-85" onclick="appendSymbol('7')">7</button>
+        <button class="button-85" onclick="appendSymbol('8')">8</button>
+        <button class="button-85" onclick="appendSymbol('9')">9</button>
+        <button class="button-85" onclick="appendOperator('*')">×</button>
+      </div>
+      <div>
+        <button class="button-85" onclick="backspace()">←</button>
+        <button class="button-85" onclick="appendSymbol('0')">0</button>
+        <button class="button-85" onclick="calculate()">=</button>
+        <button class="button-85" onclick="appendOperator('/')">÷</button>
+      </div>
+      <div>
+        <button style="color: red" class="button-85" onclick="clearResult()">
+          C
+        </button>
+        <button
+          style="color: lime"
+          class="button-85"
+          onclick="window.location.href='vs.html'"
+        >
+          Home
+        </button>
+      </div>
+    </div>
+
+    <script>
+      let result = document.getElementById("result");
+      let currentInput = "0";
+      let currentOperator = "";
+      let resetNext = false;
+
+      function appendSymbol(symbol) {
+        if (resetNext) {
+          currentInput = symbol;
+          resetNext = false;
+        } else {
+          if (currentInput === "0") {
+            currentInput = symbol;
+          } else {
+            currentInput += symbol;
+          }
+        }
+        result.innerText = currentInput;
+      }
+
+      function appendOperator(operator) {
+        if (currentOperator) {
+          calculate();
+        }
+        currentOperator = operator;
+        currentInput += " " + operator + " ";
+        result.innerText = currentInput;
+      }
+
+      function calculate() {
+        try {
+          let evaluatedResult = eval(currentInput.replace(/\s/g, ""));
+          result.innerText = evaluatedResult;
+          currentInput = evaluatedResult.toString();
+          currentOperator = "";
+          resetNext = true;
+        } catch (error) {
+          result.innerText = "Error";
+          currentInput = "0";
+          currentOperator = "";
+        }
+      }
+
+      function clearResult() {
+        currentInput = "0";
+        currentOperator = "";
+        result.innerText = currentInput;
+      }
+
+      function backspace() {
+        if (currentInput.length > 1) {
+          currentInput = currentInput.slice(0, -1);
+        } else {
+          currentInput = "0";
+        }
+        result.innerText = currentInput;
+      }
+
+      document.addEventListener("keydown", function (event) {
+        const key = event.key;
+        if (key >= "0" && key <= "9") {
+          appendSymbol(key);
+        } else if (key === "+" || key === "-" || key === "*" || key === "/") {
+          appendOperator(key);
+        } else if (key === "Enter" || key === "=") {
+          event.preventDefault(); // Prevent form submission if the calculator is in a form
+          calculate();
+        } else if (key === "Backspace") {
+          backspace();
+        } else if (key === "Escape" || key.toLowerCase() === "c") {
+          clearResult();
+        }
+      });
+    </script>
+  </body>
+</html>

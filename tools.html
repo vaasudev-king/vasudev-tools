@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Binary Tools </title>
+     <link rel="icon" href="https://cdn.glitch.global/14780529-cce6-4176-8e0b-db06f1a231d1/bin.png?v=1723561889879" type="image/x-icon" />
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        text-align: center;
+        background-color: #f2f2f2;
+        margin: 30px;
+      }
+
+      h1 {
+        margin-bottom: 30px;
+      }
+
+      .big-button-container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        margin-top: 30px;
+      }
+
+      .big-button {
+        margin: 10px;
+        padding: 20px 30px;
+        font-size: 24px;
+        border: none;
+        color: #fff;
+        background-color: #4caf50;
+        border-radius: 30px;
+        cursor: pointer;
+        width: 250px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        transition: background-color 0.3s, transform 0.2s;
+      }
+
+      .big-button:hover {
+        background-color: #45a049;
+        transform: scale(1.05);
+      }
+
+      .big-button:active {
+        background-color: #3e8e41;
+        transform: scale(0.95);
+      }
+
+      .input-container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        margin-top: 30px;
+      }
+
+      .input-textbox {
+        margin: 10px;
+        padding: 8px;
+        font-size: 16px;
+        width: 300px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+      }
+
+      .output-container {
+        margin-top: 30px;
+      }
+
+      .output-title {
+        font-size: 20px;
+        font-weight: bold;
+        margin-bottom: 5px;
+      }
+
+      .output-textbox {
+        margin: 10px;
+        padding: 8px;
+        font-size: 16px;
+        width: 300px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        background-color: #f2f2f2;
+      }
+
+      .clear-button {
+        background-color: #f44336;
+      }
+
+      .copy-button {
+        background-color: #2196f3;
+      }
+
+      .success {
+        color: green;
+        font-weight: bold;
+      }
+
+      .error {
+        color: red;
+        font-weight: bold;
+      }
+      body{
+      background-color: lightgreen;
+      background-image: url('https://wallpaperset.com/w/full/f/b/9/176037.jpg');
+      }
+    </style>
+  </head>
+
+  <body>
+    <h1>Tools by Vaasudev👑</h1>
+    <div class="big-button-container">
+      <button class="big-button" onclick="toggleMode('encoder')">
+        Encoder
+      </button>
+      <button class="big-button" onclick="toggleMode('decoder')">
+        Decoder
+      </button>
+      <br />
+      <button class="big-button" onclick="window.location.href='vs.html'">
+        Main menu
+      </button>
+      <button class="big-button" onclick="exitApp()">Exit</button>
+    </div>
+
+    <div id="encoderContainer" style="display: none">
+      <div class="input-container">
+        <input
+          type="text"
+          class="input-textbox"
+          id="encoderTextInput"
+          placeholder="Enter text to encode"
+          autocomplete="off"
+        />
+      </div>
+      <div class="input-container">
+        <button class="big-button" onclick="encodeText()">Encode</button>
+        <button class="big-button copy-button" onclick="paste(1)">
+          Paste
+        </button>
+      </div>
+      <div class="output-container">
+        <div class="output-title">Binary Output</div>
+        <textarea
+          class="output-textbox"
+          id="binaryOutputWithSpaces"
+          placeholder="Binary output"
+          readonly
+        ></textarea>
+      </div>
+      <div class="input-container">
+        <button class="big-button copy-button" onclick="copyBinaryOutput()">
+          Copy Output
+        </button>
+        <button class="big-button clear-button" onclick="clearEncoderOutputs()">
+          Clear Output
+        </button>
+        <button class="big-button clear-button" onclick="exitApp()">
+          Exit
+        </button>
+      </div>
+    </div>
+
+    <div id="decoderContainer" style="display: none">
+      <div class="input-container">
+        <input
+          type="text"
+          class="input-textbox"
+          id="decoderTextInput"
+          placeholder="Enter binary to decode"
+          autocomplete="off"
+        />
+      </div>
+      <div class="input-container">
+        <button class="big-button" onclick="decodeBinary()">Decode</button>
+        <button class="big-button copy-button" onclick="paste(2)">
+          Paste
+        </button>
+      </div>
+      <div class="output-container">
+        <div class="output-title">Decoded Text</div>
+        <textarea
+          class="output-textbox"
+          id="decodedTextOutput"
+          placeholder="Decoded text"
+          readonly
+        ></textarea>
+      </div>
+      <div class="input-container">
+        <button class="big-button copy-button" onclick="copyDecodedOutput()">
+          Copy Output
+        </button>
+       
+        <button class="big-button clear-button" onclick="clearDecoderOutput()">
+          Clear Output
+        </button>
+        <button class="big-button clear-button" onclick="exitApp()">
+          Exit
+        </button>
+      </div>
+    </div>
+    <h2>More from vaasudev mods:</h2>
+    <p>
+      <b>
+        ⇒Calculator<br />
+        ⇒Strong password genrator free<br />
+        ⇒Color Adder
+      </b>
+    </p>
+
+    <script>
+      var mem=0;
+      let mode = ""; // Global variable to track the current mode
+
+      function toggleMode(newMode) {
+        if (newMode === mode) return; // If the new mode is the same as the current mode, do nothing
+        mode = newMode;
+        if (mode === "encoder") {
+          document.getElementById("encoderContainer").style.display = "block";
+          document.getElementById("decoderContainer").style.display = "none";
+        } else if (mode === "decoder") {
+          document.getElementById("encoderContainer").style.display = "none";
+          document.getElementById("decoderContainer").style.display = "block";
+        }
+      }
+
+      function encodeText() {
+        const textToEncode = document
+          .getElementById("encoderTextInput")
+          .value.trim();
+        if (textToEncode.length === 0) {
+          showError("Please enter text to encode.");
+          return;
+        }
+
+        let binaryWithSpaces = "";
+        for (let i = 0; i < textToEncode.length; i++) {
+          const binaryChar = textToEncode.charCodeAt(i).toString(2);
+          binaryWithSpaces += binaryChar + " ";
+        }
+        document.getElementById("binaryOutputWithSpaces").value =
+          binaryWithSpaces.trim();
+        showSuccess("Text encoded successfully!");
+      }
+
+      function decodeBinary() {
+        const binaryToDecode = document
+          .getElementById("decoderTextInput")
+          .value.trim();
+        if (binaryToDecode.length === 0) {
+          showError("Please enter binary to decode.");
+          return;
+        }
+
+        const binaryArray = binaryToDecode.split(" ");
+        let decodedText = "";
+        for (let i = 0; i < binaryArray.length; i++) {
+          const charCode = parseInt(binaryArray[i], 2);
+          decodedText += String.fromCharCode(charCode);
+        }
+        document.getElementById("decodedTextOutput").value = decodedText;
+        showSuccess("Binary decoded successfully!");
+      }
+
+      function clearEncoderOutputs() {
+        document.getElementById("encoderTextInput").value = "";
+        document.getElementById("binaryOutputWithSpaces").value = "";
+      }
+
+      function clearDecoderOutput() {
+        document.getElementById("decoderTextInput").value = "";
+        document.getElementById("decodedTextOutput").value = "";
+      }
+
+      function exitApp() {
+        mode = ""; // Reset the mode to clear the current state
+        document.getElementById("encoderContainer").style.display = "none";
+        document.getElementById("decoderContainer").style.display = "none";
+        document.getElementById("encoderTextInput").value = "";
+        document.getElementById("binaryOutputWithSpaces").value = "";
+        document.getElementById("decoderTextInput").value = "";
+        document.getElementById("decodedTextOutput").value = "";
+        showSuccess("App exited sucessfully!");
+      }
+
+      function copyTextToClipboard(text) {
+        const textArea = document.createElement("textarea");
+        textArea.value = text;
+        document.body.appendChild(textArea);
+        textArea.select();
+        document.execCommand("copy");
+        document.body.removeChild(textArea);
+      }
+
+      function copyBinaryOutput() {
+        const binaryOutput = document.getElementById(
+          "binaryOutputWithSpaces"
+        ).value;
+        mem=binaryOutput;
+        copyTextToClipboard(binaryOutput);
+        showSuccess("Binary output copied to clipboard!");
+        clearOutputAfterCopy("binaryOutputWithSpaces");
+      }
+
+      function copyDecodedOutput() {
+        const decodedOutput =
+          document.getElementById("decodedTextOutput").value;
+        copyTextToClipboard(decodedOutput);
+        mem=binaryOutput;
+        showSuccess("Decoded text copied to clipboard!");
+        clearOutputAfterCopy("decodedTextOutput");
+      }
+
+      function showSuccess(message) {
+        const successDiv = document.createElement("div");
+        successDiv.className = "success";
+        successDiv.textContent = message;
+        document.body.appendChild(successDiv);
+        setTimeout(() => {
+          document.body.removeChild(successDiv);
+        }, 2000);
+      }
+
+      function showError(message) {
+        const errorDiv = document.createElement("div");
+        errorDiv.className = "error";
+        errorDiv.textContent = message;
+        document.body.appendChild(errorDiv);
+        setTimeout(() => {
+          document.body.removeChild(errorDiv);
+        }, 2000);
+      }
+
+      function clearOutputAfterCopy(outputId) {
+        setTimeout(() => {
+          document.getElementById(outputId).value = "";
+        }, 2000);
+      }
+      function paste(pt){
+        if(mem){
+          if(pt==1){
+            //alert("Encoder Paste:"+mem)
+            document.getElementById("encoderTextInput").value=mem;
+          }else if(pt==2){
+            //alert("Decoder Paste:"+mem)
+            document.getElementById("decoderTextInput").value=mem;
+          }
+        }else{
+          alert("Copy something to paste "+mem+pt);
+        }
+      }
+      
+    </script>
+  </body>
+</html>

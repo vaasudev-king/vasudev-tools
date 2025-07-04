@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Whatsapp Message Sender</title>
+    <link rel="stylesheet" href="w_css.css">
+   <link rel="icon" href="https://cdn.glitch.global/14780529-cce6-4176-8e0b-db06f1a231d1/wa.png?v=1722312436263" type="image/x-icon" />
+</head>
+<body>
+    <div class="login-wrap">
+        <div class="login-html">
+            <div class="login-form">
+              <h1 style="font-size:31px">
+                 <img onclick="alert('Enter mobile number here to send them Whatsapp messages WITHOUT saving their number')" src="https://cdn.glitch.global/14780529-cce6-4176-8e0b-db06f1a231d1/wa.png?v=1722312436263"> Whatsapp Go
+          
+              </h1><div class="group">
+                    <input type="number" id="num" class="input" placeholder="Enter Mobile Number to send message">
+                </div>
+                <div class="group">
+                  <button class="button" onclick="send()"> Send</button>
+                </div>
+            </div>
+        </div>
+    </div>
+<script>
+  
+  alert("Enter mobile number here to send them Whatsapp messages WITHOUT saving their number");
+  function send(){
+    var n=document.getElementById('num').value;
+    var nu="https://wa.me/+91"+n;
+    if (!n){
+      alert("Enter a number!");
+      return;
+    }
+    if (n.length!=10 &&n.length!=12 ){
+      alert("Invalid lenght!");
+      return;
+    }
+      
+    window.open(nu,"_blank");
+    document.getElementById('num').value="";
+  }
+  document.addEventListener('contextmenu', function(e) {
+        e.preventDefault();
+     alert("Right Click Disabled");
+    });
+  document.addEventListener('keydown', function(e) {
+        if (e.key === 'F12' || 
+            (e.ctrlKey && e.shiftKey && (e.key === 'I' || e.key === 'J')) || 
+            (e.ctrlKey && e.key === 'U')) {
+            e.preventDefault();
+            alert(e.key+" key Disabled");
+        }
+    });
+  </script>
+</body>
+</html>

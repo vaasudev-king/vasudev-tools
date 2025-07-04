@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <link rel="icon" href="https://cdn.glitch.global/14780529-cce6-4176-8e0b-db06f1a231d1/logo.png?v=1723561423385" type="image/x-icon" />
+    
+    <style>
+      body {
+        background-color: lightgreen;
+        font-family: Arial, sans-serif;
+        text-align: center;
+        background-image: url("https://wallpaperset.com/w/full/f/b/9/176037.jpg");
+        background-size: cover;
+        /*background-repeat: no-repeat;*/
+      }
+
+      button {
+        display: block;
+        width: 200px;
+        height: 40px;
+        margin: 10px auto;
+        background-color: #007bff;
+        color: rgb(249, 249, 251);
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+      }
+
+      .chp {
+        text-decoration: none;
+        text-align: right;
+        margin-top: 10px;
+        text-align: right;
+        color: red;
+        transition: outline 0.3s ease;
+      }
+      .chp:hover {
+        color: gold;
+        outline: 2px yellow;
+      }
+      button a {
+        text-decoration: none;
+        color: white;
+        display: inline-block;
+        width: 100%;
+        height: 100%;
+        line-height: 40px;
+      }
+
+      button:hover {
+        background-color: #0056b3;
+      }
+
+      #time-container {
+        position: fixed;
+        bottom: 0;
+        right: 0;
+        padding: 10px;
+        background-color: rgba(0, 0, 0, 0.7);
+        color: white;
+        font-family: Arial, sans-serif;
+        font-size: 14px;
+      }
+
+      .subscribe {
+        text-align: right;
+        margin-top: 10px;
+      }
+
+      .subscribe a {
+        text-decoration: none;
+        color: blue;
+        font-size: 14px;
+      }
+
+      .logo {
+        text-align: right;
+        margin-top: 10px;
+      }
+
+      .logo img {
+        border-radius: 50%;
+        cursor: pointer;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="logo">
+      <img
+        src="https://i0.wp.com/bane-tech.com/wp-content/uploads/2015/10/V.png?ssl=1"
+        alt="failed to load"
+        height="60px"
+        width="60px"
+        onclick="window.location.href='https://www.youtube.com/@vasudevmods'"
+      />
+    </div>
+    <div class="chp">
+      <a
+        class="chp"
+        href="https://www.youtube.com/@vasudevmods"
+        title="Help creator by subscribing. Consider subscribing."
+      >
+        <img
+          class="chp"
+          src="https://cdn.glitch.global/14780529-cce6-4176-8e0b-db06f1a231d1/subscribe.png?v=1722233398496"
+          alt="-SUBSCRIBE-"
+          height="50px"
+          width="100px"
+        />
+      </a>
+    </div>
+    <h1>VAASUDEV'S APPS</h1>
+    <p>Click them to open desired app</p>
+    <button onclick="window.location.href='homepage_v1.html'">Reload</button>
+    <button onclick="window.location.href='tools.html'">Binary</button>
+    <button onclick="window.location.href='Password_Genrator.html'">
+      Strong Password Generator
+    </button>
+    <button onclick="window.location.href='calcvs.html'">Calculator</button>
+    <button onclick="window.location.href='naruto-quiz.html'">Quiz</button>
+    <!--button onclick="window.location.href='unicode.html'">Unicode</button>
+    <!--button onclick="window.location.href='color.html'">Color Adder</button-->
+    <button onclick="window.location.href='vs.html'">Change Version</button>
+    <button onclick="window.location.href='search.html'">
+      Search on Google
+    </button>
+    <button onclick="window.location.href='dare.html'">Dare</button>
+    <button onclick="window.location.href='App_list.html'">App List</button>
+    <button onclick="window.location.href='whatsapp.html'">Whatsapp</button>
+    <button onclick="window.location.href='https://youtube.com/@vasudevmods'">
+      Support Developer
+    </button>
+    <div id="time-container"></div>
+    <script>
+      function updateTime() {
+        const now = new Date();
+        let hours = now.getHours();
+        const minutes = String(now.getMinutes()).padStart(2, "0");
+        const seconds = String(now.getSeconds()).padStart(2, "0");
+        const ampm = hours >= 12 ? "PM" : "AM";
+        hours = hours % 12;
+        hours = hours ? hours : 12; // The hour '0' should be '12'
+        const currentTime = `${hours}:${minutes}:${seconds} ${ampm}`;
+        document.getElementById("time-container").textContent = currentTime;
+      }
+      setInterval(updateTime, 1000);
+      updateTime();
+      document.addEventListener('contextmenu', function(e) {
+        e.preventDefault();
+     alert("Right Click Disabled");
+    });
+  document.addEventListener('keydown', function(e) {
+        if (e.key === 'F12' || 
+            (e.ctrlKey && e.shiftKey && (e.key === 'I' || e.key === 'J')) || 
+            (e.ctrlKey && e.key === 'U')) {
+            e.preventDefault();
+            alert(e.key+" key Disabled");
+        }
+    });
+    </script>
+  </body>
+</html>

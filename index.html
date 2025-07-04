@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <link rel="stylesheet" type="text/css" href="kurama.css" />
+    <link rel="icon" href="https://cdn.glitch.global/14780529-cce6-4176-8e0b-db06f1a231d1/logo.png?v=1723561423385" type="image/x-icon" />
+    <style>
+      .logo {
+        text-align: right;
+        margin-top: 10px;
+      }
+.button-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 10px;
+  flex-direction: column;
+}
+
+      .logo img {
+        border-radius: 50%;
+        cursor: pointer;
+      }
+      h1,
+      p {
+        color: greenyellow;
+      }
+      body {
+        font-family: Arial, sans-serif;
+        background-color: #f2f2f2;
+        color: #333;
+        margin: 0;
+        padding: 20px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        background-image: url("https://cdn.glitch.global/14780529-cce6-4176-8e0b-db06f1a231d1/bg.gif?v=1702136866421");
+      }
+      .button-85 {
+        width: 200px;
+        height: 40px;
+        margin: 10px auto;
+        padding: 0.6em 2em;
+        border: none;
+        outline: none;
+        color: rgb(255, 255, 255);
+        background: #111;
+        cursor: pointer;
+        position: relative;
+        z-index: 0;
+        border-radius: 10px;
+        user-select: none;
+        -webkit-user-select: none;
+        touch-action: manipulation;
+      }
+
+      .button-85:before {
+        content: "";
+        background: linear-gradient(
+          45deg,
+          #ff0000,
+          #ff7300,
+          #fffb00,
+          #48ff00,
+          #00ffd5,
+          #002bff,
+          #7a00ff,
+          #ff00c8,
+          #ff0000
+        );
+        position: absolute;
+        top: -2px;
+        left: -2px;
+        background-size: 400%;
+        z-index: -1;
+        filter: blur(5px);
+        -webkit-filter: blur(5px);
+        width: calc(100% + 4px);
+        height: calc(100% + 4px);
+        animation: glowing-button-85 20s linear infinite;
+        transition: opacity 0.3s ease-in-out;
+        border-radius: 10px;
+      }
+
+      @keyframes glowing-button-85 {
+        0% {
+          background-position: 0 0;
+        }
+        50% {
+          background-position: 400% 0;
+        }
+        100% {
+          background-position: 0 0;
+        }
+      }
+
+      .button-85:after {
+        z-index: -1;
+        content: "";
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        background: #222;
+        left: 0;
+        top: 0;
+        border-radius: 10px;
+      }
+      /* Clicking effect */
+      .button-85:active {
+        transform: scale(0.95);
+        box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+        color: red;
+      }
+      .button-85:hover {
+  box-shadow: 0 0 20px 5px rgba(255, 255, 0, 0.6); /* extra soft yellow glow */
+  transform: scale(1.03); /* gentle zoom on hover */
+  color: #fff700; /* brighter text */
+  transition: all 0.3s ease-in-out;
+}
+
+      
+      .button-85:hover:before {
+  filter: blur(8px); /* more blur = wider glow */
+  opacity: 1;        /* fully visible glow */
+  background-size: 5000%; /* slightly more dynamic motion */
+}
+      
+
+       .chp {
+        text-decoration: none;
+        text-align: right;
+        margin-top: 10px;
+        text-align: right;
+        color: red;
+        transition: outline 0.3s ease;
+      }
+      .chp:hover {
+        color: gold;
+        outline: 2px yellow;
+      }
+      @keyframes spin {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+    
+
+        .spin-image {
+          height:100px;
+          width:100px;
+          margin-right:20px;
+            animation: spin 3s linear infinite;
+        }
+    
+    </style>
+  </head>
+  <body>
+    <div class="logo">
+      <img
+        src="https://i0.wp.com/bane-tech.com/wp-content/uploads/2015/10/V.png?ssl=1"
+        alt="failed to load"
+        height="60px"
+        width="60px"
+        onclick="window.location.href='https://www.youtube.com/@vasudevmods'"
+      />
+    </div>
+    <p class="chp" style="text-align: right">
+      <a class="chp"
+        href="https://www.youtube.com/@vasudevmods"
+        align="right"
+        title="Help creator by subscribing. consider subscribing."
+        >Subscribe</a
+      >
+    </p>
+    <h1>VAASUDEV'S APPS</h1>
+    <p>Click them to open desired app</p>
+    <div class="button-container">
+    <button class="button-85" onclick="window.location.href='index.html'">
+      Reload
+    </button>
+    <button class="button-85" onclick="window.location.href='tools.html'">
+      Binary
+    </button>
+    <button class="button-85" onclick="window.location.href='naruto-quiz.html'">
+      Quiz
+    </button>
+    <button class="button-85" onclick="window.location.href='App_list.html'">
+      App list
+    </button>
+    <button class="button-85" onclick="window.location.href='search.html'">
+      Search on Google
+    </button>
+    <button
+      class="button-85"
+      onclick="window.location.href='Password_Genrator.html'"
+    >
+      Strong Password Generator
+    </button>
+    <button class="button-85" onclick="window.location.href='calcvs.html'">
+      Calculator
+    </button>
+    <!--button class="button-85" onclick="window.location.href='unicode.html'">
+      Unicode
+    </button>
+    <!--button class="button-85"  onclick="window.location.href='color.html'">Color adder</button-->
+    <button class="button-85" onclick="window.location.href='vs.html'">
+      Change Version
+    </button>
+    <button class="button-85" onclick="window.location.href='whatsapp.html'">Whatsapp</button>
+    <button class="button-85" onclick="window.location.href='dare.html'">
+      Dare
+    </button>
+    <button
+      class="button-85"
+      onclick="window.location.href='https://youtube.com/@vasudevmods'"
+    >
+      Support Devloper
+    </button>
+    </div>
+    <br/>
+    <div class="ms" >
+      <a onclick="sha()">
+    <img src="https://cdn.glitch.global/f629a358-07e1-453a-bc2c-16f15fd18410/sharingan.png?v=1723781467889" class="spin-image"></img>
+   <img src="https://cdn.glitch.global/f629a358-07e1-453a-bc2c-16f15fd18410/Mangekyou_Sharingan_Itachi.svg.png?v=1723781468828" class="spin-image"> </img>
+    <img src="https://cdn.glitch.global/f629a358-07e1-453a-bc2c-16f15fd18410/Mangekyou_Sharingan_Kakashi.svg.png?v=1723781469732" class="spin-image"></img>      
+    <img src="https://cdn.glitch.global/f629a358-07e1-453a-bc2c-16f15fd18410/Mangekyou_Sharingan_Sasuke.png?v=1723783054983" class="spin-image"></img>      
+</a>
+</div>
+<audio
+      id="sha"
+      src="https://cdn.glitch.global/14780529-cce6-4176-8e0b-db06f1a231d1/sharingan.mp3?v=1724043784839"
+    ></audio>
+<br/>
+<script>
+function sha(){
+  document.getElementById('sha').play();
+}
+  
+  document.addEventListener('contextmenu', function(e) {
+        e.preventDefault();
+     alert("Right Click Disabled");
+    });
+  document.addEventListener('keydown', function(e) {
+        if (e.key === 'F12' || 
+            (e.ctrlKey && e.shiftKey && (e.key === 'I' || e.key === 'J')) || 
+            (e.ctrlKey && e.key === 'U')) {
+            e.preventDefault();
+            alert(e.key+" key Disabled");
+        }
+    });
+</script>
+  </body>
+</html>
