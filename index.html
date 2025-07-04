@@ -149,7 +149,16 @@
           margin-right:20px;
             animation: spin 3s linear infinite;
         }
-    
+    #vat.ninjaseal {
+  animation: sealflash 0.6s ease-in-out 2;
+}
+
+@keyframes sealflash {
+  0% { color: red; transform: scale(1.1); }
+  50% { color: gold; transform: scale(1.3); }
+  100% { color: red; transform: scale(1.1); }
+}
+
     </style>
   </head>
   <body>
@@ -238,11 +247,14 @@ function sha(){
   const originalText = h1.textContent;
 
   h1.textContent = str;
+  h1.classList.add("ninjaseal");
 
   setTimeout(() => {
     h1.textContent = originalText;
-  }, 3000); // 3 seconds later
+    h1.classList.remove("ninjaseal");
+  }, 3000);
 }
+
   document.addEventListener('contextmenu', function(e) {
         e.preventDefault();
      ninjaseal("Right Click Disabled");
