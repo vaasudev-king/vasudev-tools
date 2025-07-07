@@ -1,31 +1,35 @@
-import { neon } from '@netlify/neon'
-const sql = neon()
+const fs = require("fs");
+const path = require("path");
 
-export async function handler(event) {
+const filePath = path.join(__dirname, "ninjas.json");
+
+exports.handler = async function (event) {
   if (event.httpMethod !== "POST") {
     return {
       statusCode: 405,
-      body: "Method Not Allowed"
-    }
+      body: JSON.stringify({ message: "Method Not Allowed" }),
+    };
   }
 
-  const { name, nickname, gender } = JSON.parse(event.body)
-
   try {
-    const [inserted] = await sql`
-      INSERT INTO ninjas (name, nickname, gender)
-      VALUES (${name}, ${nickname}, ${gender})
-      RETURNING *;
-    `
+    const ninja = JSON.parse(event.body);
+
+    const data = fs.existsSync(filePath)
+      ? JSON.parse(fs.readFileSync(filePath, "utf8"))
+      : [];
+
+    data.push(ninja);
+
+    fs.writeFileSync(filePath, JSON.stringify(data, null, 2));
 
     return {
       statusCode: 200,
-      body: JSON.stringify(inserted)
-    }
+      body: JSON.stringify({ message: "Ninja added successfully!" }),
+    };
   } catch (err) {
     return {
       statusCode: 500,
-      body: JSON.stringify({ error: err.message })
-    }
+      body: JSON.stringify({ error: "Failed to save ninja." }),
+    };
   }
-}
+};
