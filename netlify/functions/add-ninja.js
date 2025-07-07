@@ -1,9 +1,7 @@
 const fs = require("fs");
 const path = require("path");
 
-const filePath = path.join(__dirname, "ninjas.json");
-
-exports.handler = async function (event) {
+exports.handler = async (event) => {
   if (event.httpMethod !== "POST") {
     return {
       statusCode: 405,
@@ -11,25 +9,15 @@ exports.handler = async function (event) {
     };
   }
 
-  try {
-    const ninja = JSON.parse(event.body);
+  const { name, nickname, gender } = JSON.parse(event.body);
+  const filePath = path.join(__dirname, "../../ninjas.json");
+  const data = fs.existsSync(filePath) ? JSON.parse(fs.readFileSync(filePath)) : [];
 
-    const data = fs.existsSync(filePath)
-      ? JSON.parse(fs.readFileSync(filePath, "utf8"))
-      : [];
+  data.push({ name, nickname, gender });
+  fs.writeFileSync(filePath, JSON.stringify(data, null, 2));
 
-    data.push(ninja);
-
-    fs.writeFileSync(filePath, JSON.stringify(data, null, 2));
-
-    return {
-      statusCode: 200,
-      body: JSON.stringify({ message: "Ninja added successfully!" }),
-    };
-  } catch (err) {
-    return {
-      statusCode: 500,
-      body: JSON.stringify({ error: "Failed to save ninja." }),
-    };
-  }
+  return {
+    statusCode: 200,
+    body: JSON.stringify({ message: "Ninja added!" }),
+  };
 };
