@@ -1,36 +1,111 @@
-<!doctype html>
-<body>
-<h2>Add Ninja to Database 🍥</h2>
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Add Ninja</title>
+    <style>
+      body {
+        font-family: Arial;
+        background: #000;
+        color: white;
+        text-align: center;
+        padding: 20px;
+      }
+      input, button {
+        padding: 10px;
+        margin: 5px;
+        border-radius: 8px;
+      }
+      #message {
+        color: lime;
+        font-weight: bold;
+        margin: 10px 0;
+      }
+      table {
+        margin-top: 20px;
+        width: 100%;
+        border-collapse: collapse;
+        color: white;
+      }
+      th, td {
+        border: 1px solid limegreen;
+        padding: 10px;
+      }
+      th {
+        background: #111;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>🌟 Add New Ninja</h1>
+    <form id="ninjaForm">
+      <input type="text" id="name" placeholder="Name" required />
+      <input type="text" id="nickname" placeholder="Nickname" required />
+      <input type="text" id="gender" placeholder="Gender" required />
+      <button type="submit">Add Ninja</button>
+    </form>
 
-<form onsubmit="submitForm(event)">
-  <input type="text" id="name" placeholder="Full Name" required><br>
-  <input type="text" id="nickname" placeholder="Nickname"><br>
-  <select id="gender" required>
-    <option value="">Select Gender</option>
-    <option>Male</option>
-    <option>Female</option>
-    <option>Other</option>
-  </select><br>
-  <button type="submit">Add Ninja 🥷</button>
-</form>
+    <div id="message"></div>
 
-<pre id="response"></pre>
+    <h2>📜 Ninja Roster</h2>
+    <table id="ninjaTable">
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Nickname</th>
+          <th>Gender</th>
+        </tr>
+      </thead>
+      <tbody id="ninjaBody">
+        <!-- Filled dynamically -->
+      </tbody>
+    </table>
 
-<script>
-async function submitForm(e) {
-  e.preventDefault()
-  const name = document.getElementById("name").value
-  const nickname = document.getElementById("nickname").value
-  const gender = document.getElementById("gender").value
+    <script>
+      const form = document.getElementById("ninjaForm");
+      const message = document.getElementById("message");
+      const ninjaBody = document.getElementById("ninjaBody");
 
-  const res = await fetch("/.netlify/functions/add-ninja", {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ name, nickname, gender })
-  })
+      // 💾 Load ninja data from function
+      async function loadNinjas() {
+        const res = await fetch("/.netlify/functions/get-ninjas");
+        const data = await res.json();
+        ninjaBody.innerHTML = "";
+        data.forEach(n => {
+          const row = `<tr>
+            <td>${n.name}</td>
+            <td>${n.nickname}</td>
+            <td>${n.gender}</td>
+          </tr>`;
+          ninjaBody.innerHTML += row;
+        });
+      }
 
-  const data = await res.json()
-  document.getElementById("response").textContent = JSON.stringify(data, null, 2)
-}
-</script>
-</body>
+      // 📨 Form submit handler
+      form.addEventListener("submit", async e => {
+        e.preventDefault();
+        const ninja = {
+          name: document.getElementById("name").value,
+          nickname: document.getElementById("nickname").value,
+          gender: document.getElementById("gender").value,
+        };
+
+        const res = await fetch("/.netlify/functions/add-ninja", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(ninja),
+        });
+
+        if (res.ok) {
+          message.textContent = "✅ Ninja added successfully!";
+          form.reset();
+          loadNinjas();
+        } else {
+          message.textContent = "❌ Failed to add ninja!";
+        }
+      });
+
+      // 🔄 Load on page load
+      loadNinjas();
+    </script>
+  </body>
+</html>
