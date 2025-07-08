@@ -1,21 +1,32 @@
 <html>
-  <style>
+  <head>
+    <style>
+      body {
+        background-image: url('https://cdn.glitch.global/14780529-cce6-4176-8e0b-db06f1a231d1/gif%20(1).gif?v=1723384208781');
+        background-size: cover;
+        background-repeat: no-repeat;
+        background-position: center center;
+        height: 100vh;
+        margin: 0;
+        display: flex;
+        justify-content: center; /* center horizontally */
+        align-items: center;     /* center vertically */
+        text-align: center;
+      }
 
- body {
-  background-image: url('https://cdn.glitch.global/14780529-cce6-4176-8e0b-db06f1a231d1/gif%20(1).gif?v=1723384208781');
-  background-size: cover;            /* ensures it covers entire screen */
-  background-repeat: no-repeat;      /* no tiling */
-  background-position: center center;/* center it */
-  height: 100vh;                     /* make sure body fills screen */
-  margin: 0;                         /* remove default spacing */
-}
+      h1 {
+        color: red;
+        font-size: 2em;
+      }
 
-
-    }
-  </style>
+      marquee {
+        width: fit-content;
+      }
+    </style>
+  </head>
   <body>
-    <marquee direction="up" height="99%" hspace="20" vspace="10">
-      <h1 style="color: red">Under Development state. Stay tuned</h1>
+    <marquee direction="up" height="200">
+      <h1>Under Development state. Stay tuned</h1>
     </marquee>
   </body>
 </html>
