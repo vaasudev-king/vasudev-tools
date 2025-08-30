@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Z Encryption Jutsu</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      background-color: lightgreen;
+      margin: 30px;
+    }
+    textarea {
+      width: 90vw;
+      height: 150px;
+      background-color: lightgoldenrodyellow;
+      font-size: 18px;
+      padding: 10px;
+      border-radius: 10px;
+    }
+    button {
+      margin: 10px;
+      padding: 20px 30px;
+      font-size: 24px;
+      border: none;
+      color: #fff;
+      background-color: #4caf50;
+      border-radius: 30px;
+      cursor: pointer;
+      width: 250px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      transition: background-color 0.3s, transform 0.2s;
+    }
+    button:hover {
+      background-color: #45a049;
+      transform: scale(1.05);
+    }
+    button:active {
+      background-color: #3e8e41;
+      transform: scale(0.95);
+    }
+  </style>
+</head>
+<body>
+  <h1>Z Encryption Jutsu</h1>
+  
+  <textarea id="ip" placeholder="Enter your text here..."></textarea><br><br>
+  <button onclick="tr()">Z-jutsu</button><br><br>
+  
+  <textarea id="op" placeholder="Encrypted text will appear here..."></textarea><br><br>
+  <button onclick="cp()">Copy</button> 
+  
+  <script>
+    // Translation (Z-Jutsu)
+    function tr() {
+      const inputText = document.getElementById('ip').value;
+      let result = '';
+
+      for (let i = 0; i < inputText.length; i++) {
+        result += inputText[i];
+        if ((i + 1) % 2 === 0 && i < inputText.length - 1) {
+          if (/[a-zA-Z]/.test(inputText[i])) {
+            result += 'z';
+          }
+        }
+      }
+      document.getElementById('op').value = result;
+    }
+
+    // Copy function
+    function cp() {
+      const output = document.getElementById('op');
+      output.select();
+      output.setSelectionRange(0, 99999); // for mobile
+      document.execCommand("copy");
+      alert("Copied to clipboard! ✨");
+    }
+  </script>
+</body>
+</html>
