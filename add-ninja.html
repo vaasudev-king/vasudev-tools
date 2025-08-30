@@ -1,111 +1,361 @@
 <!DOCTYPE html>
-<html>
-  <head>
-    <title>Add Ninja</title>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ninja Roster with JSON Storage</title>
     <style>
-      body {
-        font-family: Arial;
-        background: #000;
-        color: white;
-        text-align: center;
-        padding: 20px;
-      }
-      input, button {
-        padding: 10px;
-        margin: 5px;
-        border-radius: 8px;
-      }
-      #message {
-        color: lime;
-        font-weight: bold;
-        margin: 10px 0;
-      }
-      table {
-        margin-top: 20px;
-        width: 100%;
-        border-collapse: collapse;
-        color: white;
-      }
-      th, td {
-        border: 1px solid limegreen;
-        padding: 10px;
-      }
-      th {
-        background: #111;
-      }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+            color: white;
+            text-align: center;
+            padding: 20px;
+            min-height: 100vh;
+        }
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: rgba(0, 20, 30, 0.8);
+            padding: 25px;
+            border-radius: 15px;
+            box-shadow: 0 0 20px rgba(0, 255, 100, 0.3);
+        }
+        h1 {
+            color: #4eff4e;
+            text-shadow: 0 0 10px rgba(0, 255, 100, 0.7);
+            margin-bottom: 25px;
+        }
+        h2 {
+            color: #4eff9b;
+            border-bottom: 2px solid limegreen;
+            padding-bottom: 10px;
+            margin-top: 30px;
+        }
+        .form-container {
+            background: rgba(0, 30, 40, 0.9);
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 25px;
+            box-shadow: 0 0 15px rgba(0, 200, 83, 0.2);
+        }
+        .input-group {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 15px;
+        }
+        input {
+            padding: 12px 15px;
+            border-radius: 8px;
+            border: 2px solid #2c5364;
+            background: #0c1e26;
+            color: white;
+            width: 200px;
+            transition: all 0.3s;
+        }
+        input:focus {
+            border-color: #4eff4e;
+            box-shadow: 0 0 10px rgba(0, 255, 100, 0.5);
+            outline: none;
+        }
+        button {
+            background: linear-gradient(to right, #0f9b0f, #00c853);
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.3s;
+            margin: 5px;
+        }
+        button:hover {
+            background: linear-gradient(to right, #00c853, #0f9b0f);
+            box-shadow: 0 0 15px rgba(0, 255, 100, 0.5);
+            transform: translateY(-2px);
+        }
+        #clearBtn {
+            background: linear-gradient(to right, #b91d1d, #ff4e4e);
+        }
+        #clearBtn:hover {
+            background: linear-gradient(to right, #ff4e4e, #b91d1d);
+            box-shadow: 0 0 15px rgba(255, 78, 78, 0.5);
+        }
+        #message {
+            color: #4eff4e;
+            font-weight: bold;
+            margin: 15px 0;
+            min-height: 24px;
+        }
+        table {
+            margin: 20px auto;
+            width: 100%;
+            border-collapse: collapse;
+            background: rgba(0, 20, 30, 0.8);
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 0 15px rgba(0, 200, 83, 0.2);
+        }
+        th, td {
+            border: 1px solid #2c5364;
+            padding: 15px;
+            text-align: left;
+        }
+        th {
+            background: linear-gradient(to bottom, #0f2027, #203a43);
+            color: #4eff9b;
+            font-weight: bold;
+            text-align: center;
+        }
+        tr:nth-child(even) {
+            background: rgba(0, 30, 40, 0.5);
+        }
+        tr:hover {
+            background: rgba(0, 40, 50, 0.7);
+        }
+        .actions {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+        }
+        .actions button {
+            padding: 8px 15px;
+            font-size: 14px;
+        }
+        .footer {
+            margin-top: 30px;
+            color: #4eff9b;
+            font-size: 14px;
+        }
+        .export-import {
+            margin: 20px 0;
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+        @media (max-width: 600px) {
+            .input-group {
+                flex-direction: column;
+                align-items: center;
+            }
+            input {
+                width: 80%;
+            }
+            th, td {
+                padding: 10px 5px;
+            }
+        }
     </style>
-  </head>
-  <body>
-    <h1>🌟 Add New Ninja</h1>
-    <form id="ninjaForm">
-      <input type="text" id="name" placeholder="Name" required />
-      <input type="text" id="nickname" placeholder="Nickname" required />
-      <input type="text" id="gender" placeholder="Gender" required />
-      <button type="submit">Add Ninja</button>
-    </form>
+</head>
+<body>
+    <div class="container">
+        <h1>🌟 Ninja Roster Manager</h1>
+        
+        <div class="form-container">
+            <h2>Add New Ninja</h2>
+            <form id="ninjaForm">
+                <div class="input-group">
+                    <input type="text" id="name" placeholder="Name" required>
+                    <input type="text" id="nickname" placeholder="Nickname" required>
+                    <input type="text" id="gender" placeholder="Gender" required>
+                </div>
+                <button type="submit">Add Ninja</button>
+            </form>
+            <div id="message"></div>
+        </div>
 
-    <div id="message"></div>
+        <div class="export-import">
+            <button id="exportBtn">Export Ninjas to JSON</button>
+            <button id="importBtn">Import Ninjas from JSON</button>
+            <input type="file" id="importFile" accept=".json" style="display:none">
+            <button id="clearBtn">Clear All Ninjas</button>
+        </div>
 
-    <h2>📜 Ninja Roster</h2>
-    <table id="ninjaTable">
-      <thead>
-        <tr>
-          <th>Name</th>
-          <th>Nickname</th>
-          <th>Gender</th>
-        </tr>
-      </thead>
-      <tbody id="ninjaBody">
-        <!-- Filled dynamically -->
-      </tbody>
-    </table>
+        <h2>📜 Ninja Roster</h2>
+        <table id="ninjaTable">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Nickname</th>
+                    <th>Gender</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody id="ninjaBody">
+                <!-- Filled dynamically -->
+            </tbody>
+        </table>
+        
+        <div class="footer">
+            <p>Ninja data is stored in your browser's local storage</p>
+        </div>
+    </div>
 
     <script>
-      const form = document.getElementById("ninjaForm");
-      const message = document.getElementById("message");
-      const ninjaBody = document.getElementById("ninjaBody");
+        // DOM elements
+        const ninjaForm = document.getElementById('ninjaForm');
+        const messageDiv = document.getElementById('message');
+        const ninjaBody = document.getElementById('ninjaBody');
+        const exportBtn = document.getElementById('exportBtn');
+        const importBtn = document.getElementById('importBtn');
+        const importFile = document.getElementById('importFile');
+        const clearBtn = document.getElementById('clearBtn');
 
-      // 💾 Load ninja data from function
-      async function loadNinjas() {
-        const res = await fetch("/.netlify/functions/get-ninjas");
-        const data = await res.json();
-        ninjaBody.innerHTML = "";
-        data.forEach(n => {
-          const row = `<tr>
-            <td>${n.name}</td>
-            <td>${n.nickname}</td>
-            <td>${n.gender}</td>
-          </tr>`;
-          ninjaBody.innerHTML += row;
-        });
-      }
+        // Initialize ninjas array from localStorage or create empty array
+        let ninjas = JSON.parse(localStorage.getItem('ninjas')) || [];
 
-      // 📨 Form submit handler
-      form.addEventListener("submit", async e => {
-        e.preventDefault();
-        const ninja = {
-          name: document.getElementById("name").value,
-          nickname: document.getElementById("nickname").value,
-          gender: document.getElementById("gender").value,
-        };
-
-        const res = await fetch("/.netlify/functions/add-ninja", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(ninja),
-        });
-
-        if (res.ok) {
-          message.textContent = "✅ Ninja added successfully!";
-          form.reset();
-          loadNinjas();
-        } else {
-          message.textContent = "❌ Failed to add ninja!";
+        // Display message function
+        function showMessage(msg, isError = false) {
+            messageDiv.textContent = msg;
+            messageDiv.style.color = isError ? '#ff4e4e' : '#4eff4e';
+            setTimeout(() => {
+                messageDiv.textContent = '';
+            }, 3000);
         }
-      });
 
-      // 🔄 Load on page load
-      loadNinjas();
+        // Add ninja to the list
+        function addNinja(event) {
+            event.preventDefault();
+            
+            const name = document.getElementById('name').value.trim();
+            const nickname = document.getElementById('nickname').value.trim();
+            const gender = document.getElementById('gender').value.trim();
+            
+            if (!name || !nickname || !gender) {
+                showMessage('Please fill in all fields', true);
+                return;
+            }
+            
+            const newNinja = {
+                id: Date.now(), // unique ID
+                name,
+                nickname,
+                gender
+            };
+            
+            ninjas.push(newNinja);
+            saveNinjas();
+            displayNinjas();
+            ninjaForm.reset();
+            
+            showMessage(`Ninja ${name} added successfully!`);
+        }
+
+        // Delete a ninja
+        function deleteNinja(id) {
+            if (confirm('Are you sure you want to delete this ninja?')) {
+                ninjas = ninjas.filter(ninja => ninja.id !== id);
+                saveNinjas();
+                displayNinjas();
+                showMessage('Ninja deleted successfully');
+            }
+        }
+
+        // Save ninjas to localStorage
+        function saveNinjas() {
+            localStorage.setItem('ninjas', JSON.stringify(ninjas));
+        }
+
+        // Display all ninjas in the table
+        function displayNinjas() {
+            if (ninjas.length === 0) {
+                ninjaBody.innerHTML = '<tr><td colspan="4" style="text-align: center;">No ninjas found. Add some using the form above!</td></tr>';
+                return;
+            }
+            
+            ninjaBody.innerHTML = ninjas.map(ninja => `
+                <tr>
+                    <td>${ninja.name}</td>
+                    <td>${ninja.nickname}</td>
+                    <td>${ninja.gender}</td>
+                    <td class="actions">
+                        <button onclick="deleteNinja(${ninja.id})">Delete</button>
+                    </td>
+                </tr>
+            `).join('');
+        }
+
+        // Export ninjas to JSON file
+        function exportNinjas() {
+            if (ninjas.length === 0) {
+                showMessage('No ninjas to export', true);
+                return;
+            }
+            
+            const dataStr = JSON.stringify(ninjas, null, 2);
+            const dataUri = 'data:application/json;charset=utf-8,'+ encodeURIComponent(dataStr);
+            
+            const exportFileDefaultName = 'ninjas.json';
+            
+            const linkElement = document.createElement('a');
+            linkElement.setAttribute('href', dataUri);
+            linkElement.setAttribute('download', exportFileDefaultName);
+            linkElement.click();
+            
+            showMessage('Ninjas exported successfully!');
+        }
+
+        // Import ninjas from JSON file
+        function importNinjas(event) {
+            const file = event.target.files[0];
+            if (!file) return;
+            
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                try {
+                    const importedNinjas = JSON.parse(e.target.result);
+                    
+                    if (!Array.isArray(importedNinjas)) {
+                        throw new Error('Invalid JSON format');
+                    }
+                    
+                    // Add unique IDs to imported ninjas if they don't have them
+                    importedNinjas.forEach(ninja => {
+                        if (!ninja.id) ninja.id = Date.now() + Math.floor(Math.random() * 1000);
+                    });
+                    
+                    ninjas = importedNinjas;
+                    saveNinjas();
+                    displayNinjas();
+                    
+                    showMessage('Ninjas imported successfully!');
+                } catch (error) {
+                    showMessage('Error importing JSON file: ' + error.message, true);
+                }
+            };
+            reader.readAsText(file);
+            
+            // Reset the file input
+            importFile.value = '';
+        }
+
+        // Clear all ninjas
+        function clearAllNinjas() {
+            if (ninjas.length === 0) {
+                showMessage('No ninjas to clear', true);
+                return;
+            }
+            
+            if (confirm('Are you sure you want to delete ALL ninjas? This cannot be undone.')) {
+                ninjas = [];
+                saveNinjas();
+                displayNinjas();
+                showMessage('All ninjas cleared successfully');
+            }
+        }
+
+        // Event listeners
+        ninjaForm.addEventListener('submit', addNinja);
+        exportBtn.addEventListener('click', exportNinjas);
+        importBtn.addEventListener('click', () => importFile.click());
+        importFile.addEventListener('change', importNinjas);
+        clearBtn.addEventListener('click', clearAllNinjas);
+
+        // Initial display of ninjas
+        displayNinjas();
     </script>
-  </body>
+</body>
 </html>
