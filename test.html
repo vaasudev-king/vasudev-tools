@@ -1,12 +1,237 @@
 <!DOCTYPE html>
-<html>
-  <head>
-    <title>Taboo</title>
-  </head>
-  <body>
-  <h1> You reached somewhere you aren't supposed to 😜😜</h1>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Taboo Access 😜</title>
+    <style>
+        @font-face {
+            font-family: 'iOS18Emoji';
+            src: url('https://files.catbox.moe/4v0mc5.ttf') format('truetype');
+        }
+
+        * {
+            font-family: 'iOS18Emoji', sans-serif !important;
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            color: #fff;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 20px;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 800px;
+            background: rgba(0, 0, 0, 0.7);
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 0 40px rgba(255, 0, 128, 0.4);
+            position: relative;
+            overflow: hidden;
+            border: 2px solid #ff0080;
+        }
+
+        h1 {
+            font-size: 2.8rem;
+            margin-bottom: 30px;
+            color: #ff0080;
+            text-shadow: 0 0 15px rgba(255, 0, 128, 0.6);
+            animation: pulse 2s infinite;
+        }
+
+        p {
+            font-size: 1.4rem;
+            margin-bottom: 25px;
+            line-height: 1.6;
+        }
+
+        .emoji-container {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin: 30px 0;
+        }
+
+        .emoji {
+            font-size: 3rem;
+            animation: float 3s ease-in-out infinite;
+            cursor: pointer;
+            transition: transform 0.3s;
+        }
+
+        .emoji:hover {
+            transform: scale(1.3) rotate(15deg);
+        }
+
+        .warning-sign {
+            font-size: 5rem;
+            margin: 20px 0;
+            animation: shake 1.5s ease-in-out infinite;
+        }
+
+        .secret-code {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 15px;
+            border-radius: 10px;
+            margin: 20px 0;
+            font-size: 1.2rem;
+            letter-spacing: 2px;
+        }
+
+        .buttons {
+            display: flex;
+            gap: 20px;
+            margin-top: 30px;
+        }
+
+        button {
+            background: linear-gradient(to right, #ff0080, #ff00aa);
+            border: none;
+            padding: 15px 30px;
+            border-radius: 50px;
+            color: white;
+            font-size: 1.2rem;
+            cursor: pointer;
+            transition: all 0.3s;
+            box-shadow: 0 5px 15px rgba(255, 0, 128, 0.4);
+        }
+
+        button:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(255, 0, 128, 0.6);
+        }
+
+        button#leave {
+            background: linear-gradient(to right, #00b4db, #0083b0);
+        }
+
+        .confetti {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            background-color: #ff0080;
+            opacity: 0.7;
+            border-radius: 50%;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-15px); }
+            100% { transform: translateY(0px); }
+        }
+
+        @keyframes shake {
+            0% { transform: rotate(0deg); }
+            25% { transform: rotate(10deg); }
+            50% { transform: rotate(-10deg); }
+            75% { transform: rotate(5deg); }
+            100% { transform: rotate(0deg); }
+        }
+
+        @media (max-width: 600px) {
+            h1 { font-size: 2rem; }
+            p { font-size: 1.1rem; }
+            .container { padding: 20px; }
+            .buttons { flex-direction: column; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="warning-sign">🚫</div>
+        <h1>You reached somewhere you aren't supposed to 😜😜</h1>
+        <p>This area is strictly forbidden for ordinary users! How did you even get here?</p>
+        
+        <div class="emoji-container">
+            <div class="emoji">😎</div>
+            <div class="emoji">🤫</div>
+            <div class="emoji">🕵️</div>
+            <div class="emoji">👀</div>
+            <div class="emoji">🙈</div>
+        </div>
+        
+        <p>Maybe you're a hacker? Or just got lucky?</p>
+        
+        <div class="secret-code">
+            <!-- Not so secret code -->
+            <p>Secret Code: T4B00-4CC3SS-D3N13D</p>
+        </div>
+        
+        <div class="buttons">
+            <button id="stay">I'm Staying! 😈</button>
+            <button id="leave">I'll Leave 😅</button>
+        </div>
+    </div>
+
     <script>
-    alert("You reached somewhere you aren't supposed to 😜😜");
+        // Alert on arrival
+        alert("You reached somewhere you aren't supposed to 😜😜");
+        
+        // Create confetti
+        function createConfetti() {
+            for (let i = 0; i < 50; i++) {
+                const confetti = document.createElement('div');
+                confetti.classList.add('confetti');
+                confetti.style.left = Math.random() * 100 + 'vw';
+                confetti.style.top = -Math.random() * 20 + 'vh';
+                confetti.style.width = Math.random() * 10 + 5 + 'px';
+                confetti.style.height = confetti.style.width;
+                confetti.style.backgroundColor = `hsl(${Math.random() * 360}, 100%, 50%)`;
+                document.body.appendChild(confetti);
+                
+                // Animate confetti
+                const animation = confetti.animate([
+                    { transform: `translate(0, 0) rotate(0deg)`, opacity: 1 },
+                    { transform: `translate(${Math.random() * 200 - 100}px, ${window.innerHeight}px) rotate(${Math.random() * 360}deg)`, opacity: 0 }
+                ], {
+                    duration: Math.random() * 3000 + 2000,
+                    easing: 'cubic-bezier(0.1, 0.8, 0.3, 1)'
+                });
+                
+                animation.onfinish = () => confetti.remove();
+            }
+        }
+        
+        // Button event handlers
+        document.getElementById('stay').addEventListener('click', function() {
+            createConfetti();
+            alert("Bold choice! Enjoy your stay in the forbidden zone! 🎉");
+        });
+        
+        document.getElementById('leave').addEventListener('click', function() {
+            alert("Wise decision! Redirecting you to safety...");
+            // In a real scenario, this would redirect elsewhere
+            document.body.style.opacity = 0;
+            setTimeout(() => {
+                alert("Just kidding! You're still here! 😜");
+                document.body.style.opacity = 1;
+            }, 1000);
+        });
+        
+        // Add some random emoji animations
+        setInterval(() => {
+            const emojis = document.querySelectorAll('.emoji');
+            emojis.forEach(emoji => {
+                emoji.style.animationDelay = `${Math.random() * 2}s`;
+            });
+        }, 5000);
     </script>
-  </body>
+</body>
 </html>
