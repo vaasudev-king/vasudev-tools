@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel ="icon" href="https://files.catbox.moe/49cqa8.png"/>
+  <link rel="icon" href="https://files.catbox.moe/49cqa8.png"/>
   <title>Z Encryption Jutsu</title>
   <style>
     body {
@@ -51,6 +51,9 @@
   
   <textarea id="op" placeholder="Encrypted text will appear here..."></textarea><br><br>
   <button onclick="cp()">Copy</button> 
+  <button onclick="rev()" style="background-color: orange;">Reverse Jutsu🔄</button> 
+  <br><br>
+  <button onclick="clr()" style="background-color: red;">Clear</button>
   
   <script>
     // Translation (Z-Jutsu)
@@ -69,13 +72,33 @@
       document.getElementById('op').value = result;
     }
 
-    // Copy function
+    // Reverse Jutsu (Decrypt)
+    function rev() {
+      let text = document.getElementById('op').value;
+      let result = text.replace(/([a-zA-Z]{2})z/g, "$1");
+      document.getElementById('ip').value = result;
+      alert("Reversed with ninja magic~ ✨ Dattebayo!");
+    }
+
+    // Copy function (modern API)
     function cp() {
       const output = document.getElementById('op');
-      output.select();
-      output.setSelectionRange(0, 99999); // for mobile
-      document.execCommand("copy");
-      alert("Copied to clipboard! ✨");
+      navigator.clipboard.writeText(output.value).then(() => {
+        alert("Copied to clipboard! ✨ UwU~");
+      }).catch(err => {
+        alert("Failed to copy: " + err);
+      });
+    }
+
+    function clr(){
+      let c = confirm('Are you sure you want to clear? It cannot be undone, dattebayo 😅');
+      if (c) {
+        document.getElementById("ip").value="";
+        document.getElementById("op").value="";
+        alert("Poof ~ it’s gone 💨");
+      } else {
+        alert("Teehee~ 🤭 No problem ~ uwuu~");
+      }
     }
   </script>
 </body>
