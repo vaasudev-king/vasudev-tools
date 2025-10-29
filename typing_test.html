@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ultimate Typing Challenge! 🌟</title>
+    
+    <style>
+        :root {
+            /* Define colors for WPM ranks */
+            --rank-beginner: #ffc107; /* Yellow */
+            --rank-average: #00bcd4;  /* Cyan */
+            --rank-good: #4caf50;     /* Green */
+            --rank-pro: #8a2be2;      /* Violet */
+            --rank-master: #ff69b4;   /* Hot Pink */
+        }
+        
+        body {
+            font-family: 'Arial', sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            background-color: #f7e9ff;
+        }
+
+        .container {
+            background-color: #ffffff;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            max-width: 800px;
+            width: 90%;
+        }
+        
+        .controls {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        select, button {
+            padding: 10px 15px;
+            border-radius: 5px;
+            font-size: 1em;
+            cursor: pointer;
+        }
+
+        #startButton {
+            background-color: #ff69b4;
+            color: white;
+            border: none;
+            transition: background-color 0.3s;
+        }
+
+        #startButton:hover:not(:disabled) {
+            background-color: #ff99cc;
+        }
+
+        #typingArea {
+            min-height: 150px;
+            margin-bottom: 20px;
+            padding: 15px;
+            border: 2px solid #ffb3e6;
+            border-radius: 8px;
+            text-align: left;
+            font-size: 1.5em; 
+            line-height: 1.4;
+            word-wrap: break-word;
+            outline: none;
+            caret-color: #8a2be2;
+        }
+
+        #typingArea:empty:before {
+            content: attr(placeholder);
+            color: #aaa;
+        }
+        
+        .results p {
+            font-size: 1.1em;
+            font-weight: bold;
+            color: #8a2be2;
+        }
+
+        .safe-char { color: green; }
+        .warning-char { color: red; font-weight: bold; background-color: #ffdddd; }
+
+        /* Style for the Modal (Results Pop-up) */
+        .modal {
+            display: none; 
+            position: fixed;
+            z-index: 100;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0,0,0,0.4);
+        }
+
+        .modal-content {
+            background-color: #fff0f5;
+            margin: 10% auto; 
+            padding: 25px;
+            border: 3px solid #ff69b4;
+            border-radius: 10px;
+            width: 80%;
+            max-width: 450px;
+            text-align: center;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+        }
+
+        .close-button {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+        }
+
+        .close-button:hover, .close-button:focus {
+            color: #ff69b4;
+            text-decoration: none;
+            cursor: pointer;
+        }
+        
+        .result-wpm {
+            font-size: 3em;
+            margin: 5px 0 15px;
+            font-weight: 900;
+            transition: color 0.5s;
+        }
+        
+        /* New styling for the Rank and details */
+        #finalRank {
+            font-size: 1.5em;
+            margin-bottom: 10px;
+            padding: 5px 10px;
+            border-radius: 5px;
+            display: inline-block;
+            color: white;
+            font-weight: bold;
+        }
+        
+        #resultDetails p {
+            margin: 5px 0;
+            font-size: 1.1em;
+        }
+        
+        /* Color classes for ranks based on WPM tiers */
+        .rank-beginner { background-color: var(--rank-beginner); }
+        .rank-average { background-color: var(--rank-average); }
+        .rank-good { background-color: var(--rank-good); }
+        .rank-pro { background-color: var(--rank-pro); }
+        .rank-master { background-color: var(--rank-master); }
+        
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Ultimate Timed Typing Challenge! 🏆</h1>
+        
+        <div class="controls">
+            <label for="timeSelect">Test Duration:</label>
+            <select id="timeSelect">
+                <option value="30">30 Seconds</option>
+                <option value="60">1 Minute</option>
+                <option value="90">1 Minute 30 Seconds</option>
+            </select>
+            <button id="startButton">Start Test! 🚀</button>
+        </div>
+        
+        <div 
+            id="typingArea" 
+            contenteditable="false" 
+            placeholder="Select a duration and press 'Start Test!'">
+        </div>
+        
+        <div class="results">
+            <p>Time Left: <span id="timer">0</span>s</p>
+            <p>Chars Typed: <span id="charCount">0</span></p>
+        </div>
+    </div>
+    
+    <div id="resultsModal" class="modal">
+        <div class="modal-content">
+            <span class="close-button">&times;</span>
+            <h2>Test Finished! 🎉</h2>
+            
+            <p id="rankLabel">Your Rank is:</p>
+            <div id="finalRank" class=""></div>
+            
+            <p>Final Speed:</p>
+            <p class="result-wpm"><span id="finalWPM">0</span> WPM</p>
+            
+            <div id="resultDetails">
+                <p>Total Chars Typed: <span id="finalChars">0</span></p>
+                <p>Time Limit: <span id="finalTimeLimit">0</span> seconds</p>
+                <p>Repetitive Errors: <span id="finalRepErrors">0</span></p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const typingArea = document.getElementById('typingArea');
+        const timerElement = document.getElementById('timer');
+        const charCountElement = document.getElementById('charCount');
+        const timeSelect = document.getElementById('timeSelect');
+        const startButton = document.getElementById('startButton');
+        const modal = document.getElementById('resultsModal');
+        const closeButton = document.getElementsByClassName('close-button')[0];
+        
+        let startTime = null;
+        let timerInterval = null;
+        let totalTimeLimit = 0; 
+        let charsTyped = 0;
+        let repetitionErrors = 0; // NEW: Counter for repetition warnings
+
+        // --- Ranks and WPM Tiers (NEW) ---
+        const RANK_TIERS = [
+            { wpm: 70, name: "Typing Master! 👑", cssClass: "rank-master" },
+            { wpm: 50, name: "Pro Typer! 💪", cssClass: "rank-pro" },
+            { wpm: 35, name: "Good Speed! 🌟", cssClass: "rank-good" },
+            { wpm: 20, name: "Average Typer 😊", cssClass: "rank-average" },
+            { wpm: 0, name: "Beginner Typer 🐥", cssClass: "rank-beginner" }, // Catch-all for lowest tier
+        ];
+
+        // --- Event Listeners and Test Control ---
+
+        startButton.addEventListener('click', startTest);
+        typingArea.addEventListener('input', checkRepetitionAndDisplay);
+
+        closeButton.onclick = () => { modal.style.display = "none"; };
+        window.onclick = (event) => {
+            if (event.target == modal) {
+                modal.style.display = "none";
+            }
+        };
+        
+        function startTest() {
+            // Reset previous state
+            clearInterval(timerInterval);
+            startTime = new Date();
+            charsTyped = 0;
+            repetitionErrors = 0; // Reset error counter
+            typingArea.textContent = '';
+            charCountElement.textContent = 0;
+            
+            totalTimeLimit = parseInt(timeSelect.value); 
+            timerElement.textContent = totalTimeLimit;
+
+            // Prepare UI for the test
+            typingArea.setAttribute('contenteditable', 'true');
+            typingArea.setAttribute('placeholder', 'START TYPING! Go! Go! Go! 🚀');
+            typingArea.focus();
+            
+            startButton.disabled = true;
+            timeSelect.disabled = true;
+
+            timerInterval = setInterval(updateTimer, 1000);
+        }
+
+        function getRank(wpm) {
+            for (const tier of RANK_TIERS) {
+                if (wpm >= tier.wpm) {
+                    return tier;
+                }
+            }
+            return RANK_TIERS[RANK_TIERS.length - 1]; // Should be the lowest tier
+        }
+        
+        function finishTest(isTimeUp) {
+            clearInterval(timerInterval);
+            
+            // Final WPM Calculation
+            const finalTime = isTimeUp ? totalTimeLimit : Math.floor((new Date() - startTime) / 1000);
+            const minutes = finalTime / 60;
+            const finalWPM = Math.round((charsTyped / 5) / minutes); 
+            
+            // Determine Rank and Color (NEW)
+            const rank = getRank(finalWPM);
+            
+            // Update the results in the modal
+            document.getElementById('finalWPM').textContent = isNaN(finalWPM) ? 0 : finalWPM;
+            
+            // Apply rank color and text
+            const rankElement = document.getElementById('finalRank');
+            rankElement.textContent = rank.name;
+            // Remove all rank classes before adding the new one
+            rankElement.className = ''; 
+            rankElement.classList.add(rank.cssClass); 
+            
+            // Set WPM text color based on rank for extra flair
+            document.querySelector('.result-wpm').style.color = getComputedStyle(rankElement).backgroundColor;
+
+            document.getElementById('finalChars').textContent = charsTyped;
+            document.getElementById('finalTimeLimit').textContent = totalTimeLimit; // Time limit chosen
+            document.getElementById('finalRepErrors').textContent = repetitionErrors; // NEW: Repetition errors
+            
+            // Show the modal
+            modal.style.display = "block";
+            
+            // Reset controls
+            typingArea.setAttribute('contenteditable', 'false');
+            typingArea.setAttribute('placeholder', 'Test finished! Press START TEST for a new round!');
+            startButton.disabled = false;
+            timeSelect.disabled = false;
+        }
+
+        function updateTimer() {
+            const timeElapsed = Math.floor((new Date() - startTime) / 1000);
+            const timeLeft = totalTimeLimit - timeElapsed;
+            timerElement.textContent = timeLeft > 0 ? timeLeft : 0;
+            
+            if (timeLeft <= 0) {
+                finishTest(true); 
+            }
+        }
+
+        // --- Repetition Checker Logic ---
+
+        function checkRepetitionAndDisplay() {
+            if (!startTime) return; // Prevent typing before starting the test
+
+            const inputText = typingArea.textContent; 
+            
+            if (inputText.length === 0) {
+                charCountElement.textContent = 0;
+                charsTyped = 0;
+                repetitionErrors = 0; // Reset errors when text is deleted
+                typingArea.innerHTML = '';
+                return;
+            }
+
+            charCountElement.textContent = inputText.length;
+            charsTyped = inputText.length;
+            repetitionErrors = 0; // Reset counter for recalculation
+            
+            const REPETITION_LIMIT = 5; 
+            let htmlOutput = '';
+            
+            const selection = window.getSelection();
+            
+            for (let i = 0; i < inputText.length; i++) {
+                const char = inputText[i];
+                let isPartOfRepetition = false;
+
+                for (let j = 0; j < REPETITION_LIMIT; j++) {
+                    const start = i - j;
+                    const end = start + REPETITION_LIMIT; 
+
+                    if (start >= 0 && end <= inputText.length) {
+                        const checkSlice = inputText.slice(start, end);
+                        
+                        if (checkSlice.split('').every(c => c === checkSlice[0])) {
+                            isPartOfRepetition = true;
+                            // NEW: Count errors only once per sequence (e.g., 'aaaaa' is 1 error)
+                            if (j === 0) { 
+                                repetitionErrors++; 
+                            }
+                            break; 
+                        }
+                    }
+                }
+                
+                const spanClass = isPartOfRepetition ? 'warning-char' : 'safe-char';
+                htmlOutput += `<span class="${spanClass}">${char}</span>`;
+            }
+            
+            typingArea.innerHTML = htmlOutput; 
+            
+            // Restore the cursor position to the end of the text
+            if (typingArea.lastChild) {
+                const range = document.createRange();
+                range.setStartAfter(typingArea.lastChild);
+                range.collapse(true);
+                selection.removeAllRanges();
+                selection.addRange(range);
+            }
+            typingArea.focus(); 
+        }
+
+        // Set initial focus
+        document.addEventListener('DOMContentLoaded', () => {
+            typingArea.focus();
+            timerElement.textContent = timeSelect.value;
+        });
+    </script>
+</body>
+</html>
