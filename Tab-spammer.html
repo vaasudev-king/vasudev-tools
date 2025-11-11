@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tab Spammer 😜</title>
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: "Poppins", sans-serif;
+        }
+
+        body{
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            background: linear-gradient(135deg,#6a11cb,#2575fc);
+            color: #fff;
+        }
+
+        h2{
+            margin-bottom: 20px;
+            font-size: 2rem;
+            font-weight: 700;
+            text-shadow: 0 0 8px rgba(255,255,255,0.5);
+        }
+
+        .box{
+            background: rgba(255,255,255,0.12);
+            backdrop-filter: blur(8px);
+            border-radius: 12px;
+            padding: 25px;
+            width: 320px;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            box-shadow: 0 0 25px rgba(0,0,0,0.3);
+        }
+
+        input{
+            padding: 10px 14px;
+            border-radius: 8px;
+            border: none;
+            width: 100%;
+            outline: none;
+            font-size: 1rem;
+            transition: .2s;
+        }
+
+        input:focus{
+            box-shadow: 0 0 10px #fff;
+            transform: scale(1.02);
+        }
+
+        button{
+            padding: 12px;
+            border-radius: 8px;
+            border: none;
+            width: 100%;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            background: #fff;
+            color: #2575fc;
+            transition: 0.3s;
+        }
+
+        button:hover{
+            background: #e3e3e3;
+            transform: scale(1.05);
+        }
+    </style>
+</head>
+<body>
+    <h2>Tab Blaster 💥</h2>
+
+    <div class="box">
+        <input type="text" id="tb" placeholder="Enter URL...">
+        <input type="number" id="ip" placeholder="Times">
+        <button onclick="bn()"> Open 🚀</button>
+    </div>
+
+    <script>
+        function bn(){
+            var url = document.getElementById('tb').value;
+            var tm = document.getElementById('ip').value;
+            if (tm > 20) tm = 20;
+            for(let i=0;i<tm;i++){
+                window.open(url, "_blank");
+            }
+        }
+    </script>
+</body>
+</html>
