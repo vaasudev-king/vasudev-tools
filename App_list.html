@@ -42,6 +42,7 @@
 
       #shadowFightBtn {
         background-color: orange;
+        /*its sofia smooch time now 😚💕*/
       }
 
       #instaBtn {
@@ -67,10 +68,6 @@
         background-color: #3b5998; 
       }
 
-      #SffgjgroBtn:hover {
-        background-color: #ff6600; 
-      }
-
       #instaBtn:hover {
         background-color: #ff00a2;
       }
@@ -91,6 +88,13 @@
         font-family: Arial, sans-serif;
         font-size: 14px;
       }
+      #apps {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 15px;
+}
+
     </style>
     <script>
       function wa() {
@@ -103,7 +107,8 @@
 
       function sfa() {
         //window.open( "https://sfarena.onelink.me/6876384";
-        alert("Temporarily Unavailable \n Stay tuned...");
+
+        alert("*its sofia smooch time now 😚💕*");
       }
       function ins() {
         window.open( "https://instagram.com/");
@@ -132,7 +137,7 @@
       style="height: 40px; width: 40px"
     />
     <h1 style="text-align: center">App list</h1>
-
+<div id="apps">
     <button id="whatsappBtn" class="button" onclick="wa()">
       <img
         src="https://cdn.glitch.global/14780529-cce6-4176-8e0b-db06f1a231d1/WA.png?v=1716704660775"
@@ -193,6 +198,7 @@
       <br />
       <p>Telegram</p>
     </button>
+    </div>
     <div id="time-container"></div>
     <script>
       function updateTime() {
