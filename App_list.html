@@ -2,7 +2,7 @@
 <html>
   <head>
     <title>App List</title>
-     <link rel="icon" href="https://cdn-icons-png.freepik.com/512/2115/2115955.png?ga=GA1.1.269029221.1723365377" type="image/x-icon" />
+     
     <link rel="icon" href="https://art.pixilart.com/b8cd84363e6f45c.gif" type="image/x-icon" />
    
     <style>
@@ -94,29 +94,35 @@
     </style>
     <script>
       function wa() {
-        window.location.href = "https://wa.me";
+        window.open( "https://wa.me");
       }
 
       function fb() {
-        window.location.href = "https://www.facebook.com";
+        window.open( "https://www.facebook.com");
       }
 
       function sfa() {
-        //window.location.href = "https://sfarena.onelink.me/6876384";
+        //window.open( "https://sfarena.onelink.me/6876384";
         alert("Temporarily Unavailable \n Stay tuned...");
       }
       function ins() {
-        window.location.href = "https://instagram.com/";
+        window.open( "https://instagram.com/");
       }
       function snap() {
-        window.location.href = "https://www.snapchat.com/";
+        window.open( "https://www.snapchat.com/");
       }
       function yt() {
-        window.location.href = "http://youtu.be/";
+        window.open( "http://youtube.com/");
       }
       function tg(){
-        window.location.href="tg://resolve?domain="
-      }
+  var we = confirm("Want to open Telegram web?");
+  if (we) {
+    window.open( "https://web.telegram.org/");
+  } else {
+    window.open( "tg://resolve?domain=");
+  }
+}
+
     </script>
   </head>
   <body>
@@ -145,7 +151,7 @@
         height="50"
       />
       <br />
-      <p>Facebook</p>
+      <p>Facebook</p> </button>
     
     <button id="instaBtn" class="button" onclick="ins()">
       <img
