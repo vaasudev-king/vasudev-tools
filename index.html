@@ -1,40 +1,68 @@
 <!DOCTYPE html>
 <html>
   <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
     <link rel="stylesheet" type="text/css" href="index.css" />
     <link rel="icon" href="https://cdn.glitch.global/14780529-cce6-4176-8e0b-db06f1a231d1/logo.png?v=1723561423385" type="image/x-icon" />
+    <title>VAASUDEV'S APPS</title>
     <style>
+      /* --- Poster / fallback used until video loads --- */
+      :root{
+        --poster-url: url("https://files.catbox.moe/uzo1t5.png");
+      }
+
+      /* --- Video background --- */
+      #bg-video {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        object-fit: cover;
+        z-index: -1;
+        pointer-events: none; /* clicks pass through */
+        /* show poster as background while video hidden or not loaded */
+        background: center / cover no-repeat var(--poster-url);
+        opacity: 0;
+        transition: opacity 0.8s ease-in-out;
+      }
+      #bg-video.loaded {
+        opacity: 1;
+      }
+
+      /* --- Page styling (kept & tuned) --- */
       .logo {
         text-align: right;
         margin-top: 10px;
       }
-.button-container {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 10px;
-  flex-direction: column;
-}
-
       .logo img {
         border-radius: 50%;
         cursor: pointer;
       }
-      h1,
-      p {
-        color: greenyellow;
-      }
+      h1, p { color: greenyellow; }
       body {
         font-family: Arial, sans-serif;
-        background-color: #f2f2f2;
-        color: #333;
+        background-color: #111; /* fallback background */
+        color: #fff;
         margin: 0;
         padding: 20px;
         display: flex;
         flex-direction: column;
         align-items: center;
-        background-image: url("https://cdn.glitch.global/14780529-cce6-4176-8e0b-db06f1a231d1/bg.gif?v=1702136866421");
+        min-height: 100vh;
       }
+
+      .button-container {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 10px;
+        flex-direction: column;
+        z-index: 1; /* ensure buttons above video */
+        position: relative;
+      }
+
       .button-85 {
         width: 200px;
         height: 40px;
@@ -46,13 +74,12 @@
         background: #111;
         cursor: pointer;
         position: relative;
-        z-index: 0;
+        z-index: 1;
         border-radius: 10px;
         user-select: none;
         -webkit-user-select: none;
         touch-action: manipulation;
       }
-
       .button-85:before {
         content: "";
         background: linear-gradient(
@@ -73,26 +100,17 @@
         background-size: 400%;
         z-index: -1;
         filter: blur(5px);
-        -webkit-filter: blur(5px);
         width: calc(100% + 4px);
         height: calc(100% + 4px);
         animation: glowing-button-85 20s linear infinite;
         transition: opacity 0.3s ease-in-out;
         border-radius: 10px;
       }
-
       @keyframes glowing-button-85 {
-        0% {
-          background-position: 0 0;
-        }
-        50% {
-          background-position: 400% 0;
-        }
-        100% {
-          background-position: 0 0;
-        }
+        0% { background-position: 0 0; }
+        50% { background-position: 400% 0; }
+        100% { background-position: 0 0; }
       }
-
       .button-85:after {
         z-index: -1;
         content: "";
@@ -104,73 +122,51 @@
         top: 0;
         border-radius: 10px;
       }
-      /* Clicking effect */
-      .button-85:active {
-        transform: scale(0.95);
-        box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
-        color: red;
+      .button-85:active { transform: scale(0.95); box-shadow: 0 0 5px rgba(0,0,0,0.3); color: red; }
+      .button-85:hover { box-shadow: 0 0 20px 5px rgba(255,255,0,0.6); transform: scale(1.03); color: #fff700; transition: all 0.3s ease-in-out; }
+      .button-85:hover:before { filter: blur(8px); opacity: 1; background-size: 5000%; }
+
+      .chp { text-decoration: none; margin-top: 10px; text-align: right; color: red; transition: outline 0.3s ease; z-index:1; position:relative; }
+      .chp:hover { color: gold; outline: 2px yellow; }
+
+      @keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+      .spin-image { height:100px; width:100px; margin-right:20px; animation: spin 3s linear infinite; user-select: none; z-index:1; position:relative; }
+
+      #vat.ninjaseal { animation: sealflash 0.6s ease-in-out 2; }
+      @keyframes sealflash {
+        0% { color: red; transform: scale(1.1); }
+        50% { color: gold; transform: scale(1.3); }
+        100% { color: red; transform: scale(1.1); }
       }
-      .button-85:hover {
-  box-shadow: 0 0 20px 5px rgba(255, 255, 0, 0.6); /* extra soft yellow glow */
-  transform: scale(1.03); /* gentle zoom on hover */
-  color: #fff700; /* brighter text */
-  transition: all 0.3s ease-in-out;
-}
 
-      
-      .button-85:hover:before {
-  filter: blur(8px); /* more blur = wider glow */
-  opacity: 1;        /* fully visible glow */
-  background-size: 5000%; /* slightly more dynamic motion */
-}
-      
-
-       .chp {
-        text-decoration: none;
-        margin-top: 10px;
-        text-align: right;
-        color: red;
-        transition: outline 0.3s ease;
+      /* respect reduced motion preference */
+      @media (prefers-reduced-motion: reduce) {
+        #bg-video { transition: none; }
+        .spin-image { animation: none; }
       }
-      .chp:hover {
-        color: gold;
-        outline: 2px yellow;
+
+      /* small responsiveness nicety: reduce poster brightness on very small screens */
+      @media (max-width: 480px) {
+        #bg-video { filter: saturate(0.95) brightness(0.85); }
       }
-      @keyframes spin {
-            from { transform: rotate(0deg); }
-            to { transform: rotate(360deg); }
-        }
-    
-
-        .spin-image {
-          height:100px;
-          width:100px;
-          margin-right:20px;
-            animation: spin 3s linear infinite;
-          user-select: none;
-        }
-    #vat.ninjaseal {
-  animation: sealflash 0.6s ease-in-out 2;
-}
-
-@keyframes sealflash {
-  0% { color: red; transform: scale(1.1); }
-  50% { color: gold; transform: scale(1.3); }
-  100% { color: red; transform: scale(1.1); }
-}
-
     </style>
   </head>
   <body>
+    <!-- VIDEO BACKGROUND (poster shows until video is ready) -->
+    <video id="bg-video" muted loop playsinline preload="none" poster="https://files.catbox.moe/uzo1t5.png" aria-hidden="true">
+      <!-- Source appended by JS for connection-aware lazy loading -->
+    </video>
+
     <div class="logo">
       <img
         src="https://i0.wp.com/bane-tech.com/wp-content/uploads/2015/10/V.png?ssl=1"
         alt="failed to load"
-        height="60px"
-        width="60px"
+        height="60"
+        width="60"
         onclick="window.location.href='https://www.youtube.com/@vasudevmods'"
       />
     </div>
+
     <p class="chp" style="text-align: right">
       <a class="chp"
         href="https://www.youtube.com/@vasudevmods"
@@ -179,103 +175,124 @@
         >Subscribe</a
       >
     </p>
+
     <h1 id="vat">VAASUDEV'S APPS</h1>
     <p>Click them to open desired app</p>
+
     <div class="button-container">
-    <button class="button-85" onclick="window.location.href='index.html'">
-      Reload
-    </button>
-    <button class="button-85" onclick="window.location.href='binary-converter.html'">
-      Binary
-    </button>
-    <button class="button-85" onclick="window.location.href='naruto-quiz.html'">
-      Quiz
-    </button>
-      <button class="button-85" onclick="window.location.href='disguise.html'">
-      Disguise Text with z
-    </button>
-      <button class="button-85" onclick="window.location.href='typing_test.html'">
-      Typing Test 
-    </button>
-    <button class="button-85" onclick="window.location.href='App_list.html'">
-      App list
-    </button>
-    <button class="button-85" onclick="window.location.href='search.html'">
-      Search on Google
-    </button>
-          <button class="button-85" onclick="window.location.href='clock.html'">
-      Clock
-          </button>
-    <button
-      class="button-85"
-      onclick="window.location.href='Password_Genrator.html'"
-    >
-      Strong Password Generator
-    </button>
-    <button class="button-85" onclick="window.location.href='calc-ver.html'">
-      Calculator
-    </button>
-
-     <button class="button-85" onclick="window.location.href='add-ninja.html'">
-      Add-Ninja
-    </button>
-    <button class="button-85" onclick="window.location.href='homepage-ver.html'">
-      Change Version
-    </button>
-    <button class="button-85" onclick="window.location.href='whatsapp.html'">Whatsapp</button>
-    <button class="button-85" onclick="window.location.href='dare.html'">
-      Dare
-    </button>
-    <button
-      class="button-85"
-      onclick="window.location.href='https://youtube.com/@vasudevmods'"
-    >
-      Support Devloper
-    </button>
+      <button class="button-85" onclick="window.location.href='index.html'">Reload</button>
+      <button class="button-85" onclick="window.location.href='binary-converter.html'">Binary</button>
+      <button class="button-85" onclick="window.location.href='naruto-quiz.html'">Quiz</button>
+      <button class="button-85" onclick="window.location.href='disguise.html'">Disguise Text with z</button>
+      <button class="button-85" onclick="window.location.href='typing_test.html'">Typing Test</button>
+      <button class="button-85" onclick="window.location.href='App_list.html'">App list</button>
+      <button class="button-85" onclick="window.location.href='search.html'">Search on Google</button>
+      <button class="button-85" onclick="window.location.href='clock.html'">Clock</button>
+      <button class="button-85" onclick="window.location.href='Password_Genrator.html'">Strong Password Generator</button>
+      <button class="button-85" onclick="window.location.href='calc-ver.html'">Calculator</button>
+      <button class="button-85" onclick="window.location.href='add-ninja.html'">Add-Ninja</button>
+      <button class="button-85" onclick="window.location.href='homepage-ver.html'">Change Version</button>
+      <button class="button-85" onclick="window.location.href='whatsapp.html'">Whatsapp</button>
+      <button class="button-85" onclick="window.location.href='dare.html'">Dare</button>
+      <button class="button-85" onclick="window.location.href='https://youtube.com/@vasudevmods'">Support Devloper</button>
     </div>
+
     <br/>
-    <div class="ms" >
+    <div class="ms">
       <a onclick="sha()">
-    <img src="https://cdn.glitch.global/f629a358-07e1-453a-bc2c-16f15fd18410/sharingan.png?v=1723781467889" class="spin-image"></img>
-   <img src="https://cdn.glitch.global/f629a358-07e1-453a-bc2c-16f15fd18410/Mangekyou_Sharingan_Itachi.svg.png?v=1723781468828" class="spin-image"> </img>
-    <img src="https://cdn.glitch.global/f629a358-07e1-453a-bc2c-16f15fd18410/Mangekyou_Sharingan_Kakashi.svg.png?v=1723781469732" class="spin-image"></img>      
-    <img src="https://cdn.glitch.global/f629a358-07e1-453a-bc2c-16f15fd18410/Mangekyou_Sharingan_Sasuke.png?v=1723783054983" class="spin-image"></img>      
-</a>
-</div>
-<audio
-      id="sha"
-      src="https://cdn.glitch.global/14780529-cce6-4176-8e0b-db06f1a231d1/sharingan.mp3?v=1724043784839"
-    ></audio>
-<br/>
-<script>
-function sha(){
-  document.getElementById('sha').play();
-}
-  function ninjaseal(str) {
-  const h1 = document.getElementById("vat");
-  const originalText = h1.textContent;
+        <img src="https://cdn.glitch.global/f629a358-07e1-453a-bc2c-16f15fd18410/sharingan.png?v=1723781467889" class="spin-image" alt="">
+        <img src="https://cdn.glitch.global/f629a358-07e1-453a-bc2c-16f15fd18410/Mangekyou_Sharingan_Itachi.svg.png?v=1723781468828" class="spin-image" alt="">
+        <img src="https://cdn.glitch.global/f629a358-07e1-453a-bc2c-16f15fd18410/Mangekyou_Sharingan_Kakashi.svg.png?v=1723781469732" class="spin-image" alt="">
+        <img src="https://cdn.glitch.global/f629a358-07e1-453a-bc2c-16f15fd18410/Mangekyou_Sharingan_Sasuke.png?v=1723783054983" class="spin-image" alt="">
+      </a>
+    </div>
 
-  h1.textContent = str;
-  h1.classList.add("ninjaseal");
+    <audio id="sha" src="https://cdn.glitch.global/14780529-cce6-4176-8e0b-db06f1a231d1/sharingan.mp3?v=1724043784839"></audio>
 
-  setTimeout(() => {
-    h1.textContent = originalText;
-    h1.classList.remove("ninjaseal");
-  }, 3000);
-}
+    <br/>
+    <script>
+      // --- play sharing audio ---
+      function sha(){ document.getElementById('sha').play(); }
 
-  document.addEventListener('contextmenu', function(e) {
+      // --- ninja seal ---
+      function ninjaseal(str) {
+        const h1 = document.getElementById("vat");
+        const originalText = h1.textContent;
+        h1.textContent = str;
+        h1.classList.add("ninjaseal");
+        setTimeout(() => { h1.textContent = originalText; h1.classList.remove("ninjaseal"); }, 3000);
+      }
+
+      document.addEventListener('contextmenu', function(e) {
         e.preventDefault();
-     ninjaseal("Right Click Disabled");
-    });
-  document.addEventListener('keydown', function(e) {
-        if (e.key === 'F12' || 
-            (e.ctrlKey && e.shiftKey && (e.key === 'I' || e.key === 'J')) || 
+        ninjaseal("Right Click Disabled");
+      });
+
+      document.addEventListener('keydown', function(e) {
+        if (e.key === 'F12' ||
+            (e.ctrlKey && e.shiftKey && (e.key === 'I' || e.key === 'J')) ||
             (e.ctrlKey && e.key === 'U')) {
-            e.preventDefault();
-            ninjaseal(e.key+" key Disabled");
+          e.preventDefault();
+          ninjaseal(e.key + " key Disabled");
         }
-    });
-</script>
+      });
+
+      // --- video background lazy/load & connection-aware logic ---
+      (function() {
+        const VIDEO_URL = "https://files.catbox.moe/cpefdg.mp4"; // your Catbox video
+        const POSTER_URL = "https://files.catbox.moe/uzo1t5.png"; // poster used until load
+        const video = document.getElementById('bg-video');
+
+        // Respect user settings: don't auto-load on Save-Data, 2G, or reduced motion
+        const conn = navigator.connection || navigator.mozConnection || navigator.webkitConnection;
+        const effectiveType = conn && conn.effectiveType ? conn.effectiveType : "";
+        const saveData = conn && 'saveData' in conn ? conn.saveData : false;
+        const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+        const blocked = saveData || /2g/.test(effectiveType) || reducedMotion;
+
+        // Ensure the poster is always visible as the background image (CSS already sets it).
+        // If blocked, we keep the poster and skip loading the MP4.
+        if (!blocked) {
+          // Create source element and append (this will start loading when appended)
+          const source = document.createElement('source');
+          source.src = VIDEO_URL;
+          source.type = 'video/mp4';
+          video.appendChild(source);
+
+          // When some data is loaded enough to play, fade video in
+          video.addEventListener("loadeddata", () => {
+            // hide the poster background automatically by fading video in
+            video.classList.add("loaded");
+          }, { once: true });
+
+          // Attempt autoplay (some browsers require user interaction)
+          video.load();
+          video.play().catch(() => {
+            // If autoplay is blocked, try to play after first user interaction
+            function playOnInteraction() {
+              video.play().catch(()=>{});
+              document.removeEventListener('click', playOnInteraction);
+              document.removeEventListener('touchstart', playOnInteraction);
+            }
+            document.addEventListener('click', playOnInteraction);
+            document.addEventListener('touchstart', playOnInteraction);
+          });
+        } else {
+          console.info('Video background skipped due to Save-Data / slow connection / reduced-motion preference. Poster will remain visible.');
+          // Optionally: make sure poster is used as a page background fallback
+          document.documentElement.style.setProperty('--poster-url', `url("${POSTER_URL}")`);
+        }
+
+        // Pause the video when tab is hidden to save battery/data
+        document.addEventListener('visibilitychange', function() {
+          if (document.hidden) {
+            try { video.pause(); } catch (e) {}
+          } else {
+            try { if (video.querySelector('source')) video.play().catch(()=>{}); } catch (e) {}
+          }
+        });
+      })();
+    </script>
   </body>
 </html>
