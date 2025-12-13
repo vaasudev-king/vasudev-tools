@@ -213,6 +213,7 @@ background-size: cover; /* optional, makes it cover the whole background nicely 
       <option value="2">Bing</option>
       <option value="3">DuckDuckGo</option>
       <option value="4">Yahooo!</option>
+       <option value="6">Brave!</option>
       <option value="5">Random</option>
     </select>
     <br /><br />
@@ -239,6 +240,9 @@ background-size: cover; /* optional, makes it cover the whole background nicely 
           goVar = "https://duckduckgo.com/?q=" + searchVar;
         } else if (se == 4) {
           goVar = "https://search.yahoo.com/search?p=" + searchVar;
+        }
+        else if (se == 6) {
+          goVar = "https://search.brave.com/search?q=" + searchVar;
         }
 
         window.open(goVar, "_blank");
@@ -273,3 +277,6 @@ background-size: cover; /* optional, makes it cover the whole background nicely 
     </script>
   </body>
 </html>
+
+
+
