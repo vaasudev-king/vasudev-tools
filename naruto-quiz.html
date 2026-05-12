@@ -1,308 +1,426 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <link
-      rel="icon"
-      href="https://wallpapers.com/images/featured/naruto-profile-pictures-sa1tekghfajrr928.webp"
-      type="image/x-icon"
-    />
-    <style>
-      input[type="submit"] {
-        display: block;
-        width: 200px;
-        height: 40px;
-        margin: 10px auto;
-        background-color: #007bff;
-        color: rgb(249, 249, 251);
-        border: none;
-        border-radius: 5px;
-        cursor: pointer;
-        transition: background-color 0.3s ease, transform 0.3s ease;
-      }
-
-      input[type="submit"]:hover {
-        background-color: #0056b3;
-        transform: scale(1.05);
-      }
-
-      input[type="submit"]:active {
-        transform: scale(0.9);
-      }
-
-      input[type="radio"] {
-        --s: 1em; /* control the size */
-        --c: #009688; /* the active color */
-
-        height: var(--s);
-        aspect-ratio: 1;
-        border: calc(var(--s) / 8) solid #939393;
-        padding: calc(var(--s) / 8);
-        background: radial-gradient(farthest-side, var(--c) 94%, #0000) 50%/0 0
-          no-repeat content-box;
-        border-radius: 50%;
-        outline-offset: calc(var(--s) / 10);
-        -webkit-appearance: none;
-        -moz-appearance: none;
-        appearance: none;
-        cursor: pointer;
-        font-size: inherit;
-        transition: 0.3s;
-      }
-
-      input[type="radio"]:checked {
-        border-color: var(--c);
-        background-size: 100% 100%;
-      }
-    </style>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Quiz</title>
-    <script src="quiz.js" defer></script>
-  </head>
-  <body>
-    <form id="quizForm">
-      <!-- Question 1 -->
-      <h1>Q1:</h1>
-      <h1>Who killed Rin?</h1>
-
-      <input type="radio" id="q1_option1" name="question1" value="1" />Naruto
-      <br />
-
-      <input type="radio" id="q1_option2" name="question1" value="2" />Neji
-      <br />
-
-      <input type="radio" id="q1_option3" name="question1" value="3" />Kakashi
-      <br />
-
-      <input type="radio" id="q1_option4" name="question1" value="4" />Obito
-      <br />
-
-      <!-- Question 2 -->
-      <h1>Q2:</h1>
-      <h1>Who Created Rasengan?</h1>
-
-      <input type="radio" id="q2_option1" name="question2" value="1" />Jiraya
-      <br />
-
-      <input type="radio" id="q2_option2" name="question2" value="2" />Minato
-      <br />
-
-      <input type="radio" id="q2_option3" name="question2" value="3" />Naruto
-      <br />
-
-      <input type="radio" id="q2_option4" name="question2" value="4" />Boruto
-      <br />
-
-      <!-- Question 3 -->
-      <h1>Q3:</h1>
-      <h1>Who has Rinnegan?</h1>
-
-      <input type="radio" id="q3_option1" name="question3" value="1" />Sasuke
-      <br />
-
-      <input type="radio" id="q3_option2" name="question3" value="2" />Itachi
-      <br />
-
-      <input type="radio" id="q3_option3" name="question3" value="3" />Kakashi
-      <br />
-
-      <input type="radio" id="q3_option4" name="question3" value="4" />Sarada
-      <br />
-
-      <!-- Question 4 -->
-      <h1>Q4:</h1>
-      <h1>Who is the Fifth Hokage?</h1>
-
-      <input type="radio" id="q4_option1" name="question4" value="1" />Hashirama
-      <br />
-
-      <input type="radio" id="q4_option2" name="question4" value="2" />Tsunade
-      <br />
-
-      <input type="radio" id="q4_option3" name="question4" value="3" />Naruto
-      <br />
-
-      <input type="radio" id="q4_option4" name="question4" value="4" />Madara
-      <br />
-
-      <!-- Question 5 -->
-      <h1>Q5:</h1>
-      <h1>Who has Mangekyou but no Susanoo?</h1>
-
-      <input type="radio" id="q5_option1" name="question5" value="1" />Madara
-      <br />
-
-      <input type="radio" id="q5_option2" name="question5" value="2" />Itachi
-      <br />
-
-      <input type="radio" id="q5_option3" name="question5" value="3" />Sasuke
-      <br />
-
-      <input type="radio" id="q5_option4" name="question5" value="4" />Obito
-      <br />
-
-      <!-- Question 6 -->
-      <h1>Q6:</h1>
-      <h1>Who is not an Uchiha?</h1>
-
-      <input type="radio" id="q6_option1" name="question6" value="1" />Itachi
-      <br />
-
-      <input type="radio" id="q6_option2" name="question6" value="2" />Sasuke
-      <br />
-
-      <input type="radio" id="q6_option3" name="question6" value="3" />Kakashi
-      <br />
-
-      <input type="radio" id="q6_option4" name="question6" value="4" />Madara
-      <br />
-
-      <!-- Question 7 -->
-      <h1>Q7:</h1>
-      <h1>Who is known as the God of Shinobi?</h1>
-
-      <input type="radio" id="q7_option1" name="question7" value="1" />Tobirama
-      <br />
-
-      <input type="radio" id="q7_option2" name="question7" value="2" />Hashirama
-      <br />
-
-      <input type="radio" id="q7_option3" name="question7" value="3" />Sakura
-      <br />
-
-      <input type="radio" id="q7_option4" name="question7" value="4" />Rin
-      <br />
-
-      <!-- Question 8 -->
-      <h1>Q8:</h1>
-      <h1>Who is the father of Kakashi Hatake?</h1>
-
-      <input type="radio" id="q8_option1" name="question8" value="1" />Might Dai
-      <br />
-
-      <input type="radio" id="q8_option2" name="question8" value="2" />Jiraya
-      <br />
-
-      <input type="radio" id="q8_option3" name="question8" value="3" />Hiruzen
-      <br />
-
-      <input type="radio" id="q8_option4" name="question8" value="4" />Sakumo
-      <br />
-
-      <!-- Question 9 -->
-      <h1>Q9:</h1>
-      <h1>What is the Mangekyou ability of Kakashi?</h1>
-
-      <input type="radio" id="q9_option1" name="question9" value="1" />Amaterasu
-      <br />
-
-      <input type="radio" id="q9_option2" name="question9" value="2" />Tsukiyomi
-      <br />
-
-      <input type="radio" id="q9_option3" name="question9" value="3" />Kamui
-      <br />
-
-      <input
-        type="radio"
-        id="q9_option4"
-        name="question9"
-        value="4"
-      />Kotoamatsukami
-      <br />
-
-      <!-- Question 10 -->
-      <h1>Q10:</h1>
-      <h1>Who awakened Eternal Mangekyou Sharingan first?</h1>
-
-      <input type="radio" id="q10_option1" name="question10" value="1" />Madara
-      <br />
-
-      <input type="radio" id="q10_option2" name="question10" value="2" />Itachi
-      <br />
-
-      <input
-        type="radio"
-        id="q10_option3"
-        name="question10"
-        value="3"
-      />Hagoromo
-      <br />
-
-      <input type="radio" id="q10_option4" name="question10" value="4" />Sasuke
-      <br />
-
-      <!-- Question 11 -->
-      <h1>Q10:</h1>
-      <h1>Who awakened Rinnegan first?</h1>
-
-      <input type="radio" id="q11_option1" name="question11" value="1" />
-      Hagoromo
-      <br />
-
-      <input type="radio" id="q11_option2" name="question11" value="2" />Sasuke
-      <br />
-
-      <input type="radio" id="q11_option3" name="question11" value="3" />obito
-      <br />
-
-      <input type="radio" id="q11_option4" name="question11" value="4" />Naruto
-      <br />
-
-      <h2 style="color: red" id="resultz"></h2>
-      <h2 style="color: lime" id="result"></h2>
-      <input type="submit" value="Submit" />
-    </form>
-    <script>
-      // Define the correct answers
-      const correctAnswers = {
-        question1: "3",
-        question2: "2",
-        question3: "1",
-        question4: "2",
-        question5: "4",
-        question6: "3",
-        question7: "2",
-        question8: "4",
-        question9: "3",
-        question10: "1",
-        question11: "1",
-      };
-
-      document.addEventListener("DOMContentLoaded", () => {
-        const form = document.getElementById("quizForm");
-        const resultz = document.getElementById("resultz");
-        const result = document.getElementById("result");
-
-        form.addEventListener("submit", (event) => {
-          event.preventDefault(); // Prevent form from submitting normally
-
-          let score = 0;
-          const totalQuestions = Object.keys(correctAnswers).length;
-
-          // Check each question's answer
-          for (let question in correctAnswers) {
-            const selectedOption = form.querySelector(
-              `input[name="${question}"]:checked`
-            );
-
-            if (
-              selectedOption &&
-              selectedOption.value === correctAnswers[question]
-            ) {
-              score++;
-            }
-          }
-
-          // Display results
-          if (score === 0) {
-            resultz.innerHTML = `You scored ${score} out of ${totalQuestions}`;
-            alert(`You scored ${score} out of ${totalQuestions}`);
-          } else {
-            result.innerHTML = `You scored ${score} out of ${totalQuestions}`;
-            alert(`You scored ${score} out of ${totalQuestions}`);
-          }
-        });
-      });
-    </script>
-  </body>
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+<title>Naruto Ultimate Quiz 🍥</title>
+
+<link rel="icon"
+href="https://wallpapers.com/images/featured/naruto-profile-pictures-sa1tekghfajrr928.webp">
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:'Poppins',sans-serif;
+}
+
+body{
+    min-height:100vh;
+    background:
+    linear-gradient(rgba(0,0,0,0.65),rgba(0,0,0,0.8)),
+    url('https://images6.alphacoders.com/413/413205.jpg');
+    background-size:cover;
+    background-position:center;
+    background-attachment:fixed;
+    color:white;
+    padding:40px 20px;
+}
+
+.container{
+    max-width:900px;
+    margin:auto;
+}
+
+.title{
+    text-align:center;
+    margin-bottom:40px;
+    animation: float 3s ease-in-out infinite;
+}
+
+.title h1{
+    font-size:4rem;
+    color:#ff9800;
+    text-shadow:
+    0 0 10px #ff9800,
+    0 0 30px #ff5722;
+}
+
+.title p{
+    margin-top:10px;
+    color:#ddd;
+    font-size:1.1rem;
+}
+
+@keyframes float{
+    0%,100%{
+        transform:translateY(0px);
+    }
+    50%{
+        transform:translateY(-10px);
+    }
+}
+
+.quiz-card{
+    background:rgba(255,255,255,0.08);
+    backdrop-filter:blur(12px);
+    border:1px solid rgba(255,255,255,0.15);
+    border-radius:25px;
+    padding:30px;
+    margin-bottom:30px;
+    transition:0.4s;
+    box-shadow:0 8px 25px rgba(0,0,0,0.3);
+}
+
+.quiz-card:hover{
+    transform:translateY(-8px) scale(1.01);
+    border-color:#ff9800;
+    box-shadow:
+    0 0 20px rgba(255,152,0,0.4),
+    0 0 50px rgba(255,87,34,0.2);
+}
+
+.question-number{
+    color:#ff9800;
+    font-size:1rem;
+    margin-bottom:10px;
+    font-weight:600;
+}
+
+.question{
+    font-size:1.5rem;
+    margin-bottom:25px;
+}
+
+.option{
+    display:flex;
+    align-items:center;
+    background:rgba(255,255,255,0.05);
+    border:2px solid transparent;
+    padding:15px 20px;
+    border-radius:15px;
+    margin-bottom:15px;
+    cursor:pointer;
+    transition:0.3s;
+}
+
+.option:hover{
+    background:rgba(255,152,0,0.12);
+    border-color:#ff9800;
+    transform:translateX(8px);
+}
+
+.option input{
+    margin-right:15px;
+    transform:scale(1.4);
+    accent-color:#ff9800;
+}
+
+.submit-btn{
+    width:100%;
+    height:65px;
+    border:none;
+    border-radius:18px;
+    background:linear-gradient(45deg,#ff9800,#ff5722);
+    color:white;
+    font-size:1.3rem;
+    font-weight:bold;
+    cursor:pointer;
+    transition:0.4s;
+    box-shadow:0 0 20px rgba(255,152,0,0.4);
+}
+
+.submit-btn:hover{
+    transform:scale(1.03);
+    box-shadow:
+    0 0 20px #ff9800,
+    0 0 40px #ff5722;
+}
+
+.result-box{
+    margin-top:40px;
+    text-align:center;
+    padding:30px;
+    border-radius:25px;
+    display:none;
+    animation:fadeIn 1s ease;
+    background:rgba(255,255,255,0.08);
+    backdrop-filter:blur(10px);
+}
+
+.result-box h2{
+    font-size:2rem;
+    margin-bottom:15px;
+}
+
+.result-box p{
+    font-size:1.3rem;
+    color:#ddd;
+}
+
+.rank{
+    margin-top:20px;
+    font-size:2rem;
+    color:#ff9800;
+    font-weight:bold;
+}
+
+@keyframes fadeIn{
+    from{
+        opacity:0;
+        transform:translateY(20px);
+    }
+    to{
+        opacity:1;
+        transform:translateY(0);
+    }
+}
+
+@media(max-width:768px){
+
+.title h1{
+    font-size:2.5rem;
+}
+
+.question{
+    font-size:1.2rem;
+}
+
+.option{
+    padding:12px;
+}
+
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+<div class="title">
+<h1>🍥 Naruto Ultimate Quiz 🍥</h1>
+<p>Test your Shinobi knowledge and become Hokage! 🔥</p>
+</div>
+
+<form id="quizForm">
+
+<!-- QUESTION TEMPLATE -->
+
+<div class="quiz-card">
+<div class="question-number">Question 1</div>
+<div class="question">Who killed Rin?</div>
+
+<label class="option">
+<input type="radio" name="question1" value="1">
+Naruto
+</label>
+
+<label class="option">
+<input type="radio" name="question1" value="2">
+Neji
+</label>
+
+<label class="option">
+<input type="radio" name="question1" value="3">
+Kakashi
+</label>
+
+<label class="option">
+<input type="radio" name="question1" value="4">
+Obito
+</label>
+</div>
+
+<div class="quiz-card">
+<div class="question-number">Question 2</div>
+<div class="question">Who created Rasengan?</div>
+
+<label class="option">
+<input type="radio" name="question2" value="1">
+Jiraiya
+</label>
+
+<label class="option">
+<input type="radio" name="question2" value="2">
+Minato
+</label>
+
+<label class="option">
+<input type="radio" name="question2" value="3">
+Naruto
+</label>
+
+<label class="option">
+<input type="radio" name="question2" value="4">
+Boruto
+</label>
+</div>
+
+<div class="quiz-card">
+<div class="question-number">Question 3</div>
+<div class="question">Who has Rinnegan?</div>
+
+<label class="option">
+<input type="radio" name="question3" value="1">
+Sasuke
+</label>
+
+<label class="option">
+<input type="radio" name="question3" value="2">
+Itachi
+</label>
+
+<label class="option">
+<input type="radio" name="question3" value="3">
+Kakashi
+</label>
+
+<label class="option">
+<input type="radio" name="question3" value="4">
+Sarada
+</label>
+</div>
+
+<div class="quiz-card">
+<div class="question-number">Question 4</div>
+<div class="question">Who is the Fifth Hokage?</div>
+
+<label class="option">
+<input type="radio" name="question4" value="1">
+Hashirama
+</label>
+
+<label class="option">
+<input type="radio" name="question4" value="2">
+Tsunade
+</label>
+
+<label class="option">
+<input type="radio" name="question4" value="3">
+Naruto
+</label>
+
+<label class="option">
+<input type="radio" name="question4" value="4">
+Madara
+</label>
+</div>
+
+<div class="quiz-card">
+<div class="question-number">Question 5</div>
+<div class="question">Who has Mangekyou but no Susanoo?</div>
+
+<label class="option">
+<input type="radio" name="question5" value="1">
+Madara
+</label>
+
+<label class="option">
+<input type="radio" name="question5" value="2">
+Itachi
+</label>
+
+<label class="option">
+<input type="radio" name="question5" value="3">
+Sasuke
+</label>
+
+<label class="option">
+<input type="radio" name="question5" value="4">
+Obito
+</label>
+</div>
+
+<button class="submit-btn" type="submit">
+🔥 Submit Quiz 🔥
+</button>
+
+</form>
+
+<div class="result-box" id="resultBox">
+<h2 id="scoreText"></h2>
+<p id="percentageText"></p>
+<div class="rank" id="rankText"></div>
+</div>
+
+</div>
+
+<script>
+
+const correctAnswers = {
+question1:"3",
+question2:"2",
+question3:"1",
+question4:"2",
+question5:"4"
+};
+
+const form = document.getElementById("quizForm");
+
+form.addEventListener("submit",(e)=>{
+
+e.preventDefault();
+
+let score = 0;
+
+for(let question in correctAnswers){
+
+const selected = document.querySelector(
+`input[name="${question}"]:checked`
+);
+
+if(selected && selected.value === correctAnswers[question]){
+score++;
+}
+
+}
+
+const totalQuestions = Object.keys(correctAnswers).length;
+
+const percentage = Math.round(
+(score / totalQuestions) * 100
+);
+
+document.getElementById("resultBox").style.display = "block";
+
+document.getElementById("scoreText").innerHTML =
+`🎯 You scored ${score} out of ${totalQuestions}`;
+
+document.getElementById("percentageText").innerHTML =
+`✨ Accuracy: ${percentage}%`;
+
+let rank = "";
+
+if(score === totalQuestions){
+rank = "👑 HOKAGE LEVEL 👑";
+}
+else if(score >= 4){
+rank = "⚔️ JONIN LEVEL ⚔️";
+}
+else if(score >= 2){
+rank = "🍃 GENIN LEVEL 🍃";
+}
+else{
+rank = "😂 ACADEMY STUDENT 😂";
+}
+
+document.getElementById("rankText").innerHTML = rank;
+
+window.scrollTo({
+top:document.body.scrollHeight,
+behavior:"smooth"
+});
+
+});
+
+</script>
+
+</body>
 </html>
