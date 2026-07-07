@@ -4,67 +4,668 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="icon" href="https://files.catbox.moe/49cqa8.png"/>
-  <title>Z Encryption Jutsu</title>
+  <title>🌸 Z Encryption Jutsu 🌸</title>
   <style>
+    /* --- CSS Variables for Easy Theme Swapping --- */
+    :root {
+      --bg-gradient: linear-gradient(135deg, #ffeef8 0%, #d4fcd4 100%);
+      --container-bg: rgba(255, 255, 255, 0.75);
+      --container-border: 1px solid rgba(255, 255, 255, 0.5);
+      --text-color: #2c3e50;
+      --title-color: #2b7a3a;
+      --textarea-bg: rgba(255, 253, 235, 0.9);
+      --textarea-border: #a3e2a5;
+      --textarea-focus: #4caf50;
+      --btn-primary: linear-gradient(135deg, #ff758c 0%, #ff7eb3 100%);
+      --btn-shadow: rgba(255, 117, 140, 0.3);
+      --font-style: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      --box-radius: 24px;
+      --btn-radius: 50px;
+      
+      --panel-bg: rgba(255, 255, 255, 0.95);
+      --panel-card: #f8f9fa;
+      --panel-card-border: #e0e0e0;
+      --panel-card-text: #333333;
+    }
+
     body {
-      font-family: Arial, sans-serif;
+      font-family: var(--font-style);
       text-align: center;
-      background-color: lightgreen;
-      margin: 30px;
+      background: var(--bg-gradient);
+      margin: 0;
+      padding: 40px 20px;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      color: var(--text-color);
+      transition: all 0.4s ease;
+      position: relative;
     }
-    textarea {
-      width: 90vw;
-      height: 150px;
-      background-color: lightgoldenrodyellow;
-      font-size: 18px;
+
+    /* Floating Settings Gear Button */
+    .settings-btn {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      background: var(--container-bg);
+      border: var(--container-border);
+      color: var(--text-color);
+      font-size: 28px;
+      cursor: pointer;
       padding: 10px;
-      border-radius: 10px;
+      border-radius: 50%;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+      transition: transform 0.3s ease;
+      z-index: 10;
+      line-height: 1;
     }
+    .settings-btn:hover {
+      transform: rotate(90deg) scale(1.1);
+    }
+
+    /* Glassmorphism Container */
+    .container {
+      background: var(--container-bg);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      border-radius: var(--box-radius);
+      padding: 30px;
+      max-width: 600px;
+      width: 100%;
+      box-shadow: 0 12px 32px rgba(0, 0, 0, 0.08);
+      border: var(--container-border);
+      transition: all 0.4s ease;
+      box-sizing: border-box;
+    }
+
+    h1 {
+      font-size: 2.2rem;
+      color: var(--title-color);
+      margin-top: 0;
+      margin-bottom: 25px;
+      font-weight: 800;
+    }
+
+    textarea {
+      width: 100%;
+      height: 130px;
+      box-sizing: border-box;
+      background-color: var(--textarea-bg);
+      font-size: 18px;
+      padding: 15px;
+      border-radius: 16px;
+      border: 2px solid var(--textarea-border);
+      outline: none;
+      resize: vertical;
+      transition: all 0.3s ease;
+      font-family: inherit;
+      color: var(--text-color);
+    }
+    
+    textarea:focus {
+      border-color: var(--textarea-focus);
+      box-shadow: 0 0 10px rgba(76, 175, 80, 0.25);
+      transform: translateY(-2px);
+    }
+
+    .btn-group {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      justify-content: center;
+      margin: 18px 0;
+    }
+
     button {
-      margin: 10px;
-      padding: 20px 30px;
-      font-size: 24px;
+      padding: 14px 24px;
+      font-size: 16px;
+      font-weight: bold;
       border: none;
       color: #fff;
-      background-color: #4caf50;
-      border-radius: 30px;
+      background: linear-gradient(135deg, #56ab2f 0%, #a8e063 100%);
+      border-radius: var(--btn-radius);
       cursor: pointer;
-      width: 250px;
-      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-      transition: background-color 0.3s, transform 0.2s;
+      flex: 1;
+      min-width: 140px;
+      box-shadow: 0 4px 15px rgba(86, 171, 47, 0.3);
+      transition: all 0.25s cubic-bezier(0.175, 0.885, 0.32, 1.275);
     }
+
     button:hover {
-      background-color: #45a049;
-      transform: scale(1.05);
+      transform: translateY(-3px) scale(1.03);
     }
-    button:active {
-      background-color: #3e8e41;
-      transform: scale(0.95);
+
+    button.btn-jutsu {
+      background: var(--btn-primary);
+      box-shadow: 0 4px 15px var(--btn-shadow);
+      font-size: 18px;
+      padding: 16px 30px;
+      width: 100%;
+      flex: none;
+    }
+
+    button.btn-reverse {
+      background: linear-gradient(135deg, #f12711 0%, #f5af19 100%);
+    }
+
+    button.btn-clear {
+      background: linear-gradient(135deg, #757f9a 0%, #4a569d 100%);
+    }
+
+    /* --- GLOBAL COMPATIBLE MODAL OVERLAYS --- */
+    .custom-modal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.6);
+      backdrop-filter: blur(5px);
+      justify-content: center;
+      align-items: center;
+      z-index: 150;
+    }
+
+    .modal-content {
+      background: var(--panel-bg);
+      backdrop-filter: blur(15px);
+      -webkit-backdrop-filter: blur(15px);
+      color: var(--text-color);
+      padding: 30px 25px;
+      border-radius: var(--box-radius);
+      max-width: 440px;
+      width: 85%;
+      box-shadow: 0 15px 35px rgba(0,0,0,0.3);
+      text-align: center;
+      border: var(--container-border);
+      transition: all 0.3s ease;
+    }
+
+    .modal-content h3 {
+      color: var(--title-color);
+      margin-top: 0;
+      font-size: 22px;
+    }
+
+    .theme-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 10px;
+      margin: 20px 0;
+      max-height: 260px;
+      overflow-y: auto;
+      padding-right: 5px;
+    }
+
+    .theme-grid::-webkit-scrollbar {
+      width: 6px;
+    }
+    .theme-grid::-webkit-scrollbar-thumb {
+      background-color: var(--title-color);
+      border-radius: 10px;
+    }
+
+    .theme-opt {
+      padding: 12px;
+      font-weight: bold;
+      border: 2px solid var(--panel-card-border);
+      border-radius: 12px;
+      cursor: pointer;
+      background: var(--panel-card);
+      color: var(--panel-card-text);
+      transition: all 0.2s;
+      font-size: 14px;
+    }
+    .theme-opt:hover {
+      border-color: var(--textarea-focus);
+      transform: scale(1.02);
+    }
+
+    /* --- EXPLICIT LUXURY PAYWALL OVERLAY --- */
+    .paywall-modal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.85);
+      backdrop-filter: blur(8px);
+      justify-content: center;
+      align-items: center;
+      z-index: 200;
+    }
+
+    .paywall-content {
+      background: #111111;
+      color: #ffd700;
+      border: 3px solid #ffd700;
+      border-radius: 20px;
+      padding: 35px 25px;
+      max-width: 400px;
+      width: 85%;
+      text-align: center;
+      box-shadow: 0 0 30px rgba(255, 215, 0, 0.4);
+      font-family: 'Georgia', serif;
+    }
+
+    .paywall-content h2 {
+      font-size: 26px;
+      margin-top: 0;
+      text-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
+    }
+
+    .paywall-content p {
+      color: #fff3b3;
+      font-size: 16px;
+      margin-bottom: 25px;
+    }
+
+    .modal-btn-group {
+      display: flex;
+      gap: 12px;
+      justify-content: center;
+      margin-top: 20px;
+    }
+
+    .btn-action-ok {
+      background: var(--btn-primary);
+      color: #ffffff;
+    }
+    
+    .btn-action-cancel {
+      background: rgba(0,0,0,0.1);
+      color: var(--text-color);
+      border: 1px solid var(--panel-card-border);
+    }
+
+    .btn-pay {
+      background: linear-gradient(135deg, #bf953f 0%, #fcf6ba 50%, #b38728 100%);
+      color: #111;
+      box-shadow: 0 4px 15px rgba(255, 215, 0, 0.4);
+    }
+    
+    .btn-pay-cancel {
+      background: #222;
+      color: #ffd700;
+      border: 1px solid #554400;
     }
   </style>
 </head>
 <body>
-  <h1>Z Encryption Jutsu</h1>
-  
-  <textarea id="ip" placeholder="Enter your text here..."></textarea><br><br>
-  <button onclick="tr()">Z-jutsu</button><br><br>
-  
-  <textarea id="op" placeholder="Encrypted text will appear here..."></textarea><br><br>
-  <button onclick="cp()">Copy</button> 
-  <button onclick="rev()" style="background-color: orange;">Reverse Jutsu🔄</button> 
-  <br><br>
-  <button onclick="clr()" style="background-color: red;">Clear</button>
-  
+
+  <!-- Settings Trigger -->
+  <div class="settings-btn" onclick="toggleModal('settingsPanel', true)">⚙️</div>
+
+  <!-- Main Container -->
+  <div class="container">
+    <h1>🌸 Z Encryption Jutsu 🌸</h1>
+    
+    <textarea id="ip" placeholder="Enter your secret message here, daisuki-chan... ✨"></textarea>
+    
+    <div class="btn-group">
+      <button class="btn-jutsu" onclick="tr()">Cast Z-Jutsu! 🥷✨</button>
+    </div>
+    
+    <textarea id="op" placeholder="Your encrypted scroll text will appear here... 📜" readonly></textarea>
+    
+    <div class="btn-group">
+      <button onclick="cp()">Copy Scroll 📋</button> 
+      <button class="btn-reverse" onclick="rev()">Reverse Jutsu 🔄</button> 
+      <button class="btn-clear" onclick="triggerClearCheck()">Wipe Clean 💨</button>
+    </div>
+  </div>
+
+  <!-- Fully Synced Theme Settings Panel -->
+  <div class="custom-modal" id="settingsPanel">
+    <div class="modal-content">
+      <h3>Select Ninja Theme 📜</h3>
+      <div class="theme-grid">
+        <div class="theme-opt" style="border-color: #ffd700;" onclick="triggerGoldPaywall()">👑 Golden Premium</div>
+        <div class="theme-opt" onclick="setTheme('heroic')">🛡️ Heroic Red</div>
+        <div class="theme-opt" onclick="setTheme('aoi')">💙 Aoi-chan Blue</div>
+        <div class="theme-opt" onclick="setTheme('night')">🌙 Midnight Operations</div>
+        <div class="theme-opt" onclick="setTheme('rainy')">🌧️ Rainy Village</div>
+        <div class="theme-opt" onclick="setTheme('kawaii')">🌸 Kawaii Sakura</div>
+        <div class="theme-opt" onclick="setTheme('original')">🟩 Daisuki Original</div>
+        <div class="theme-opt" onclick="setTheme('cyber')">👾 Cyber Neon</div>
+        <div class="theme-opt" onclick="setTheme('retro')">📟 Retro Arcade</div>
+        <div class="theme-opt" onclick="setTheme('cool')">🖤 Sleek Dark</div>
+        <div class="theme-opt" onclick="setTheme('cloud')">☁️ Akatsuki Red</div>
+      </div>
+      <button style="width:100%; margin-top:10px;" onclick="toggleModal('settingsPanel', false)">Close Setup ❌</button>
+    </div>
+  </div>
+
+  <!-- MULTI-USE ALERT NOTIFICATION POPUP -->
+  <div class="custom-modal" id="alertModal">
+    <div class="modal-content">
+      <h3 id="alertTitle">Ninja Scroll Notice 📜</h3>
+      <p id="alertText">Notification message goes here...</p>
+      <div class="modal-btn-group" id="alertBtnContainer">
+        <!-- Buttons injected dynamically -->
+      </div>
+    </div>
+  </div>
+
+  <!-- JOKING PREMIUM GOLD PAYWALL MODAL -->
+  <div class="paywall-modal" id="paywallModal">
+    <div class="paywall-content">
+      <h2>👑 Elite Premium Scroll 👑</h2>
+      <p>Unlock the forbidden multi-nature gold layout! Cast your wallet jutsu to continue.</p>
+      <div class="paywall-btn-group" style="display:flex; gap:12px;">
+        <button class="btn-pay" onclick="acceptGoldPayment()">Pay $5 💰</button>
+        <button class="btn-pay-cancel" onclick="closePaywall()">Cancel ❌</button>
+      </div>
+    </div>
+  </div>
+
   <script>
-    // Translation (Z-Jutsu)
+    // --- Mega Dynamic Theme Config Engine ---
+    const themes = {
+      gold: {
+        '--bg-gradient': 'linear-gradient(135deg, #111111 0%, #2c2205 100%)',
+        '--container-bg': 'rgba(35, 30, 15, 0.9)',
+        '--container-border': '2px solid #ffd700',
+        '--text-color': '#fff3b3',
+        '--title-color': '#ffd700',
+        '--textarea-bg': '#1a160a',
+        '--textarea-border': '#cca300',
+        '--textarea-focus': '#ffd700',
+        '--btn-primary': 'linear-gradient(135deg, #bf953f 0%, #fcf6ba 50%, #b38728 100%)',
+        '--btn-shadow': 'rgba(212, 175, 55, 0.4)',
+        '--font-style': "'Georgia', serif",
+        '--box-radius': '16px',
+        '--btn-radius': '30px',
+        '--panel-bg': 'rgba(25, 20, 10, 0.95)',
+        '--panel-card': '#332b12',
+        '--panel-card-border': '#594a1f',
+        '--panel-card-text': '#ffd700'
+      },
+      heroic: {
+        '--bg-gradient': 'linear-gradient(135deg, #2b0404 0%, #120101 100%)',
+        '--container-bg': 'rgba(30, 10, 10, 0.85)',
+        '--container-border': '1px solid #ff3333',
+        '--text-color': '#ffcccc',
+        '--title-color': '#ff3333',
+        '--textarea-bg': '#1a0505',
+        '--textarea-border': '#cc2222',
+        '--textarea-focus': '#ff3333',
+        '--btn-primary': 'linear-gradient(135deg, #e52d27 0%, #b31217 100%)',
+        '--btn-shadow': 'rgba(229, 45, 39, 0.4)',
+        '--font-style': "'Impact', sans-serif",
+        '--box-radius': '8px',
+        '--btn-radius': '6px',
+        '--panel-bg': 'rgba(35, 12, 12, 0.95)',
+        '--panel-card': '#4d1414',
+        '--panel-card-border': '#802020',
+        '--panel-card-text': '#ffcccc'
+      },
+      aoi: {
+        '--bg-gradient': 'linear-gradient(135deg, #e0f2fe 0%, #bae6fd 100%)',
+        '--container-bg': 'rgba(255, 255, 255, 0.8)',
+        '--container-border': '1px solid #38bdf8',
+        '--text-color': '#0369a1',
+        '--title-color': '#0284c7',
+        '--textarea-bg': '#f0f9ff',
+        '--textarea-border': '#7dd3fc',
+        '--textarea-focus': '#0284c7',
+        '--btn-primary': 'linear-gradient(135deg, #0ea5e9 0%, #38bdf8 100%)',
+        '--btn-shadow': 'rgba(14, 165, 233, 0.3)',
+        '--font-style': "'Segoe UI', sans-serif",
+        '--box-radius': '24px',
+        '--btn-radius': '50px',
+        '--panel-bg': 'rgba(240, 249, 255, 0.95)',
+        '--panel-card': '#e0f2fe',
+        '--panel-card-border': '#bae6fd',
+        '--panel-card-text': '#0369a1'
+      },
+      night: {
+        '--bg-gradient': 'linear-gradient(135deg, #050510 0%, #0a0b1e 100%)',
+        '--container-bg': 'rgba(13, 15, 35, 0.9)',
+        '--container-border': '1px solid #4f46e5',
+        '--text-color': '#c7d2fe',
+        '--title-color': '#818cf8',
+        '--textarea-bg': '#070814',
+        '--textarea-border': '#4338ca',
+        '--textarea-focus': '#6366f1',
+        '--btn-primary': 'linear-gradient(135deg, #4f46e5 0%, #6366f1 100%)',
+        '--btn-shadow': 'rgba(79, 70, 229, 0.4)',
+        '--font-style': "'Trebuchet MS', sans-serif",
+        '--box-radius': '20px',
+        '--btn-radius': '20px',
+        '--panel-bg': 'rgba(15, 18, 45, 0.95)',
+        '--panel-card': '#1e224f',
+        '--panel-card-border': '#31388a',
+        '--panel-card-text': '#c7d2fe'
+      },
+      rainy: {
+        '--bg-gradient': 'linear-gradient(135deg, #2e3b4e 0%, #1c2331 100%)',
+        '--container-bg': 'rgba(40, 50, 70, 0.75)',
+        '--container-border': '1px solid #78909c',
+        '--text-color': '#eceff1',
+        '--title-color': '#b0bec5',
+        '--textarea-bg': '#1e2736',
+        '--textarea-border': '#607d8b',
+        '--textarea-focus': '#90a4ae',
+        '--btn-primary': 'linear-gradient(135deg, #455a64 0%, #546e7a 100%)',
+        '--btn-shadow': 'rgba(69, 90, 100, 0.3)',
+        '--font-style': "'Courier New', monospace",
+        '--box-radius': '16px',
+        '--btn-radius': '12px',
+        '--panel-bg': 'rgba(38, 49, 66, 0.95)',
+        '--panel-card': '#37474f',
+        '--panel-card-border': '#4f5b66',
+        '--panel-card-text': '#eceff1'
+      },
+      kawaii: {
+        '--bg-gradient': 'linear-gradient(135deg, #ffeef8 0%, #d4fcd4 100%)',
+        '--container-bg': 'rgba(255, 255, 255, 0.75)',
+        '--container-border': '1px solid rgba(255, 255, 255, 0.5)',
+        '--text-color': '#2c3e50',
+        '--title-color': '#2b7a3a',
+        '--textarea-bg': 'rgba(255, 253, 235, 0.9)',
+        '--textarea-border': '#a3e2a5',
+        '--textarea-focus': '#4caf50',
+        '--btn-primary': 'linear-gradient(135deg, #ff758c 0%, #ff7eb3 100%)',
+        '--btn-shadow': 'rgba(255, 117, 140, 0.3)',
+        '--font-style': "'Segoe UI', sans-serif",
+        '--box-radius': '24px',
+        '--btn-radius': '50px',
+        '--panel-bg': 'rgba(255, 255, 255, 0.95)',
+        '--panel-card': '#f8f9fa',
+        '--panel-card-border': '#e0e0e0',
+        '--panel-card-text': '#333333'
+      },
+      original: {
+        '--bg-gradient': 'none',
+        '--container-bg': 'transparent',
+        '--container-border': 'none',
+        '--text-color': '#000000',
+        '--title-color': '#000000',
+        '--textarea-bg': 'lightgoldenrodyellow',
+        '--textarea-border': '#000000',
+        '--textarea-focus': '#4caf50',
+        '--btn-primary': '#4caf50',
+        '--btn-shadow': 'none',
+        '--font-style': 'Arial, sans-serif',
+        '--box-radius': '0px',
+        '--btn-radius': '30px',
+        '--panel-bg': 'lightgreen',
+        '--panel-card': 'lightgoldenrodyellow',
+        '--panel-card-border': '#000000',
+        '--panel-card-text': '#000000'
+      },
+      cyber: {
+        '--bg-gradient': 'linear-gradient(135deg, #0f0c1b 0%, #241442 100%)',
+        '--container-bg': 'rgba(20, 10, 35, 0.85)',
+        '--container-border': '1px solid #ff007f',
+        '--text-color': '#00ffff',
+        '--title-color': '#ff007f',
+        '--textarea-bg': '#120626',
+        '--textarea-border': '#00ffff',
+        '--textarea-focus': '#ff007f',
+        '--btn-primary': 'linear-gradient(135deg, #ff007f 0%, #7928ca 100%)',
+        '--btn-shadow': 'rgba(255, 0, 127, 0.4)',
+        '--font-style': "'Courier New', monospace",
+        '--box-radius': '12px',
+        '--btn-radius': '4px',
+        '--panel-bg': 'rgba(20, 8, 38, 0.95)',
+        '--panel-card': '#1a0b2e',
+        '--panel-card-border': '#ff007f',
+        '--panel-card-text': '#00ffff'
+      },
+      retro: {
+        '--bg-gradient': '#000000',
+        '--container-bg': '#111111',
+        '--container-border': '4px double #33ff33',
+        '--text-color': '#33ff33',
+        '--title-color': '#33ff33',
+        '--textarea-bg': '#000000',
+        '--textarea-border': '#33ff33',
+        '--textarea-focus': '#ffffff',
+        '--btn-primary': '#33ff33',
+        '--btn-shadow': 'none',
+        '--font-style': "'Lucida Console', Monaco, monospace",
+        '--box-radius': '0px',
+        '--btn-radius': '0px',
+        '--panel-bg': '#111111',
+        '--panel-card': '#000000',
+        '--panel-card-border': '#33ff33',
+        '--panel-card-text': '#33ff33'
+      },
+      cool: {
+        '--bg-gradient': 'linear-gradient(135deg, #141e30 0%, #243b55 100%)',
+        '--container-bg': 'rgba(255, 255, 255, 0.05)',
+        '--container-border': '1px solid rgba(255,255,255,0.1)',
+        '--text-color': '#ffffff',
+        '--title-color': '#eceff1',
+        '--textarea-bg': 'rgba(0, 0, 0, 0.3)',
+        '--textarea-border': '#455a64',
+        '--textarea-focus': '#607d8b',
+        '--btn-primary': 'linear-gradient(135deg, #37474f 0%, #4f5b66 100%)',
+        '--btn-shadow': 'rgba(0,0,0,0.3)',
+        '--font-style': "'Segoe UI', sans-serif",
+        '--box-radius': '20px',
+        '--btn-radius': '12px',
+        '--panel-bg': 'rgba(26, 36, 50, 0.95)',
+        '--panel-card': '#243242',
+        '--panel-card-border': '#37474f',
+        '--panel-card-text': '#ffffff'
+      },
+      cloud: {
+        '--bg-gradient': 'linear-gradient(135deg, #0d0d0d 0%, #260505 100%)',
+        '--container-bg': 'rgba(20, 20, 20, 0.9)',
+        '--container-border': '2px solid #990000',
+        '--text-color': '#ffffff',
+        '--title-color': '#ff0000',
+        '--textarea-bg': '#1a1a1a',
+        '--textarea-border': '#ff0000',
+        '--textarea-focus': '#ff5555',
+        '--btn-primary': 'linear-gradient(135deg, #800000 0%, #b30000 100%)',
+        '--btn-shadow': 'rgba(255, 0, 0, 0.4)',
+        '--font-style': 'Impact, sans-serif',
+        '--box-radius': '30px',
+        '--btn-radius': '25px',
+        '--panel-bg': 'rgba(20, 5, 5, 0.95)',
+        '--panel-card': '#1f0808',
+        '--panel-card-border': '#800000',
+        '--panel-card-text': '#ffffff'
+      }
+    };
+
+    function setTheme(themeName) {
+      const selected = themes[themeName];
+      if (!selected) return;
+
+      for (const key in selected) {
+        document.documentElement.style.setProperty(key, selected[key]);
+      }
+      if (themeName === 'original') {
+        document.body.style.backgroundColor = 'lightgreen';
+      } else {
+        document.body.style.backgroundColor = '';
+      }
+      localStorage.setItem('jutsuTheme', themeName);
+    }
+
+    window.addEventListener('DOMContentLoaded', () => {
+      const savedTheme = localStorage.getItem('jutsuTheme') || 'kawaii';
+      setTheme(savedTheme);
+    });
+
+    function toggleModal(id, isOpen) {
+      document.getElementById(id).style.display = isOpen ? 'flex' : 'none';
+    }
+
+    // --- High-Grade Sync Popup Engine ---
+    function castCustomAlert(title, text, type = 'informational', confirmCallback = null) {
+      document.getElementById('alertTitle').innerText = title;
+      document.getElementById('alertText').innerText = text;
+      
+      const container = document.getElementById('alertBtnContainer');
+      container.innerHTML = ''; // Reset actions
+      
+      if (type === 'confirm') {
+        const cancelBtn = document.createElement('button');
+        cancelBtn.className = 'btn-action-cancel';
+        cancelBtn.innerText = 'Cancel ❌';
+        cancelBtn.onclick = () => toggleModal('alertModal', false);
+        
+        const confirmBtn = document.createElement('button');
+        confirmBtn.className = 'btn-action-ok';
+        confirmBtn.innerText = 'Proceed ⚔️';
+        confirmBtn.onclick = () => {
+          toggleModal('alertModal', false);
+          if (confirmCallback) confirmCallback();
+        };
+        
+        container.appendChild(confirmBtn);
+        container.appendChild(cancelBtn);
+      } else {
+        // Simple Info close
+        const closeBtn = document.createElement('button');
+        closeBtn.className = 'btn-action-ok';
+        closeBtn.innerText = 'Got it! ✨';
+        closeBtn.style.width = '100%';
+        closeBtn.onclick = () => toggleModal('alertModal', false);
+        container.appendChild(closeBtn);
+      }
+      
+      toggleModal('alertModal', true);
+    }
+
+    // --- Microtransaction Joke Interceptors ---
+    function triggerGoldPaywall() {
+      toggleModal('paywallModal', true);
+    }
+
+    function closePaywall() {
+      toggleModal('paywallModal', false);
+      castCustomAlert("Scroll Canceled", "Transaction canceled. Back to basic ninja life~! 💸🤭");
+    }
+
+    function acceptGoldPayment() {
+      toggleModal('paywallModal', false);
+      setTheme('gold');
+      castCustomAlert("👑 Gold Premium Active", "Payment Success! 💰 Transaction ID: 777-UWU-NINJA. Gold Premium unlocked, boss~! ✨👑");
+    }
+
+    // --- Core Ninja Logic ---
     function tr() {
       const inputText = document.getElementById('ip').value;
       let result = '';
+      let letterCount = 0;
 
       for (let i = 0; i < inputText.length; i++) {
-        result += inputText[i];
-        if ((i + 1) % 2 === 0 && i < inputText.length - 1) {
-          if (/[a-zA-Z]/.test(inputText[i])) {
+        const char = inputText[i];
+        result += char;
+
+        if (/[a-zA-Z]/.test(char)) {
+          letterCount++;
+          if (letterCount % 2 === 0) {
             result += 'z';
           }
         }
@@ -72,33 +673,56 @@
       document.getElementById('op').value = result;
     }
 
-    // Reverse Jutsu (Decrypt)
     function rev() {
-      let text = document.getElementById('op').value;
-      let result = text.replace(/([a-zA-Z]{2})z/g, "$1");
+      const encryptedText = document.getElementById('op').value;
+      if (!encryptedText) {
+        castCustomAlert("Scroll Warning", "The output box is empty, silly~! 🤭");
+        return;
+      }
+      
+      let result = '';
+      let letterCount = 0;
+
+      for (let i = 0; i < encryptedText.length; i++) {
+        const char = encryptedText[i];
+        
+        if (/[a-zA-Z]/.test(char)) {
+          letterCount++;
+          if (letterCount % 3 === 0 && char.toLowerCase() === 'z') {
+            continue; 
+          }
+        }
+        result += char;
+      }
+
       document.getElementById('ip').value = result;
-      alert("Reversed with ninja magic~ ✨ Dattebayo!");
+      castCustomAlert("Spell Decoded", "Reversed with ninja magic~ ✨ Dattebayo!");
     }
 
-    // Copy function (modern API)
     function cp() {
       const output = document.getElementById('op');
+      if (!output.value) {
+        castCustomAlert("Scroll Warning", "There is nothing written on the scroll yet~! 🤭🌸");
+        return;
+      }
       navigator.clipboard.writeText(output.value).then(() => {
-        alert("Copied to clipboard! ✨ UwU~");
+        castCustomAlert("Copied", "Copied to clipboard! ✨ UwU~");
       }).catch(err => {
-        alert("Failed to copy: " + err);
+        castCustomAlert("Error", "Failed to copy: " + err);
       });
     }
 
-    function clr(){
-      let c = confirm('Are you sure you want to clear? It cannot be undone, dattebayo 😅');
-      if (c) {
-        document.getElementById("ip").value="";
-        document.getElementById("op").value="";
-        alert("Poof ~ it’s gone 💨");
-      } else {
-        alert("Teehee~ 🤭 No problem ~ uwuu~");
-      }
+    function triggerClearCheck() {
+      castCustomAlert(
+        'Burn Scroll? 🔥', 
+        'Are you sure you want to burn this secret scroll? It cannot be undone, dattebayo 😅', 
+        'confirm', 
+        () => {
+          document.getElementById("ip").value = "";
+          document.getElementById("op").value = "";
+          castCustomAlert("Poof!", "Poof ~ it’s gone into thin air! 💨");
+        }
+      );
     }
   </script>
 </body>
