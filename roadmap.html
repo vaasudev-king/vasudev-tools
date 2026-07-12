@@ -20,9 +20,40 @@
             font-family: "Segoe UI", sans-serif;
         }
 
+        .tabs {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 15px;
+            overflow-x: auto;
+        }
+
+        button {
+            flex-shrink: 0;
+
+            padding: 10px 20px;
+
+            border: 0;
+            border-radius: 12px;
+
+            background: rgba(255, 255, 255, 0.7);
+
+            font-size: 18px;
+            cursor: pointer;
+        }
+
+        button.active {
+            background: #ff69b4;
+            color: white;
+        }
+
+        .add-button {
+            font-weight: bold;
+            font-size: 22px;
+        }
+
         textarea {
             width: 100%;
-            height: calc(100vh - 40px);
+            height: calc(100vh - 95px);
 
             padding: 25px;
 
@@ -39,17 +70,22 @@
 
             resize: none;
 
-            box-shadow: 0 10px 30px rgba(120, 50, 160, 0.2);
+            box-shadow:
+                0 10px 30px rgba(120, 50, 160, 0.2);
         }
 
         textarea:focus {
             border-color: #ff69b4;
-            box-shadow: 0 0 20px rgba(255, 105, 180, 0.4);
+
+            box-shadow:
+                0 0 20px rgba(255, 105, 180, 0.4);
         }
     </style>
 </head>
 
 <body>
+
+    <div class="tabs" id="tabs"></div>
 
     <textarea
         id="roadmap"
@@ -59,13 +95,95 @@
 
     <script>
         const roadmap = document.getElementById("roadmap");
+        const tabs = document.getElementById("tabs");
+
+        let units = JSON.parse(
+            localStorage.getItem("roadmap-units")
+        ) || ["U1"];
+
+        let currentUnit =
+            localStorage.getItem("current-roadmap-unit")
+            || units[0];
+
+        function storageKey(unit) {
+            return `roadmap-${unit}`;
+        }
+
+        function saveCurrentPage() {
+            localStorage.setItem(
+                storageKey(currentUnit),
+                roadmap.value
+            );
+        }
+
+        function switchUnit(unit) {
+            saveCurrentPage();
+
+            currentUnit = unit;
+
+            localStorage.setItem(
+                "current-roadmap-unit",
+                currentUnit
+            );
+
+            roadmap.value =
+                localStorage.getItem(storageKey(unit)) || "";
+
+            renderTabs();
+            roadmap.focus();
+        }
+
+        function addUnit() {
+            saveCurrentPage();
+
+            const unitNumber = units.length + 1;
+            const newUnit = `U${unitNumber}`;
+
+            units.push(newUnit);
+
+            localStorage.setItem(
+                "roadmap-units",
+                JSON.stringify(units)
+            );
+
+            switchUnit(newUnit);
+        }
+
+        function renderTabs() {
+            tabs.innerHTML = "";
+
+            units.forEach(unit => {
+                const button = document.createElement("button");
+
+                button.textContent = unit;
+
+                if (unit === currentUnit) {
+                    button.classList.add("active");
+                }
+
+                button.onclick = () => switchUnit(unit);
+
+                tabs.appendChild(button);
+            });
+
+            const addButton = document.createElement("button");
+
+            addButton.textContent = "+";
+            addButton.classList.add("add-button");
+            addButton.onclick = addUnit;
+
+            tabs.appendChild(addButton);
+        }
+
+        roadmap.addEventListener(
+            "input",
+            saveCurrentPage
+        );
 
         roadmap.value =
-            localStorage.getItem("roadmap") || "";
+            localStorage.getItem(storageKey(currentUnit)) || "";
 
-        roadmap.addEventListener("input", () => {
-            localStorage.setItem("roadmap", roadmap.value);
-        });
+        renderTabs();
     </script>
 
 </body>
