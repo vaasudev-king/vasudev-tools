@@ -17,7 +17,7 @@
     display: flex;           /* enable flexbox */
     justify-content: center; /* center horizontally */
     align-items: center;     /* center vertically */
-    background-color: var(--mc);
+    background-color: rgb(100, 255, 100);
     color: var(--mt);
     transition: background-color .3s ease,
                 color .3s ease;
@@ -40,15 +40,15 @@
 
 body.dark{
   background-color: black;
-  color:lime;
-  text-shadow:0 0 15px lime;
+  color:var(--mt);
+  text-shadow:0 0 15px var(--mt);
 }
 
 .slider{
     position:absolute;
     inset:0;
     cursor:pointer;
-    background:rgb(100, 255, 100);
+    background:var(--mc);
     border:2px solid green;
     border-radius:100px;
     transition:.3s;
@@ -81,7 +81,7 @@ input:checked + .slider:before{
 }
 .theme-switch{
     position:fixed;
-    top:calc(env(safe-area-inset-top) + 12px);
+    top:calc(env(safe-area-inset-top) + 21px);
     right:15px;
     z-index:1000;
 }
@@ -94,6 +94,91 @@ input:checked + .slider:before{
 }
 
 
+.accent-switch{
+    position:fixed;
+    top:calc(env(safe-area-inset-top) + 21px);
+    left:15px;
+    z-index:1000;
+}
+
+
+
+.accents{
+    position: relative;
+    display: inline-block;
+    width: 40px;
+    height: 40px;
+}
+.aslider{
+    position:absolute;
+    inset:0;
+    cursor:pointer;
+    background:var(--mc);
+    border:2px solid green;
+    border-radius:100px;
+    transition:.3s;
+}
+
+.aslider:before{
+    content:"🎨";
+    position:absolute;
+    width:33px;
+    height:33px;
+    left:0px;
+    top:0px;
+    background:rgba(255, 255, 255, 0);
+    border-radius:50%;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    transition:.3s;
+    font-size:13px;
+}
+
+
+.colors{
+    position: absolute;
+    left: 65px;
+    top: calc(env(safe-area-inset-top) + 12px);
+
+    display: flex;
+    gap: 8px;
+    padding: 8px;
+    border-radius: 30px;
+    background: var(--mc);
+    border: 2px solid green;
+    box-shadow: 0 5px 15px rgba(0,0,0,.2);
+
+    opacity: 0;
+    visibility: hidden;
+    transform: translateX(-10px) scale(.9);
+    transition: .25s ease;
+}
+
+.colors.show{
+    opacity: 1;
+    visibility: visible;
+    transform: translateX(0) scale(1);
+}
+
+.colors span {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  cursor: pointer;
+  border: 3px solid white;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+  transition: transform 0.2s;
+}
+
+.colors span:hover { transform: scale(1.2); }
+
+/* The Colors */
+.pink { background: #ff8fab; }
+.blue { background: #4facfe; }
+.purple { background: #9b5de5; }
+.green { background: #2ec4b6; }
+.lime { background: lime; }
     </style>
   </head>
   <body>
@@ -103,6 +188,19 @@ input:checked + .slider:before{
         <span class="slider"></span>
     </label>
 </div>
+<div class="accent-switch" onclick="acc()">
+    <label class="accents">
+        <span class="aslider"></span>
+    </label>
+</div>
+<div class="colors" id="colors">
+    <span class="pink" onclick="setAccent('#ff8fab')"></span>
+    <span class="blue" onclick="setAccent('#4facfe')"></span>
+    <span class="purple" onclick="setAccent('#9b5de5')"></span>
+    <span class="green" onclick="setAccent('#2ec4b6')"></span>
+    <span class="lime" onclick="setAccent('lime')"></span>
+  </div>
+
     <h1 id="time"></h1>
     <script>
       function updateTime() {
@@ -133,15 +231,19 @@ toggle.checked = localStorage.getItem("theme") === "dark";
 document.body.classList.toggle("dark", toggle.checked);
 
 toggle.onchange = () => {
-    //document.body.classList.toggle("dark", toggle.checked);
+    document.body.classList.toggle("dark", toggle.checked);
     localStorage.setItem("theme", toggle.checked ? "dark" : "light");
     if(toggle.checked){
         relm.style.setProperty('--mc','black');
         relm.style.setProperty('--mt','lime');
+         relm.style.setProperty("--mt", localStorage.accent || "lime");
+         
     } else {
+      
       relm.style.setProperty('--mc','rgb(100, 255, 100)');
         relm.style.setProperty('--mt','blue');
-    }
+         relm.style.setProperty("--mt", localStorage.accent || "blue");
+    }    
 };
 document.addEventListener("keydown", function (event) {
 if(event.key == "Enter" || event.key == "Tab"){
@@ -149,6 +251,26 @@ if(event.key == "Enter" || event.key == "Tab"){
   toggle.click();
 }
 });
+if (toggle.checked) {
+    relm.style.setProperty("--mc", "black");
+    relm.style.setProperty("--mt", localStorage.accent || "lime");
+} else {
+    relm.style.setProperty("--mc", "rgb(100, 255, 100)");
+    relm.style.setProperty("--mt", localStorage.accent || "blue");
+}
+
+function setAccent(c){
+    // 1. Change the variable instantly
+    document.documentElement.style.setProperty("--mt", c);
+    // 2. Save it to Rika-chan's memory
+    localStorage.accent = c;
+}
+if(localStorage.accent){
+    setAccent(localStorage.accent);
+}
+function acc(){
+    document.getElementById("colors").classList.toggle("show");
+}
     </script>
   </body>
 </html>
