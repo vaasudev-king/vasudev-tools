@@ -6,6 +6,10 @@
     <link rel="icon" href="https://www.transparentpng.com/download/time/time-icons--time-icon-clock-png-5.png" type="image/png" />
    
     <style>
+      :root{
+        --mc:rgb(100, 255, 100);
+        --mt:blue;
+      }
      body {
     font-size: xx-large;
     margin: 0;
@@ -13,8 +17,8 @@
     display: flex;           /* enable flexbox */
     justify-content: center; /* center horizontally */
     align-items: center;     /* center vertically */
-    background-color: rgb(100, 255, 100);
-    color: blue;
+    background-color: var(--mc);
+    color: var(--mt);
     transition: background-color .3s ease,
                 color .3s ease;
   }
@@ -46,17 +50,17 @@ body.dark{
     cursor:pointer;
     background:rgb(100, 255, 100);
     border:2px solid green;
-    border-radius:30px;
+    border-radius:100px;
     transition:.3s;
 }
 
 .slider:before{
     content:"☀️";
     position:absolute;
-    width:22px;
-    height:22px;
+    width:30px;
+    height:30px;
     left:2px;
-    top:2px;
+    top:3px;
     background:rgba(255, 255, 255, 0.502);
     border-radius:50%;
     display:flex;
@@ -72,7 +76,7 @@ input:checked + .slider{
 }
 
 input:checked + .slider:before{
-    transform:translateX(24px);
+    transform:translateX(32px);
     content:"🌙";
 }
 .theme-switch{
@@ -85,8 +89,8 @@ input:checked + .slider:before{
 .switch{
     position:relative;
     display:inline-block;
-    width:54px;
-    height:30px;
+    width:70px;
+    height:40px;
 }
 
 
@@ -123,14 +127,28 @@ input:checked + .slider:before{
 tick();
 
       const toggle = document.getElementById("themeToggle");
+      relm=document.documentElement;
 
 toggle.checked = localStorage.getItem("theme") === "dark";
 document.body.classList.toggle("dark", toggle.checked);
 
 toggle.onchange = () => {
-    document.body.classList.toggle("dark", toggle.checked);
+    //document.body.classList.toggle("dark", toggle.checked);
     localStorage.setItem("theme", toggle.checked ? "dark" : "light");
+    if(toggle.checked){
+        relm.style.setProperty('--mc','black');
+        relm.style.setProperty('--mt','lime');
+    } else {
+      relm.style.setProperty('--mc','rgb(100, 255, 100)');
+        relm.style.setProperty('--mt','blue');
+    }
 };
+document.addEventListener("keydown", function (event) {
+if(event.key == "Enter" || event.key == "Tab"){
+  event.preventDefault();
+  toggle.click();
+}
+});
     </script>
   </body>
 </html>
