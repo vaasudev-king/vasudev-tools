@@ -3,190 +3,915 @@
   <head>
     <title>Calculator App</title>
     <meta charset="UTF-8" />
-<link rel="icon" href="https://cdn.glitch.global/4aba7458-1964-4806-b002-2d38cf08add5/calc.png?v=1723538347496" type="image/x-icon" />
-   
+
+    <link
+      rel="icon"
+      href="https://cdn.glitch.global/4aba7458-1964-4806-b002-2d38cf08add5/calc.png?v=1723538347496"
+      type="image/x-icon"
+    />
+
     <style>
-      /* Add your custom styles here */
+      :root {
+        --mc: rgb(100, 255, 100);
+        --mt: #007bff;
+
+        --bg: #f2f2f2;
+        --container: #ffffff;
+        --result: #e9ecef;
+        --text: #333;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
       body {
         font-family: Arial, sans-serif;
-        background-color: #f2f2f2;
-        color: #333;
+        background-color: var(--bg);
+        color: var(--text);
         margin: 0;
         padding: 0;
+
         display: flex;
         justify-content: center;
         align-items: center;
+
         min-height: 100vh;
+
+        transition:
+          background-color 0.3s ease,
+          color 0.3s ease;
       }
-      h1 {
-        text-align: center;
-        margin: 30px 0;
-        color: #007bff;
-      }
+
+      /* =========================
+         CALCULATOR
+         ========================= */
+
       .calc-container {
         width: 80%;
         max-width: 400px;
-        background-color: #fff;
-        border: 1px solid #ccc;
+
+        background-color: var(--container);
+
+        border: 1px solid var(--mt);
+
         padding: 20px;
         border-radius: 5px;
+
+        transition:
+          background-color 0.3s ease,
+          border-color 0.3s ease;
+
+        box-shadow:
+          0 0 12px var(--mt);
       }
+
       .calc-btn,
       .calc-btn2 {
         display: inline-block;
+
         width: 20%;
         padding: 10px;
         margin: 5px;
+
         text-align: center;
         font-size: 24px;
-        background-color: #007bff;
+
+        background-color: var(--mt);
         color: #fff;
+
         border: none;
         border-radius: 5px;
+
         cursor: pointer;
+
+        transition:
+          background-color 0.2s ease,
+          transform 0.1s ease,
+          box-shadow 0.2s ease;
       }
-      .calc-btn.clicked {
-        background-color: #0056b3;
+
+      .calc-btn:hover {
+        filter: brightness(0.9);
+
+        box-shadow:
+          0 0 8px var(--mt);
       }
 
       .calc-btn:active {
-        background-color: #003d80;
+        transform: scale(0.95);
       }
+
       .result {
         font-size: 36px;
         text-align: right;
+
         margin-bottom: 20px;
         padding: 10px;
-        background-color: #e9ecef;
+
+        background-color: var(--result);
+        color: var(--text);
+
         border-radius: 5px;
+        border: 2px solid var(--mt);
+
+        transition:
+          background-color 0.3s ease,
+          color 0.3s ease,
+          border-color 0.3s ease,
+          box-shadow 0.3s ease;
+
+        box-shadow:
+          0 0 10px var(--mt);
       }
+
+      /* =========================
+         DARK MODE
+         ========================= */
+
+      body.dark {
+        --bg: #000;
+        --container: #111;
+        --result: #222;
+        --text: var(--mt);
+
+        text-shadow: 0 0 10px var(--mt);
+      }
+
+      body.dark .calc-container {
+        box-shadow:
+          0 0 15px var(--mt),
+          0 0 30px var(--mt);
+      }
+
+      body.dark .result {
+        text-shadow: 0 0 8px var(--mt);
+
+        box-shadow:
+          0 0 12px var(--mt),
+          0 0 25px var(--mt);
+      }
+
+      /* =========================
+         THEME SWITCH
+         ========================= */
+
+      .theme-switch {
+        position: fixed;
+
+        top: calc(env(safe-area-inset-top) + 21px);
+        right: 15px;
+
+        z-index: 1000;
+      }
+
+      .switch {
+        position: relative;
+
+        display: inline-block;
+
+        width: 70px;
+        height: 40px;
+      }
+
+      .switch input {
+        display: none;
+      }
+
+      .slider {
+        position: absolute;
+        inset: 0;
+
+        cursor: pointer;
+
+        background: white;
+
+        border: 2px solid var(--mt);
+        border-radius: 100px;
+
+        transition: 0.3s;
+
+        box-shadow:
+          0 0 10px var(--mt),
+          0 0 20px var(--mt);
+      }
+
+      .slider:before {
+        content: "☀️";
+
+        position: absolute;
+
+        width: 30px;
+        height: 30px;
+
+        left: 2px;
+        top: 3px;
+
+        background: rgb(230, 230, 230);
+
+        border-radius: 50%;
+
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        transition: 0.3s;
+
+        font-size: 13px;
+      }
+
+      input:checked + .slider {
+        background: #222;
+
+        border-color: var(--mt);
+
+        box-shadow:
+          0 0 15px var(--mt),
+          0 0 30px var(--mt);
+      }
+
+      input:checked + .slider:before {
+        transform: translateX(32px);
+
+        content: "🌙";
+      }
+
+      /* =========================
+         ACCENT SWITCH
+         ========================= */
+
+      .accent-switch {
+        position: fixed;
+
+        top: calc(env(safe-area-inset-top) + 21px);
+        left: 15px;
+
+        z-index: 1000;
+      }
+
+      .accents {
+        position: relative;
+
+        display: inline-block;
+
+        width: 40px;
+        height: 40px;
+      }
+
+      .aslider {
+        position: absolute;
+        inset: 0;
+
+        cursor: pointer;
+
+        background: white;
+
+        border: 2px solid var(--mt);
+
+        border-radius: 100px;
+
+        transition: 0.3s;
+
+        box-shadow:
+          0 0 10px var(--mt),
+          0 0 20px var(--mt);
+      }
+
+      .aslider:before {
+        content: "🎨";
+
+        position: absolute;
+
+        width: 33px;
+        height: 33px;
+
+        left: 0;
+        top: 0;
+
+        background: rgba(255, 255, 255, 0);
+
+        border-radius: 50%;
+
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        transition: 0.3s;
+
+        font-size: 13px;
+      }
+
+      /* =========================
+         COLOR MENU
+         ========================= */
+
+      .colors {
+        position: fixed;
+
+        left: 65px;
+        top: calc(env(safe-area-inset-top) + 12px);
+
+        display: flex;
+
+        gap: 8px;
+
+        padding: 8px;
+
+        border-radius: 30px;
+
+        background: white;
+
+        border: 2px solid var(--mt);
+
+        box-shadow:
+          0 0 12px var(--mt),
+          0 5px 15px rgba(0, 0, 0, 0.2);
+
+        opacity: 0;
+        visibility: hidden;
+
+        transform:
+          translateX(-10px)
+          scale(0.9);
+
+        transition: 0.25s ease;
+      }
+
+      .colors.show {
+        opacity: 1;
+
+        visibility: visible;
+
+        transform:
+          translateX(0)
+          scale(1);
+      }
+
+      .colors span {
+        width: 30px;
+        height: 30px;
+
+        border-radius: 50%;
+
+        cursor: pointer;
+
+        border: 3px solid white;
+
+        box-shadow:
+          0 0 8px rgba(0, 0, 0, 0.2);
+
+        transition:
+          transform 0.2s,
+          box-shadow 0.2s;
+      }
+
+      .colors span:hover {
+        transform: scale(1.2);
+
+        box-shadow:
+          0 0 10px currentColor;
+      }
+
+      /* =========================
+         ACCENT COLORS
+         ========================= */
+
+      .pink {
+        background: #ff8fab;
+      }
+
+      .blue {
+        background: #4facfe;
+      }
+
+      .purple {
+        background: #9b5de5;
+      }
+
+      .green {
+        background: #2ec4b6;
+      }
+
+      .lime {
+        background: lime;
+      }
+
+      /* =========================
+         MOBILE
+         ========================= */
+
       @media (max-width: 500px) {
-        /* Adjust styles for smaller screens */
         .calc-container {
           width: 90%;
         }
+
         .calc-btn {
           font-size: 20px;
         }
+
         .result {
           font-size: 28px;
         }
       }
     </style>
   </head>
+
   <body>
-    <!--h1>Calculator App</h1-->
+
+    <!-- THEME SWITCH -->
+
+    <div class="theme-switch">
+      <label class="switch">
+        <input type="checkbox" id="themeToggle">
+        <span class="slider"></span>
+      </label>
+    </div>
+
+
+    <!-- ACCENT SWITCH -->
+
+    <div class="accent-switch" onclick="acc()">
+      <label class="accents">
+        <span class="aslider"></span>
+      </label>
+    </div>
+
+
+    <!-- ACCENT COLORS -->
+
+    <div class="colors" id="colors">
+
+      <span
+        class="pink"
+        onclick="setAccent('#ff8fab')">
+      </span>
+
+      <span
+        class="blue"
+        onclick="setAccent('#4facfe')">
+      </span>
+
+      <span
+        class="purple"
+        onclick="setAccent('#9b5de5')">
+      </span>
+
+      <span
+        class="green"
+        onclick="setAccent('#2ec4b6')">
+      </span>
+
+      <span
+        class="lime"
+        onclick="setAccent('lime')">
+      </span>
+
+    </div>
+
+
+    <!-- CALCULATOR -->
+
     <div class="calc-container">
+
       <div class="result" id="result">0</div>
+
       <div>
-        <button class="calc-btn" onclick="appendSymbol('1')">1</button>
-        <button class="calc-btn" onclick="appendSymbol('2')">2</button>
-        <button class="calc-btn" onclick="appendSymbol('3')">3</button>
-        <button class="calc-btn" onclick="appendOperator('+')">+</button>
-      </div>
-      <div>
-        <button class="calc-btn" onclick="appendSymbol('4')">4</button>
-        <button class="calc-btn" onclick="appendSymbol('5')">5</button>
-        <button class="calc-btn" onclick="appendSymbol('6')">6</button>
-        <button class="calc-btn" onclick="appendOperator('-')">-</button>
-      </div>
-      <div>
-        <button class="calc-btn" onclick="appendSymbol('7')">7</button>
-        <button class="calc-btn" onclick="appendSymbol('8')">8</button>
-        <button class="calc-btn" onclick="appendSymbol('9')">9</button>
-        <button class="calc-btn" onclick="appendOperator('*')">×</button>
-      </div>
-      <div>
-        <button class="calc-btn" onclick="backspace()">←</button>
-        <button class="calc-btn" onclick="appendSymbol('0')">0</button>
-        <button class="calc-btn" onclick="calculate()">=</button>
-        <button class="calc-btn" onclick="appendOperator('/')">÷</button>
-      </div>
-      <div>
-        <button style="background-color: red" class="calc-btn" onclick="clearResult()">C</button>
         <button
-          style="background-color: lime"
           class="calc-btn"
-          onclick="window.location.href='vs.html'"
-        >
+          onclick="appendSymbol('1')">
+          1
+        </button>
+
+        <button
+          class="calc-btn"
+          onclick="appendSymbol('2')">
+          2
+        </button>
+
+        <button
+          class="calc-btn"
+          onclick="appendSymbol('3')">
+          3
+        </button>
+
+        <button
+          class="calc-btn"
+          onclick="appendOperator('+')">
+          +
+        </button>
+      </div>
+
+      <div>
+        <button
+          class="calc-btn"
+          onclick="appendSymbol('4')">
+          4
+        </button>
+
+        <button
+          class="calc-btn"
+          onclick="appendSymbol('5')">
+          5
+        </button>
+
+        <button
+          class="calc-btn"
+          onclick="appendSymbol('6')">
+          6
+        </button>
+
+        <button
+          class="calc-btn"
+          onclick="appendOperator('-')">
+          -
+        </button>
+      </div>
+
+      <div>
+        <button
+          class="calc-btn"
+          onclick="appendSymbol('7')">
+          7
+        </button>
+
+        <button
+          class="calc-btn"
+          onclick="appendSymbol('8')">
+          8
+        </button>
+
+        <button
+          class="calc-btn"
+          onclick="appendSymbol('9')">
+          9
+        </button>
+
+        <button
+          class="calc-btn"
+          onclick="appendOperator('*')">
+          ×
+        </button>
+      </div>
+
+      <div>
+        <button
+          class="calc-btn"
+          onclick="backspace()">
+          ←
+        </button>
+
+        <button
+          class="calc-btn"
+          onclick="appendSymbol('0')">
+          0
+        </button>
+
+        <button
+          class="calc-btn"
+          onclick="calculate()">
+          =
+        </button>
+
+        <button
+          class="calc-btn"
+          onclick="appendOperator('/')">
+          ÷
+        </button>
+      </div>
+
+      <div>
+        <button
+          class="calc-btn"
+          onclick="clearResult()">
+          C
+        </button>
+
+        <button
+          class="calc-btn"
+          onclick="window.location.href='vs.html'">
           Home
         </button>
       </div>
+
     </div>
 
+
     <script>
-      let result = document.getElementById("result");
+
+      /* =========================
+         CALCULATOR
+         ========================= */
+
+      let result =
+        document.getElementById("result");
+
       let currentInput = "0";
+
       let currentOperator = "";
+
       let resetNext = false;
 
+
       function appendSymbol(symbol) {
+
         if (resetNext) {
+
           currentInput = symbol;
+
           resetNext = false;
+
         } else {
+
           if (currentInput === "0") {
+
             currentInput = symbol;
+
           } else {
+
             currentInput += symbol;
+
           }
+
         }
+
         result.innerText = currentInput;
       }
 
+
       function appendOperator(operator) {
+
         if (currentOperator) {
           calculate();
         }
+
         currentOperator = operator;
-        currentInput += " " + operator + " ";
-        result.innerText = currentInput;
+
+        currentInput +=
+          " " + operator + " ";
+
+        result.innerText =
+          currentInput;
       }
+
 
       function calculate() {
+
         try {
-          let evaluatedResult = eval(currentInput.replace(/\s/g, ""));
-          result.innerText = evaluatedResult;
-          currentInput = evaluatedResult.toString();
+
+          let evaluatedResult =
+            eval(
+              currentInput.replace(/\s/g, "")
+            );
+
+          result.innerText =
+            evaluatedResult;
+
+          currentInput =
+            evaluatedResult.toString();
+
           currentOperator = "";
+
           resetNext = true;
+
         } catch (error) {
+
           result.innerText = "Error";
+
           currentInput = "0";
+
           currentOperator = "";
+
         }
+
       }
+
 
       function clearResult() {
+
         currentInput = "0";
+
         currentOperator = "";
-        result.innerText = currentInput;
+
+        result.innerText =
+          currentInput;
+
       }
+
 
       function backspace() {
+
         if (currentInput.length > 1) {
-          currentInput = currentInput.slice(0, -1);
+
+          currentInput =
+            currentInput.slice(0, -1);
+
         } else {
+
           currentInput = "0";
+
         }
-        result.innerText = currentInput;
+
+        result.innerText =
+          currentInput;
+
       }
 
-      document.addEventListener("keydown", function (event) {
-        const key = event.key;
-        if (key >= "0" && key <= "9") {
-          appendSymbol(key);
-        } else if (key === "+" || key === "-" || key === "*" || key === "/") {
-          appendOperator(key);
-        } else if (key === "Enter" || key === "=") {
-          event.preventDefault(); // Prevent form submission if the calculator is in a form
-          calculate();
-        } else if (key === "Backspace") {
-          backspace();
-        } else if (key === "Escape" || key.toLowerCase() === "c") {
-          clearResult();
+
+      /* =========================
+         THEME
+         ========================= */
+
+      const toggle =
+        document.getElementById(
+          "themeToggle"
+        );
+
+      const relm =
+        document.documentElement;
+
+
+      toggle.checked =
+        localStorage.getItem("theme") === "dark";
+
+
+      document.body.classList.toggle(
+        "dark",
+        toggle.checked
+      );
+
+
+      function applyTheme() {
+
+        if (toggle.checked) {
+
+          relm.style.setProperty(
+            "--mc",
+            "black"
+          );
+
+          relm.style.setProperty(
+            "--mt",
+            localStorage.accent || "lime"
+          );
+
+        } else {
+
+          relm.style.setProperty(
+            "--mc",
+            "white"
+          );
+
+          relm.style.setProperty(
+            "--mt",
+            localStorage.accent || "blue"
+          );
+
         }
-      });
+
+      }
+
+
+      toggle.onchange = () => {
+
+        document.body.classList.toggle(
+          "dark",
+          toggle.checked
+        );
+
+        localStorage.setItem(
+          "theme",
+          toggle.checked
+            ? "dark"
+            : "light"
+        );
+
+        applyTheme();
+
+      };
+
+
+      /* =========================
+         KEYBOARD
+         ========================= */
+
+      document.addEventListener(
+        "keydown",
+        function (event) {
+
+          const key = event.key;
+
+
+          /*
+             Enter / Tab = theme toggle
+          */
+
+          if (
+            key === "Enter" ||
+            key === "Tab"
+          ) {
+
+            event.preventDefault();
+
+            toggle.click();
+
+            return;
+
+          }
+
+
+          if (
+            key >= "0" &&
+            key <= "9"
+          ) {
+
+            appendSymbol(key);
+
+          }
+
+          else if (
+            key === "+" ||
+            key === "-" ||
+            key === "*" ||
+            key === "/"
+          ) {
+
+            appendOperator(key);
+
+          }
+
+          else if (
+            key === "="
+          ) {
+
+            event.preventDefault();
+
+            calculate();
+
+          }
+
+          else if (
+            key === "Backspace"
+          ) {
+
+            backspace();
+
+          }
+
+          else if (
+            key === "Escape" ||
+            key.toLowerCase() === "c"
+          ) {
+
+            clearResult();
+
+          }
+
+        }
+      );
+
+
+      /* =========================
+         ACCENT
+         ========================= */
+
+      function setAccent(c) {
+
+        document.documentElement.style.setProperty(
+          "--mt",
+          c
+        );
+
+        localStorage.accent = c;
+
+      }
+
+
+      if (localStorage.accent) {
+
+        setAccent(
+          localStorage.accent
+        );
+
+      } else {
+
+        applyTheme();
+
+      }
+
+
+      /* =========================
+         ACCENT MENU
+         ========================= */
+
+      function acc() {
+
+        document
+          .getElementById("colors")
+          .classList.toggle("show");
+
+      }
+
     </script>
+
   </body>
 </html>
