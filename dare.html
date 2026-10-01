@@ -1,101 +1,828 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <sty <meta charset="UTF-8">
-      <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-      <title>Dare</title>
-     
-      <style>
-        body {
-          font-family: Arial, sans-serif;
-          text-align: center;
-          margin-top: 50px;
-        }
-        #question {
-          margin-bottom: 20px;
-        }
-        .button,
-        .button2 {
-          margin-top: 10px;
-          padding: 10px 20px;
-          font-size: 16px;
-          background-color:white;
-          cursor: pointer;
-        }
-        .button2:active {
-          transform: scale(0.95);
-          box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
-          color: lime;
-        }
-        .button:active {
-         background-color:white;
-        }
-        #noButton {
-          position: absolute;
-        }
-        .err {
-          color: red;
-          outline: 5px green;
-        }
-      </style>
-      <body>
-        <div id="error" style="display: none">
-          <h2 class="err">This page can only be accessed on a computer.</h2>
-          <a href="vs.html">Home</a>
-        </div>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dare</title>
 
-        <div id="content">
-          <div id="question">Are you Idiot ?</div>
+<style>
+:root {
+  --mc: white;
+  --mt: blue;
 
-          <button id="yesButton" class="button2" onclick="showPopup()">
-            Yes
-          </button>
-          <button id="noButton" class="button" onmouseover="moveButton()" onclick="moveButton()">
-            No
-          </button>
+  --bg: #f4f4f4;
+  --text: #222;
+  --card: white;
+  --button-bg: white;
+}
 
-          <div id="popup" style="display: none">
-            <h2>Thanks for Accepting 🤡</h2>
-          </div>
-        </div>
+* {
+  box-sizing: border-box;
+}
 
-        <script>
-          function showPopup() {
-            var popup = document.getElementById("popup");
-            popup.style.display = "block";
-          }
+body {
+  font-family: Arial, sans-serif;
+  text-align: center;
+  margin: 0;
+  min-height: 100vh;
+  background: var(--bg);
+  color: var(--text);
+  transition: background .3s ease, color .3s ease;
+}
 
-          function moveButton() {
-            var button = document.getElementById("noButton");
-            var x = Math.floor(Math.random() * 350);
-            var y = Math.floor(Math.random() * 350);
-            button.style.left = x + "px";
-            button.style.top = y + "px";
-          }
+/* =========================
+   MAIN CONTENT
+========================= */
 
-          // Check if the device is a computer or mobile
-          function isMobileDevice() {
-            return (
-              typeof window.orientation !== "undefined" ||
-              navigator.userAgent.indexOf("IEMobile") !== -1
-            );
-          }
+#content {
+  padding-top: 110px;
+}
 
-          // Display error message if accessed from a mobile device
-          window.onload = function () {
-            if (isMobileDevice()) {
-              var content = document.getElementById("content");
-              var error = document.getElementById("error");
-              content.style.display = "none";
-              error.style.display = "block";
-            } else {
-              alert(
-                "In this dare you need to answer a question with YES or NO"
-              );
-            }
-          };
-        </script>
-      </body>
-    </sty>
-  </head>
+#question {
+  margin-bottom: 20px;
+  font-size: 24px;
+  font-weight: bold;
+  color: var(--mt);
+  text-shadow: 0 0 8px var(--mt);
+}
+
+.button,
+.button2 {
+  margin-top: 10px;
+  padding: 10px 20px;
+  font-size: 16px;
+  background: var(--button-bg);
+  color: var(--mt);
+  border: 2px solid var(--mt);
+  border-radius: 6px;
+  cursor: pointer;
+  transition:
+    transform .2s ease,
+    box-shadow .2s ease,
+    background .3s ease,
+    color .3s ease;
+}
+
+.button:hover,
+.button2:hover {
+  box-shadow:
+    0 0 8px var(--mt),
+    0 0 18px var(--mt);
+}
+
+.button2:active {
+  transform: scale(0.95);
+  box-shadow:
+    0 0 5px var(--mt),
+    0 0 12px var(--mt);
+}
+
+.button:active {
+  transform: scale(0.95);
+}
+
+/* =========================
+   NO BUTTON
+========================= */
+
+#noButton {
+  position: absolute;
+}
+
+/* =========================
+   POPUP
+========================= */
+
+#popup {
+  margin: 25px auto;
+}
+
+#popup h2 {
+  color: var(--mt);
+  text-shadow: 0 0 10px var(--mt);
+}
+
+/* =========================
+   ERROR
+========================= */
+
+.err {
+  color: red;
+  text-shadow: 0 0 8px red;
+}
+
+#error {
+  padding-top: 100px;
+}
+
+#error a {
+  color: var(--mt);
+}
+
+/* =========================
+   MENU BUTTON
+========================= */
+
+.menu-button {
+  position: fixed;
+  top: 15px;
+  left: 15px;
+
+  width: 42px;
+  height: 42px;
+
+  border: 2px solid var(--mt);
+  border-radius: 8px;
+
+  background: var(--mc);
+  color: var(--mt);
+
+  font-size: 23px;
+  cursor: pointer;
+
+  z-index: 1001;
+
+  box-shadow:
+    0 0 8px var(--mt),
+    0 0 16px var(--mt);
+
+  transition: .3s ease;
+}
+
+.menu-button:hover {
+  transform: scale(1.05);
+}
+
+/* =========================
+   THEME SWITCH
+========================= */
+
+.theme-switch {
+  position: fixed;
+  top: 15px;
+  right: 15px;
+  z-index: 1001;
+}
+
+.theme-switch input {
+  display: none;
+}
+
+.slider {
+  width: 70px;
+  height: 40px;
+
+  background: white;
+
+  border: 2px solid var(--mt);
+  border-radius: 30px;
+
+  display: block;
+  position: relative;
+
+  cursor: pointer;
+
+  box-shadow:
+    0 0 8px var(--mt),
+    0 0 16px var(--mt);
+
+  transition: .3s ease;
+}
+
+body.dark .slider {
+  background: #222;
+}
+
+.slider:before {
+  content: "☀️";
+
+  width: 30px;
+  height: 30px;
+
+  position: absolute;
+
+  left: 2px;
+  top: 3px;
+
+  background: #888;
+
+  border-radius: 50%;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  transition: .3s ease;
+
+  font-size: 13px;
+
+  box-shadow: 0 0 8px var(--mt);
+}
+
+.theme-switch input:checked + .slider:before {
+  transform: translateX(32px);
+  content: "🌙";
+  background: #888;
+}
+
+/* =========================
+   SIDE MENU
+========================= */
+
+.side-menu {
+  position: fixed;
+
+  top: 0;
+  left: -280px;
+
+  width: 280px;
+  height: 100vh;
+
+  background: var(--card);
+
+  border-right: 2px solid var(--mt);
+
+  box-shadow:
+    5px 0 20px rgba(0,0,0,.25),
+    0 0 15px var(--mt);
+
+  z-index: 1000;
+
+  padding: 80px 20px 20px;
+
+  transition: left .35s ease;
+
+  text-align: left;
+}
+
+.side-menu.open {
+  left: 0;
+}
+
+.menu-title {
+  font-size: 24px;
+  font-weight: bold;
+
+  color: var(--mt);
+
+  margin-bottom: 25px;
+
+  text-shadow: 0 0 8px var(--mt);
+}
+
+.menu-section {
+  margin-bottom: 25px;
+}
+
+.menu-label {
+  font-size: 14px;
+  font-weight: bold;
+
+  color: var(--text);
+
+  margin-bottom: 10px;
+}
+
+/* =========================
+   ACCENT COLORS
+========================= */
+
+.accent-grid {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.accent {
+  width: 38px;
+  height: 38px;
+
+  border-radius: 50%;
+
+  border: 2px solid var(--text);
+
+  cursor: pointer;
+
+  transition:
+    transform .2s ease,
+    box-shadow .2s ease;
+}
+
+.accent:hover {
+  transform: scale(1.15);
+}
+
+.accent.active {
+  box-shadow:
+    0 0 8px currentColor,
+    0 0 18px currentColor;
+}
+
+/* Individual accent colors */
+
+.accent-pink {
+  background: #ff8fab;
+  color: #ff8fab;
+}
+
+.accent-blue {
+  background: #4facfe;
+  color: #4facfe;
+}
+
+.accent-purple {
+  background: #9b5de5;
+  color: #9b5de5;
+}
+
+.accent-green {
+  background: #2ec4b6;
+  color: #2ec4b6;
+}
+
+.accent-lime {
+  background: lime;
+  color: lime;
+}
+
+/* =========================
+   MENU BUTTONS
+========================= */
+
+.menu-item {
+  width: 100%;
+
+  padding: 12px;
+
+  margin-top: 8px;
+
+  border: 2px solid var(--mt);
+  border-radius: 6px;
+
+  background: var(--mc);
+  color: var(--mt);
+
+  cursor: pointer;
+
+  font-size: 15px;
+
+  transition: .2s ease;
+}
+
+.menu-item:hover {
+  box-shadow:
+    0 0 8px var(--mt),
+    0 0 15px var(--mt);
+}
+
+/* =========================
+   MENU OVERLAY
+========================= */
+
+.overlay {
+  position: fixed;
+
+  inset: 0;
+
+  background: rgba(0,0,0,.35);
+
+  z-index: 999;
+
+  opacity: 0;
+  visibility: hidden;
+
+  transition: .3s ease;
+}
+
+.overlay.show {
+  opacity: 1;
+  visibility: visible;
+}
+
+/* =========================
+   DARK MODE
+========================= */
+
+body.dark {
+  --bg: #000;
+  --text: var(--mt);
+  --card: #111;
+  --button-bg: #111;
+
+  text-shadow: 0 0 5px var(--mt);
+}
+
+body.dark .side-menu {
+  background: #111;
+}
+
+body.dark .button,
+body.dark .button2,
+body.dark .menu-item {
+  background: #111;
+}
+
+body.dark .menu-button {
+  background: #222;
+}
+
+/* =========================
+   RESPONSIVE
+========================= */
+
+@media (max-width: 600px) {
+  #content {
+    padding-top: 100px;
+  }
+
+  #question {
+    font-size: 21px;
+  }
+
+  .side-menu {
+    width: 260px;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<!-- MENU BUTTON -->
+<button class="menu-button" onclick="toggleMenu()">☰</button>
+
+<!-- THEME SWITCH -->
+<label class="theme-switch">
+  <input type="checkbox" id="themeToggle">
+  <span class="slider"></span>
+</label>
+
+<!-- SIDE MENU -->
+
+<div class="overlay" id="overlay" onclick="closeMenu()"></div>
+
+<div class="side-menu" id="sideMenu">
+
+  <div class="menu-title">
+    Dare Settings 😜
+  </div>
+
+  <div class="menu-section">
+
+    <div class="menu-label">
+      Accent Color
+    </div>
+
+    <div class="accent-grid">
+
+      <button
+        class="accent accent-pink"
+        onclick="setAccent('#ff8fab', this)">
+      </button>
+
+      <button
+        class="accent accent-blue"
+        onclick="setAccent('#4facfe', this)">
+      </button>
+
+      <button
+        class="accent accent-purple"
+        onclick="setAccent('#9b5de5', this)">
+      </button>
+
+      <button
+        class="accent accent-green"
+        onclick="setAccent('#2ec4b6', this)">
+      </button>
+
+      <button
+        class="accent accent-lime"
+        onclick="setAccent('lime', this)">
+      </button>
+
+    </div>
+
+  </div>
+
+  <div class="menu-section">
+
+    <div class="menu-label">
+      Theme
+    </div>
+
+    <button class="menu-item" onclick="toggleTheme()">
+      🌗 Toggle Day / Night
+    </button>
+
+  </div>
+
+  <div class="menu-section">
+
+    <button class="menu-item" onclick="closeMenu()">
+      ✖ Close Menu
+    </button>
+
+  </div>
+
+</div>
+
+<!-- COMPUTER ERROR -->
+
+<div id="error" style="display:none">
+
+  <h2 class="err">
+    This page can only be accessed on a computer.
+  </h2>
+
+  <a href="vs.html">
+    Home
+  </a>
+
+</div>
+
+<!-- MAIN CONTENT -->
+
+<div id="content">
+
+  <div id="question">
+    Are you Idiot ?
+  </div>
+
+  <button
+    id="yesButton"
+    class="button2"
+    onclick="showPopup()">
+    Yes
+  </button>
+
+  <button
+    id="noButton"
+    class="button"
+    onmouseover="moveButton()"
+    onclick="moveButton()">
+    No
+  </button>
+
+  <div id="popup" style="display:none">
+
+    <h2>
+      Thanks for Accepting 🤡
+    </h2>
+
+  </div>
+
+</div>
+
+<script>
+
+/* =========================
+   MENU
+========================= */
+
+function toggleMenu() {
+
+  var menu = document.getElementById("sideMenu");
+  var overlay = document.getElementById("overlay");
+
+  menu.classList.toggle("open");
+  overlay.classList.toggle("show");
+}
+
+function closeMenu() {
+
+  document.getElementById("sideMenu")
+    .classList.remove("open");
+
+  document.getElementById("overlay")
+    .classList.remove("show");
+}
+
+
+/* =========================
+   THEME
+========================= */
+
+function applyTheme(theme) {
+
+  var toggle =
+    document.getElementById("themeToggle");
+
+  if (theme === "dark") {
+
+    document.body.classList.add("dark");
+    toggle.checked = true;
+
+  } else {
+
+    document.body.classList.remove("dark");
+    toggle.checked = false;
+
+  }
+
+  localStorage.setItem("theme", theme);
+}
+
+function toggleTheme() {
+
+  var current =
+    document.body.classList.contains("dark")
+      ? "dark"
+      : "light";
+
+  applyTheme(
+    current === "dark"
+      ? "light"
+      : "dark"
+  );
+}
+
+document
+  .getElementById("themeToggle")
+  .addEventListener("change", function () {
+
+    applyTheme(
+      this.checked
+        ? "dark"
+        : "light"
+    );
+
+  });
+
+
+/* =========================
+   ACCENT
+========================= */
+
+function setAccent(color, element) {
+
+  document.documentElement
+    .style.setProperty("--mt", color);
+
+  localStorage.setItem(
+    "accent",
+    color
+  );
+
+  document
+    .querySelectorAll(".accent")
+    .forEach(function (button) {
+
+      button.classList.remove("active");
+
+    });
+
+  if (element) {
+    element.classList.add("active");
+  }
+}
+
+
+/* =========================
+   LOAD SETTINGS
+========================= */
+
+window.addEventListener("load", function () {
+
+  var savedTheme =
+    localStorage.getItem("theme");
+
+  var savedAccent =
+    localStorage.getItem("accent");
+
+  applyTheme(
+    savedTheme || "light"
+  );
+
+  setAccent(
+    savedAccent || "blue"
+  );
+
+  /* Mark selected accent */
+
+  document
+    .querySelectorAll(".accent")
+    .forEach(function (button) {
+
+      var bg =
+        getComputedStyle(button)
+          .backgroundColor;
+
+      var saved =
+        savedAccent || "#4facfe";
+
+      if (
+        saved.toLowerCase() ===
+        rgbToHex(bg).toLowerCase()
+      ) {
+        button.classList.add("active");
+      }
+
+    });
+
+});
+
+
+/* =========================
+   RGB → HEX
+========================= */
+
+function rgbToHex(rgb) {
+
+  var values =
+    rgb.match(/\d+/g);
+
+  if (!values) return "";
+
+  return "#" +
+    values
+      .slice(0, 3)
+      .map(function (x) {
+
+        return parseInt(x)
+          .toString(16)
+          .padStart(2, "0");
+
+      })
+      .join("");
+
+}
+
+
+/* =========================
+   ORIGINAL DARE
+========================= */
+
+function showPopup() {
+
+  var popup =
+    document.getElementById("popup");
+
+  popup.style.display = "block";
+}
+
+
+function moveButton() {
+
+  var button =
+    document.getElementById("noButton");
+
+  var x =
+    Math.floor(Math.random() * 350);
+
+  var y =
+    Math.floor(Math.random() * 350);
+
+  button.style.left =
+    x + "px";
+
+  button.style.top =
+    y + "px";
+}
+
+
+/* =========================
+   DEVICE CHECK
+========================= */
+
+function isMobileDevice() {
+
+  return (
+    typeof window.orientation !== "undefined" ||
+    navigator.userAgent.indexOf("IEMobile") !== -1
+  );
+
+}
+
+
+/* =========================
+   PAGE LOAD
+========================= */
+
+window.onload = function () {
+
+  if (isMobileDevice()) {
+
+    var content =
+      document.getElementById("content");
+
+    var error =
+      document.getElementById("error");
+
+    content.style.display = "none";
+
+    error.style.display = "block";
+
+  } else {
+
+    alert(
+      "In this dare you need to answer a question with YES or NO"
+    );
+
+  }
+
+};
+
+</script>
+
+</body>
 </html>
