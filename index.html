@@ -201,14 +201,19 @@
     <br/>
     <div class="ms">
       <a onclick="sha()">
-        <img src="https://cdn.glitch.global/f629a358-07e1-453a-bc2c-16f15fd18410/sharingan.png?v=1723781467889" class="spin-image" alt="">
-        <img src="https://cdn.glitch.global/f629a358-07e1-453a-bc2c-16f15fd18410/Mangekyou_Sharingan_Itachi.svg.png?v=1723781468828" class="spin-image" alt="">
-        <img src="https://cdn.glitch.global/f629a358-07e1-453a-bc2c-16f15fd18410/Mangekyou_Sharingan_Kakashi.svg.png?v=1723781469732" class="spin-image" alt="">
-        <img src="https://cdn.glitch.global/f629a358-07e1-453a-bc2c-16f15fd18410/Mangekyou_Sharingan_Sasuke.png?v=1723783054983" class="spin-image" alt="">
+        <img src="https://www.pngmart.com/files/12/Mangekyou-Sharingan-PNG-Free-Download.png" class="spin-image" alt="">
+        <img src="https://www.pngmart.com/files/12/Sharingan-PNG-File.png" class="spin-image" alt="">
+        <img src="https://www.pngmart.com/files/12/Mangekyou-Sharingan-PNG-Transparent-Image.png" class="spin-image" alt="">
+         <img src="https://www.pngmart.com/files/12/Sharingan-PNG-Free-Download.png" class="spin-image" alt="">
+        <img src="https://www.pngmart.com/files/12/Sharingan-PNG-Photo.png" class="spin-image" alt="">
+        <img src="https://www.pngmart.com/files/12/Sharingan-Transparent-Background.png" class="spin-image">
+        <img src="https://www.pngmart.com/files/12/Sharingan-PNG-HD.png" class="spin-image">
+        <img src="https://www.pngmart.com/files/12/Mangekyou-Sharingan-PNG-Photo.png" class="spin-image">
       </a>
     </div>
 
-    <audio id="sha" src="https://cdn.glitch.global/14780529-cce6-4176-8e0b-db06f1a231d1/sharingan.mp3?v=1724043784839"></audio>
+    <audio id="fuck" src="https://cdn.glitch.global/14780529-cce6-4176-8e0b-db06f1a231d1/sharingan.mp3?v=1724043784839"></audio>
+    <audio id="sha" src="https://files.catbox.moe/2qlg57.mp3"></audio>
 
     <br/>
     <script>
@@ -230,6 +235,10 @@
       });
 
       document.addEventListener('keydown', function(e) {
+        if (e.key === ' ' || e.key == 'Shift') {
+          sha();
+  
+        }
         if (e.key === 'F12' ||
             (e.ctrlKey && e.shiftKey && (e.key === 'I' || e.key === 'J')) ||
             (e.ctrlKey && e.key === 'U')) {
@@ -294,6 +303,11 @@
           }
         });
       })();
+      document.addEventListener('keydown', function(e) {
+        if (e.key === ' ' || e.key == 'Shift') {
+          sha();
+        }
+           });
     </script>
   </body>
 </html>
